@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0"?>
 <grammar xml:lang="pt-PT" version="1.0" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+  
   <rule id="rootRule" scope="public">
     <one-of>
       <ruleref uri="#deslocarMapa" />
@@ -85,7 +86,19 @@
     </one-of>
   </rule>
 
-
+  <rule id="criatura">
+    <one-of>
+      <item>
+        aranha<tag>out="ARANHA"</tag>
+      </item>
+      <item>
+        cobra<tag>out="COBRA"</tag>
+      </item>
+      <item>
+        rato<tag>out="RATO"</tag>
+      </item>
+    </one-of>
+  </rule>
 
 
 </grammar>

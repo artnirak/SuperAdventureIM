@@ -1,0 +1,4 @@
+
+speechModality/speechModality/obj/Debug/*
+speechModality/.vs/*
+*.cache
