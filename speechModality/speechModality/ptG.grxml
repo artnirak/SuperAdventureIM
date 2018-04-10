@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0"?>
 <grammar xml:lang="pt-PT" version="1.0" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
-  
+
+  <!--ROOT RULE-->
   <rule id="rootRule" scope="public">
     <one-of>
-      <ruleref uri="#deslocarMapa" />
-      <tag>out.deslocarMapa=rules.deslocarMapa</tag>
+      <item>
+        <ruleref uri="#deslocarMapa" />
+        <tag>out.deslocarMapa=rules.deslocarMapa</tag>        
+      </item>
+      <item>
+        <ruleref uri="#atacar" />
+        <tag>out.atacar=rules.atacar</tag>
+      </item>
     </one-of>
   </rule>
 
+  <!--DESLOCAÇÃO NO MAPA-->
   <rule id="deslocarMapa">
     <one-of>
       <item>
@@ -21,6 +29,19 @@
     </one-of>
   </rule>
 
+  <!--DESLOCAÇÃO EM DIREÇÕES-->
+  <rule id="deslocar">
+    <item>
+      <ruleref uri="#move" />
+      <tag>out.move=rules.move</tag>
+    </item>
+    <item>
+      <ruleref uri="#directions" />
+      <tag>out.directions=rules.directions</tag>
+    </item>
+  </rule>
+
+  <!--MOVER PARA CASA-->
   <rule id="home">
     <item>
       <ruleref uri="#move" />
@@ -38,17 +59,7 @@
     </one-of>
   </rule>
 
-  <rule id="deslocar">
-    <item>
-      <ruleref uri="#move" />
-      <tag>out.move=rules.move</tag>
-    </item>
-    <item>
-      <ruleref uri="#directions" />
-      <tag>out.directions=rules.directions</tag>
-    </item>
-  </rule>
-
+  <!--ANUNCIAR MOVIMENTO-->
   <rule id="move">
     <one-of>
       <item>
@@ -69,6 +80,7 @@
     </item>
   </rule>
 
+  <!--DIREÇÕES-->
   <rule id="directions">
     <one-of>
       <item>
@@ -86,16 +98,77 @@
     </one-of>
   </rule>
 
+  <!--ATACAR-->
+  <rule id="atacar">
+    <item>
+      <ruleref uri="#investida" />
+      <tag>out.investida=rules.investida</tag>      
+    </item>
+    <item>
+      <ruleref uri="#criatura" />
+      <tag>out.criatura=rules.criatura</tag>
+    </item>
+  </rule>
+
+  <!--ANUNCIAR ATAQUE-->
+  <rule id="investida">
+    <one-of>
+      <item>
+        ataca<tag>out="ATACAR"</tag>
+      </item>
+      <item>
+        mata<tag>out="ATACAR"</tag>
+      </item>
+      <item>
+        atinge<tag>out="ATACAR"</tag>
+      </item>
+      <item>
+        <item>
+          acerta<tag>out="ATACAR"</tag>
+        </item>
+        <one-of>
+          <item repeat="0-1">
+            no
+          </item>
+          <item repeat="0-1">
+            na
+          </item>          
+        </one-of>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--REFERENCIAR A CRIATURA-->
   <rule id="criatura">
     <one-of>
       <item>
-        aranha<tag>out="ARANHA"</tag>
+        <item repeat="0-1">
+          a
+        </item>
+        <one-of>
+          <item>
+            <item>
+              aranha<tag>out="ARANHA"</tag>
+            </item>
+            <item repeat="0-1">
+              gigante
+            </item>
+          </item>
+          <item>
+            cobra<tag>out="COBRA"</tag>
+          </item>
+          <item>
+            serpente<tag>out="COBRA"</tag>
+          </item>
+        </one-of>
       </item>
       <item>
-        cobra<tag>out="COBRA"</tag>
-      </item>
-      <item>
-        rato<tag>out="RATO"</tag>
+        <item repeat="0-1">
+          o
+        </item>
+        <item>
+          rato<tag>out="RATO"</tag>
+        </item>        
       </item>
     </one-of>
   </rule>
