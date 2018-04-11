@@ -24,6 +24,10 @@
         <ruleref uri="#comercio" />
         <tag>out.comercio=rules.comercio</tag>
       </item>
+      <item>
+        <ruleref uri="#som" />
+        <tag>out.som=rules.som</tag>
+      </item>
     </one-of>
   </rule>
 
@@ -91,16 +95,32 @@
   <rule id="directions">
     <one-of>
       <item>
-        norte<tag>out="NORTE"</tag>
+        <one-of>
+          <item>norte</item>
+          <item>cima</item>
+        </one-of>
+        <tag>out="CIMA"</tag>
       </item>
       <item>
-        sul<tag>out="SUL"</tag>
+        <one-of>
+          <item>sul</item>
+          <item>baixo</item>
+        </one-of>
+        <tag>out="BAIXO"</tag>
       </item>
       <item>
-        este<tag>out="ESTE"</tag>
+        <one-of>
+          <item>este</item>
+          <item>direita</item>
+        </one-of>
+        <tag>out="DIREITA"</tag>
       </item>
       <item>
-        oeste<tag>out="OESTE"</tag>
+        <one-of>
+          <item>oeste</item>
+          <item>esquerda</item>
+        </one-of>
+        <tag>out="ESQUERDA"</tag>
       </item>
     </one-of>
   </rule>
@@ -154,7 +174,8 @@
             <item repeat="0-1">gigante</item>
           </item>
           <item>
-            <ruleref uri="#cobra" /><tag>out="COBRA"</tag>
+            <ruleref uri="#cobra" />
+            <tag>out="COBRA"</tag>
           </item>
         </one-of>
       </item>
@@ -317,14 +338,14 @@
       <item>
         <ruleref uri="#vender" />
         <tag>out.vender=rules.vender</tag>
-      </item> 
+      </item>
       <item>
         <ruleref uri="#comprar" />
         <tag>out.comprar=rules.comprar</tag>
       </item>
-    </one-of>  
+    </one-of>
   </rule>
-  
+
   <!--COMPRAR ITENS-->
   <rule id="comprar">
     <item>
@@ -349,7 +370,7 @@
       </item>
     </item>
   </rule>
-  
+
   <!--VENDER ITENS-->
   <rule id="vender">
     <item>
@@ -416,6 +437,14 @@
       <item>
         veneno de aranha<tag>out="VENENO_ARANHA"</tag>
       </item>
+      <item>
+        <item>
+          poção<tag>out="POCAO"</tag>
+        </item>
+        <item repeat="0-1">
+          de vida
+        </item>
+      </item>
     </one-of>
   </rule>
 
@@ -423,21 +452,96 @@
   <rule id="itensVendedor">
     <one-of>
       <item>
-        bastão<tag>out="BASTAO"</tag>
-      </item>
-      <item>
-        <item>
-          espada<tag>out="ESPADA"</tag>
-        </item>
-        <item repeat="0-1">
-          enferrujada
-        </item>
+        <ruleref uri="#arma" />
+        <tag>out.arma=rules.arma</tag>
       </item>
       <item>
         cauda de rato<tag>out="CAUDA_RATO"</tag>
       </item>
       <item>
         pedaços de pêlo<tag>out="PEDACOS_PELO"</tag>
+      </item>
+      <item>
+        <item>
+          poção<tag>out="POCAO"</tag>
+        </item>
+        <item repeat="0-1">
+          de vida
+        </item>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--UTILIZAR ITENS-->
+  <rule id="utilizar">
+    <one-of>
+      <item>
+        <ruleref uri="#beberPocao" />
+        <tag>out.beberpocao=rules.beberpocao</tag>
+      </item>
+      <item>
+        <ruleref uri="#equipar" />
+        <tag>out.equipar=rules.equipar</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--BEBER POÇÃO-->
+  <rule id="beberPocao">
+    <one-of>
+      <item>bebe</item>
+      <item>beber</item>
+      <tag>out="BEBER"</tag>
+    </one-of>
+    <item>
+      <item>
+        a poção<tag>out="POCAO"</tag>
+      </item>
+      <item repeat="0-1">
+        de vida
+      </item>
+    </item>
+  </rule>
+
+  <!--EQUIPAR ARMA-->
+  <rule id="equipar">
+    <one-of>
+      <item>equipar</item>
+      <item>equipa</item>
+      <item>utiliza</item>
+      <tag>out="EQUIPAR"</tag>
+    </one-of>
+    <item>
+      <ruleref uri="#arma" />
+      <tag>out.arma=rules.arma</tag>
+    </item>
+  </rule>
+
+  <!--ARMAS-->
+  <rule id="arma">
+    <one-of>
+      <item>
+        o bastão<tag>out="BASTAO"</tag>
+      </item>
+      <item>
+        <item>
+          a espada<tag>out="ESPADA"</tag>
+        </item>
+        <item repeat="0-1">
+          enferrujada
+        </item>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--DESATIVAR SOM-->
+  <rule id="som">
+    <one-of>
+      <item>
+        descativa os sons<tag>out="MUTE"</tag>
+      </item>
+      <item>
+        activa os sons<tag>out="UNMUTE"</tag>
       </item>
     </one-of>
   </rule>
