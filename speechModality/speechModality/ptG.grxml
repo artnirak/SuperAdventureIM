@@ -4,10 +4,32 @@
   <!--ROOT RULE-->
   <rule id="rootRule" scope="public">
     <one-of>
+
+      <!--DESLOCAÇÃO NAS DIREÇÕES-->
       <item>
-        <ruleref uri="#deslocarMapa" />
-        <tag>out.deslocarMapa=rules.deslocarMapa</tag>
+        <item>
+          <ruleref uri="#move" />
+          <tag>out.deslocar=rules.latest()</tag>
+        </item>
+        <item>
+          <ruleref uri="#directions" />
+          <tag>out.sentido=rules.latest()</tag>
+        </item>
       </item>
+
+      <!--MOVER PARA CASA-->
+      <item>
+        <item>
+          <ruleref uri="#move" />
+          <tag>out.deslocar=rules.latest()</tag>
+        </item>
+        <!--"volta para (maybe?)"-->
+        <item>
+          <ruleref uri="#casa" />
+          <tag>out.casa=rules.latest()</tag>
+        </item>
+      </item>
+      
       <item>
         <ruleref uri="#atacar" />
         <tag>out.atacar=rules.atacar</tag>
@@ -26,47 +48,8 @@
       </item>
       <item>
         <ruleref uri="#som" />
-        <tag>out.som=rules.som</tag>
+        <tag>out.som=rules.latest()</tag>
       </item>
-    </one-of>
-  </rule>
-
-  <!--DESLOCAÇÃO NO MAPA-->
-  <rule id="deslocarMapa">
-    <one-of>
-      <item>
-        <ruleref uri="#deslocar" />
-        <tag>out.deslocar=rules.deslocar</tag>
-      </item>
-      <item>
-        <ruleref uri="#home" />
-        <tag>out.home=rules.home</tag>
-      </item>
-    </one-of>
-  </rule>
-
-  <!--DESLOCAÇÃO EM DIREÇÕES-->
-  <rule id="deslocar">
-    <item>
-      <ruleref uri="#move" />
-      <tag>out.move=rules.move</tag>
-    </item>
-    <item>
-      <ruleref uri="#directions" />
-      <tag>out.directions=rules.directions</tag>
-    </item>
-  </rule>
-
-  <!--MOVER PARA CASA-->
-  <rule id="home">
-    <item>
-      <ruleref uri="#move" />
-    </item>
-    <!--"volta para (maybe?)"-->
-    <one-of>
-      <item>casa</item>
-      <item>esconderijo</item>
-      <item>início</item>
     </one-of>
   </rule>
 
@@ -542,6 +525,18 @@
       <item>víbora</item>
       <item>cascavel</item>
     </one-of>
+  </rule>
+
+  <!--NOME DE CASA-->
+  <rule id="casa">
+    <item>
+      <one-of>
+        <item>casa</item>
+        <item>esconderijo</item>
+        <item>início</item>
+      </one-of>
+      <tag>out="CASA"</tag>
+    </item>
   </rule>
 
 </grammar>
