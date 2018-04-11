@@ -71,7 +71,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 11);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Hit Points:";
+            this.label1.Text = "Pontos de vida:";
             // 
             // label2
             // 
@@ -83,7 +83,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 11);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Gold:";
+            this.label2.Text = "Ouro:";
             // 
             // label3
             // 
@@ -95,7 +95,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 11);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Experience:";
+            this.label3.Text = "Experiência:";
             // 
             // label4
             // 
@@ -107,7 +107,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 11);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Level:";
+            this.label4.Text = "Nível:";
             // 
             // lblHitPoints
             // 
@@ -163,7 +163,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(96, 11);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Select action";
+            this.label5.Text = "Escolha uma ação";
             // 
             // cboWeapons
             // 
@@ -191,7 +191,7 @@
             this.btnUseWeapon.Name = "btnUseWeapon";
             this.btnUseWeapon.Size = new System.Drawing.Size(75, 23);
             this.btnUseWeapon.TabIndex = 11;
-            this.btnUseWeapon.Text = "Use";
+            this.btnUseWeapon.Text = "Usar";
             this.btnUseWeapon.UseVisualStyleBackColor = false;
             this.btnUseWeapon.Click += new System.EventHandler(this.btnUseWeapon_Click);
             // 
@@ -203,7 +203,7 @@
             this.btnUsePotion.Name = "btnUsePotion";
             this.btnUsePotion.Size = new System.Drawing.Size(75, 23);
             this.btnUsePotion.TabIndex = 12;
-            this.btnUsePotion.Text = "Use";
+            this.btnUsePotion.Text = "Usar";
             this.btnUsePotion.UseVisualStyleBackColor = false;
             this.btnUsePotion.Click += new System.EventHandler(this.btnUsePotion_Click);
             // 
@@ -215,7 +215,7 @@
             this.btnNorth.Name = "btnNorth";
             this.btnNorth.Size = new System.Drawing.Size(75, 23);
             this.btnNorth.TabIndex = 13;
-            this.btnNorth.Text = "North";
+            this.btnNorth.Text = "Norte";
             this.btnNorth.UseVisualStyleBackColor = false;
             this.btnNorth.Click += new System.EventHandler(this.btnNorth_Click);
             // 
@@ -227,7 +227,7 @@
             this.btnEast.Name = "btnEast";
             this.btnEast.Size = new System.Drawing.Size(75, 23);
             this.btnEast.TabIndex = 14;
-            this.btnEast.Text = "East";
+            this.btnEast.Text = "Este";
             this.btnEast.UseVisualStyleBackColor = false;
             this.btnEast.Click += new System.EventHandler(this.btnEast_Click);
             // 
@@ -239,7 +239,7 @@
             this.btnSouth.Name = "btnSouth";
             this.btnSouth.Size = new System.Drawing.Size(75, 23);
             this.btnSouth.TabIndex = 15;
-            this.btnSouth.Text = "South";
+            this.btnSouth.Text = "Sul";
             this.btnSouth.UseVisualStyleBackColor = false;
             this.btnSouth.Click += new System.EventHandler(this.btnSouth_Click);
             // 
@@ -251,7 +251,7 @@
             this.btnWest.Name = "btnWest";
             this.btnWest.Size = new System.Drawing.Size(75, 23);
             this.btnWest.TabIndex = 16;
-            this.btnWest.Text = "West";
+            this.btnWest.Text = "Oeste";
             this.btnWest.UseVisualStyleBackColor = false;
             this.btnWest.Click += new System.EventHandler(this.btnWest_Click);
             // 
@@ -362,7 +362,7 @@
             this.btnTrade.Name = "btnTrade";
             this.btnTrade.Size = new System.Drawing.Size(75, 23);
             this.btnTrade.TabIndex = 21;
-            this.btnTrade.Text = "Trade";
+            this.btnTrade.Text = "Vendedor";
             this.btnTrade.UseVisualStyleBackColor = false;
             this.btnTrade.Click += new System.EventHandler(this.btnTrade_Click);
             // 
@@ -385,7 +385,7 @@
             this.btnMap.Name = "btnMap";
             this.btnMap.Size = new System.Drawing.Size(75, 23);
             this.btnMap.TabIndex = 23;
-            this.btnMap.Text = "Map";
+            this.btnMap.Text = "Mapa";
             this.btnMap.UseVisualStyleBackColor = true;
             this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
             // 
@@ -422,7 +422,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "SuperAdventure";
-            this.Text = "My Game";
+            this.Text = "Meu Jogo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SuperAdventure_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvQuests)).EndInit();
