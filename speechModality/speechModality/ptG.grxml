@@ -348,52 +348,44 @@
 
   <!--COMPRAR ITENS-->
   <rule id="comprar">
-    <item>
-      <one-of>
-        <item>
-          comprar<tag>out="COMPRAR"</tag>
-        </item>
-        <item>
-          compra<tag>out="COMPRAR"</tag>
-        </item>
-      </one-of>
-      <item repeat="0-1">
-        <one-of>
-          <item>o</item>
-          <item>a</item>
-          <item>as</item>
-        </one-of>
+    <one-of>
+      <item>
+        comprar<tag>out="COMPRAR"</tag>
       </item>
       <item>
-        <ruleref uri="#itensVendedor" />
-        <tag>out.itensVendedor=rules.itensVendedor</tag>
+        compra<tag>out="COMPRAR"</tag>
       </item>
+    </one-of>
+    <item repeat="0-1">
+      <one-of>
+        <item>o</item>
+        <item>a</item>
+        <item>as</item>
+      </one-of>
     </item>
+    <ruleref uri="#itensVendedor" />
+    <tag>out.itensVendedor=rules.itensVendedor</tag>
   </rule>
 
   <!--VENDER ITENS-->
   <rule id="vender">
-    <item>
-      <one-of>
-        <item>
-          vender<tag>out="VENDER"</tag>
-        </item>
-        <item>
-          vende<tag>out="VENDER"</tag>
-        </item>
-      </one-of>
-      <item repeat="0-1">
-        <one-of>
-          <item>o</item>
-          <item>a</item>
-          <item>as</item>
-        </one-of>
+    <one-of>
+      <item>
+        vender<tag>out="VENDER"</tag>
       </item>
       <item>
-        <ruleref uri="#itensUtilizador" />
-        <tag>out.itensUtilizador=rules.itensUtilizador</tag>
+        vende<tag>out="VENDER"</tag>
       </item>
+    </one-of>
+    <item repeat="0-1">
+      <one-of>
+        <item>o</item>
+        <item>a</item>
+        <item>as</item>
+      </one-of>
     </item>
+    <ruleref uri="#itensUtilizador" />
+    <tag>out.itensUtilizador=rules.itensUtilizador</tag>
   </rule>
 
   <!--ITENS DO UTILIZADOR-->
@@ -477,7 +469,7 @@
     <one-of>
       <item>
         <ruleref uri="#beberPocao" />
-        <tag>out.beberpocao=rules.beberpocao</tag>
+        <tag>out.beberPocao=rules.beberPocao</tag>
       </item>
       <item>
         <ruleref uri="#equipar" />
@@ -491,15 +483,12 @@
     <one-of>
       <item>bebe</item>
       <item>beber</item>
-      <tag>out="BEBER"</tag>
     </one-of>
     <item>
-      <item>
-        a poção<tag>out="POCAO"</tag>
-      </item>
-      <item repeat="0-1">
-        de vida
-      </item>
+      a poção<tag>out="BEBER_POCAO"</tag>
+    </item>
+    <item repeat="0-1">
+      de vida
     </item>
   </rule>
 
@@ -509,11 +498,10 @@
       <item>equipar</item>
       <item>equipa</item>
       <item>utiliza</item>
-      <tag>out="EQUIPAR"</tag>
     </one-of>
     <item>
       <ruleref uri="#arma" />
-      <tag>out.arma=rules.arma</tag>
+      <tag>out=rules.arma</tag>
     </item>
   </rule>
 
@@ -538,7 +526,7 @@
   <rule id="som">
     <one-of>
       <item>
-        descativa os sons<tag>out="MUTE"</tag>
+        desactiva os sons<tag>out="MUTE"</tag>
       </item>
       <item>
         activa os sons<tag>out="UNMUTE"</tag>
