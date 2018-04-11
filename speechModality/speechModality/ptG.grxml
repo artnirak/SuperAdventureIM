@@ -20,6 +20,10 @@
         <ruleref uri="#fecharEntidades" />
         <tag>out.fecharEntidades=rules.fecharEntidades</tag>
       </item>
+      <item>
+        <ruleref uri="#comercio" />
+        <tag>out.comercio=rules.comercio</tag>
+      </item>
     </one-of>
   </rule>
 
@@ -150,10 +154,7 @@
             <item repeat="0-1">gigante</item>
           </item>
           <item>
-            cobra<tag>out="COBRA"</tag>
-          </item>
-          <item>
-            serpente<tag>out="COBRA"</tag>
+            <ruleref uri="#cobra" /><tag>out="COBRA"</tag>
           </item>
         </one-of>
       </item>
@@ -171,7 +172,7 @@
     <one-of>
       <item>
         <ruleref uri="#abrirMapa" />
-        <tag>out.abrirMapa=rules.abrirMapa</tag>        
+        <tag>out.abrirMapa=rules.abrirMapa</tag>
       </item>
       <item>
         <ruleref uri="#abrirVendedor" />
@@ -218,7 +219,7 @@
     <item>
       <ruleref uri="#mapa" />
       <tag>out="MAPA"</tag>
-    </item>    
+    </item>
   </rule>
 
   <!--ABRIR VENDEDOR-->
@@ -289,7 +290,7 @@
     </one-of>
     <item repeat="0-1">o</item>
   </rule>
-  
+
   <!--FECHAR...-->
   <rule id="fechar">
     <one-of>
@@ -308,7 +309,147 @@
         <item repeat="0-1">do</item>
       </item>
     </one-of>
-    </rule>
+  </rule>
 
+  <!--COMPRAR/VENDER ITENS-->
+  <rule id="comercio">
+    <one-of>
+      <item>
+        <ruleref uri="#vender" />
+        <tag>out.vender=rules.vender</tag>
+      </item> 
+      <item>
+        <ruleref uri="#comprar" />
+        <tag>out.comprar=rules.comprar</tag>
+      </item>
+    </one-of>  
+  </rule>
+  
+  <!--COMPRAR ITENS-->
+  <rule id="comprar">
+    <item>
+      <one-of>
+        <item>
+          comprar<tag>out="COMPRAR"</tag>
+        </item>
+        <item>
+          compra<tag>out="COMPRAR"</tag>
+        </item>
+      </one-of>
+      <item repeat="0-1">
+        <one-of>
+          <item>o</item>
+          <item>a</item>
+          <item>as</item>
+        </one-of>
+      </item>
+      <item>
+        <ruleref uri="#itensVendedor" />
+        <tag>out.itensVendedor=rules.itensVendedor</tag>
+      </item>
+    </item>
+  </rule>
+  
+  <!--VENDER ITENS-->
+  <rule id="vender">
+    <item>
+      <one-of>
+        <item>
+          vender<tag>out="VENDER"</tag>
+        </item>
+        <item>
+          vende<tag>out="VENDER"</tag>
+        </item>
+      </one-of>
+      <item repeat="0-1">
+        <one-of>
+          <item>o</item>
+          <item>a</item>
+          <item>as</item>
+        </one-of>
+      </item>
+      <item>
+        <ruleref uri="#itensUtilizador" />
+        <tag>out.itensUtilizador=rules.itensUtilizador</tag>
+      </item>
+    </item>
+  </rule>
+
+  <!--ITENS DO UTILIZADOR-->
+  <rule id="itensUtilizador">
+    <one-of>
+      <item>
+        bastão<tag>out="BASTAO"</tag>
+      </item>
+      <item>
+        <item>
+          espada<tag>out="ESPADA"</tag>
+        </item>
+        <item repeat="0-1">
+          enferrujada
+        </item>
+      </item>
+      <item>
+        cauda de rato<tag>out="CAUDA_RATO"</tag>
+      </item>
+      <item>
+        rabo de rato<tag>out="CAUDA_RATO"</tag>
+      </item>
+      <item>
+        <item>
+          pêlo<tag>out="PELO"</tag>
+        </item>
+        <item repeat="0-1">de rato</item>
+      </item>
+      <item>
+        presas de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
+      </item>
+      <item>
+        dentes de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
+      </item>
+      <item>
+        presas de aranha<tag>out="PRESAS_ARANHA"</tag>
+      </item>
+      <item>
+        seda de aranha<tag>out="SEDA_ARANHA"</tag>
+      </item>
+      <item>
+        veneno de aranha<tag>out="VENENO_ARANHA"</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--ITENS DO VENDEDOR-->
+  <rule id="itensVendedor">
+    <one-of>
+      <item>
+        bastão<tag>out="BASTAO"</tag>
+      </item>
+      <item>
+        <item>
+          espada<tag>out="ESPADA"</tag>
+        </item>
+        <item repeat="0-1">
+          enferrujada
+        </item>
+      </item>
+      <item>
+        cauda de rato<tag>out="CAUDA_RATO"</tag>
+      </item>
+      <item>
+        pedaços de pêlo<tag>out="PEDACOS_PELO"</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--NOME DE COBRA-->
+  <rule id="cobra">
+    <one-of>
+      <item>cobra</item>
+      <item>serpente</item>
+      <item>víbora</item>
+      <item>cascavel</item>
+    </one-of>
+  </rule>
 
 </grammar>
