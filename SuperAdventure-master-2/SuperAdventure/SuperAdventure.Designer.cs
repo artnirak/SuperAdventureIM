@@ -63,49 +63,49 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Tomato;
-            this.label1.Location = new System.Drawing.Point(18, 20);
+            this.label1.Location = new System.Drawing.Point(24, 26);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 11);
+            this.label1.Size = new System.Drawing.Size(366, 14);
             this.label1.TabIndex = 0;
             this.label1.Text = "Pontos de vida:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gold;
-            this.label2.Location = new System.Drawing.Point(18, 46);
+            this.label2.Location = new System.Drawing.Point(24, 57);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 11);
+            this.label2.Size = new System.Drawing.Size(399, 14);
             this.label2.TabIndex = 1;
             this.label2.Text = "Ouro:";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.PowderBlue;
-            this.label3.Location = new System.Drawing.Point(18, 74);
+            this.label3.Location = new System.Drawing.Point(24, 91);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 11);
+            this.label3.Size = new System.Drawing.Size(399, 14);
             this.label3.TabIndex = 2;
             this.label3.Text = "Experiência:";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.label4.Location = new System.Drawing.Point(18, 100);
+            this.label4.Location = new System.Drawing.Point(24, 123);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 11);
+            this.label4.Size = new System.Drawing.Size(366, 14);
             this.label4.TabIndex = 3;
             this.label4.Text = "Nível:";
             // 
@@ -115,9 +115,10 @@
             this.lblHitPoints.BackColor = System.Drawing.Color.Transparent;
             this.lblHitPoints.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHitPoints.ForeColor = System.Drawing.Color.Tomato;
-            this.lblHitPoints.Location = new System.Drawing.Point(110, 19);
+            this.lblHitPoints.Location = new System.Drawing.Point(147, 23);
+            this.lblHitPoints.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHitPoints.Name = "lblHitPoints";
-            this.lblHitPoints.Size = new System.Drawing.Size(0, 11);
+            this.lblHitPoints.Size = new System.Drawing.Size(0, 14);
             this.lblHitPoints.TabIndex = 4;
             // 
             // lblGold
@@ -126,9 +127,10 @@
             this.lblGold.BackColor = System.Drawing.Color.Transparent;
             this.lblGold.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGold.ForeColor = System.Drawing.Color.Gold;
-            this.lblGold.Location = new System.Drawing.Point(110, 45);
+            this.lblGold.Location = new System.Drawing.Point(147, 55);
+            this.lblGold.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGold.Name = "lblGold";
-            this.lblGold.Size = new System.Drawing.Size(0, 11);
+            this.lblGold.Size = new System.Drawing.Size(0, 14);
             this.lblGold.TabIndex = 5;
             // 
             // lblExperience
@@ -137,9 +139,10 @@
             this.lblExperience.BackColor = System.Drawing.Color.Transparent;
             this.lblExperience.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExperience.ForeColor = System.Drawing.Color.PowderBlue;
-            this.lblExperience.Location = new System.Drawing.Point(110, 73);
+            this.lblExperience.Location = new System.Drawing.Point(147, 90);
+            this.lblExperience.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblExperience.Name = "lblExperience";
-            this.lblExperience.Size = new System.Drawing.Size(0, 11);
+            this.lblExperience.Size = new System.Drawing.Size(0, 14);
             this.lblExperience.TabIndex = 6;
             // 
             // lblLevel
@@ -148,9 +151,10 @@
             this.lblLevel.BackColor = System.Drawing.Color.Transparent;
             this.lblLevel.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLevel.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.lblLevel.Location = new System.Drawing.Point(110, 99);
+            this.lblLevel.Location = new System.Drawing.Point(147, 122);
+            this.lblLevel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLevel.Name = "lblLevel";
-            this.lblLevel.Size = new System.Drawing.Size(0, 11);
+            this.lblLevel.Size = new System.Drawing.Size(0, 14);
             this.lblLevel.TabIndex = 7;
             // 
             // label5
@@ -159,9 +163,10 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.label5.Location = new System.Drawing.Point(614, 552);
+            this.label5.Location = new System.Drawing.Point(819, 679);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 11);
+            this.label5.Size = new System.Drawing.Size(135, 14);
             this.label5.TabIndex = 8;
             this.label5.Text = "Escolha uma ação";
             // 
@@ -169,27 +174,30 @@
             // 
             this.cboWeapons.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboWeapons.FormattingEnabled = true;
-            this.cboWeapons.Location = new System.Drawing.Point(366, 580);
+            this.cboWeapons.Location = new System.Drawing.Point(445, 703);
+            this.cboWeapons.Margin = new System.Windows.Forms.Padding(4);
             this.cboWeapons.Name = "cboWeapons";
-            this.cboWeapons.Size = new System.Drawing.Size(121, 19);
+            this.cboWeapons.Size = new System.Drawing.Size(203, 22);
             this.cboWeapons.TabIndex = 9;
             // 
             // cboPotions
             // 
             this.cboPotions.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboPotions.FormattingEnabled = true;
-            this.cboPotions.Location = new System.Drawing.Point(366, 614);
+            this.cboPotions.Location = new System.Drawing.Point(445, 739);
+            this.cboPotions.Margin = new System.Windows.Forms.Padding(4);
             this.cboPotions.Name = "cboPotions";
-            this.cboPotions.Size = new System.Drawing.Size(121, 19);
+            this.cboPotions.Size = new System.Drawing.Size(203, 22);
             this.cboPotions.TabIndex = 10;
             // 
             // btnUseWeapon
             // 
             this.btnUseWeapon.BackColor = System.Drawing.Color.Tomato;
             this.btnUseWeapon.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUseWeapon.Location = new System.Drawing.Point(617, 580);
+            this.btnUseWeapon.Location = new System.Drawing.Point(764, 697);
+            this.btnUseWeapon.Margin = new System.Windows.Forms.Padding(4);
             this.btnUseWeapon.Name = "btnUseWeapon";
-            this.btnUseWeapon.Size = new System.Drawing.Size(75, 23);
+            this.btnUseWeapon.Size = new System.Drawing.Size(100, 28);
             this.btnUseWeapon.TabIndex = 11;
             this.btnUseWeapon.Text = "Usar";
             this.btnUseWeapon.UseVisualStyleBackColor = false;
@@ -199,9 +207,10 @@
             // 
             this.btnUsePotion.BackColor = System.Drawing.Color.PowderBlue;
             this.btnUsePotion.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUsePotion.Location = new System.Drawing.Point(617, 614);
+            this.btnUsePotion.Location = new System.Drawing.Point(765, 733);
+            this.btnUsePotion.Margin = new System.Windows.Forms.Padding(4);
             this.btnUsePotion.Name = "btnUsePotion";
-            this.btnUsePotion.Size = new System.Drawing.Size(75, 23);
+            this.btnUsePotion.Size = new System.Drawing.Size(100, 28);
             this.btnUsePotion.TabIndex = 12;
             this.btnUsePotion.Text = "Usar";
             this.btnUsePotion.UseVisualStyleBackColor = false;
@@ -211,9 +220,10 @@
             // 
             this.btnNorth.BackColor = System.Drawing.Color.BurlyWood;
             this.btnNorth.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNorth.Location = new System.Drawing.Point(493, 467);
+            this.btnNorth.Location = new System.Drawing.Point(657, 575);
+            this.btnNorth.Margin = new System.Windows.Forms.Padding(4);
             this.btnNorth.Name = "btnNorth";
-            this.btnNorth.Size = new System.Drawing.Size(75, 23);
+            this.btnNorth.Size = new System.Drawing.Size(100, 28);
             this.btnNorth.TabIndex = 13;
             this.btnNorth.Text = "Norte";
             this.btnNorth.UseVisualStyleBackColor = false;
@@ -223,9 +233,10 @@
             // 
             this.btnEast.BackColor = System.Drawing.Color.BurlyWood;
             this.btnEast.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEast.Location = new System.Drawing.Point(573, 497);
+            this.btnEast.Location = new System.Drawing.Point(764, 612);
+            this.btnEast.Margin = new System.Windows.Forms.Padding(4);
             this.btnEast.Name = "btnEast";
-            this.btnEast.Size = new System.Drawing.Size(75, 23);
+            this.btnEast.Size = new System.Drawing.Size(100, 28);
             this.btnEast.TabIndex = 14;
             this.btnEast.Text = "Este";
             this.btnEast.UseVisualStyleBackColor = false;
@@ -235,9 +246,10 @@
             // 
             this.btnSouth.BackColor = System.Drawing.Color.BurlyWood;
             this.btnSouth.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSouth.Location = new System.Drawing.Point(493, 527);
+            this.btnSouth.Location = new System.Drawing.Point(657, 649);
+            this.btnSouth.Margin = new System.Windows.Forms.Padding(4);
             this.btnSouth.Name = "btnSouth";
-            this.btnSouth.Size = new System.Drawing.Size(75, 23);
+            this.btnSouth.Size = new System.Drawing.Size(100, 28);
             this.btnSouth.TabIndex = 15;
             this.btnSouth.Text = "Sul";
             this.btnSouth.UseVisualStyleBackColor = false;
@@ -247,9 +259,10 @@
             // 
             this.btnWest.BackColor = System.Drawing.Color.BurlyWood;
             this.btnWest.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnWest.Location = new System.Drawing.Point(412, 497);
+            this.btnWest.Location = new System.Drawing.Point(549, 612);
+            this.btnWest.Margin = new System.Windows.Forms.Padding(4);
             this.btnWest.Name = "btnWest";
-            this.btnWest.Size = new System.Drawing.Size(75, 23);
+            this.btnWest.Size = new System.Drawing.Size(100, 28);
             this.btnWest.TabIndex = 16;
             this.btnWest.Text = "Oeste";
             this.btnWest.UseVisualStyleBackColor = false;
@@ -259,20 +272,22 @@
             // 
             this.rtbLocation.BackColor = System.Drawing.SystemColors.Control;
             this.rtbLocation.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbLocation.Location = new System.Drawing.Point(347, 19);
+            this.rtbLocation.Location = new System.Drawing.Point(463, 23);
+            this.rtbLocation.Margin = new System.Windows.Forms.Padding(4);
             this.rtbLocation.Name = "rtbLocation";
             this.rtbLocation.ReadOnly = true;
-            this.rtbLocation.Size = new System.Drawing.Size(360, 105);
+            this.rtbLocation.Size = new System.Drawing.Size(479, 128);
             this.rtbLocation.TabIndex = 17;
             this.rtbLocation.Text = "";
             // 
             // rtbMessages
             // 
             this.rtbMessages.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbMessages.Location = new System.Drawing.Point(347, 130);
+            this.rtbMessages.Location = new System.Drawing.Point(463, 160);
+            this.rtbMessages.Margin = new System.Windows.Forms.Padding(4);
             this.rtbMessages.Name = "rtbMessages";
             this.rtbMessages.ReadOnly = true;
-            this.rtbMessages.Size = new System.Drawing.Size(360, 286);
+            this.rtbMessages.Size = new System.Drawing.Size(479, 351);
             this.rtbMessages.TabIndex = 18;
             this.rtbMessages.Text = "";
             this.rtbMessages.TextChanged += new System.EventHandler(this.rtbMessages_TextChanged);
@@ -302,12 +317,13 @@
             this.dgvInventory.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvInventory.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvInventory.Enabled = false;
-            this.dgvInventory.Location = new System.Drawing.Point(16, 130);
+            this.dgvInventory.Location = new System.Drawing.Point(21, 160);
+            this.dgvInventory.Margin = new System.Windows.Forms.Padding(4);
             this.dgvInventory.MultiSelect = false;
             this.dgvInventory.Name = "dgvInventory";
             this.dgvInventory.ReadOnly = true;
             this.dgvInventory.RowHeadersVisible = false;
-            this.dgvInventory.Size = new System.Drawing.Size(312, 309);
+            this.dgvInventory.Size = new System.Drawing.Size(416, 380);
             this.dgvInventory.TabIndex = 19;
             // 
             // dgvQuests
@@ -335,22 +351,24 @@
             this.dgvQuests.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvQuests.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvQuests.Enabled = false;
-            this.dgvQuests.Location = new System.Drawing.Point(16, 446);
+            this.dgvQuests.Location = new System.Drawing.Point(21, 549);
+            this.dgvQuests.Margin = new System.Windows.Forms.Padding(4);
             this.dgvQuests.MultiSelect = false;
             this.dgvQuests.Name = "dgvQuests";
             this.dgvQuests.ReadOnly = true;
             this.dgvQuests.RowHeadersVisible = false;
-            this.dgvQuests.Size = new System.Drawing.Size(312, 189);
+            this.dgvQuests.Size = new System.Drawing.Size(416, 233);
             this.dgvQuests.TabIndex = 20;
             // 
             // btnClearRtbMessages
             // 
             this.btnClearRtbMessages.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnClearRtbMessages.Location = new System.Drawing.Point(347, 422);
+            this.btnClearRtbMessages.Location = new System.Drawing.Point(463, 519);
+            this.btnClearRtbMessages.Margin = new System.Windows.Forms.Padding(4);
             this.btnClearRtbMessages.Name = "btnClearRtbMessages";
-            this.btnClearRtbMessages.Size = new System.Drawing.Size(75, 23);
+            this.btnClearRtbMessages.Size = new System.Drawing.Size(100, 28);
             this.btnClearRtbMessages.TabIndex = 21;
-            this.btnClearRtbMessages.Text = "Clear";
+            this.btnClearRtbMessages.Text = "Limpar log";
             this.btnClearRtbMessages.UseVisualStyleBackColor = true;
             this.btnClearRtbMessages.Click += new System.EventHandler(this.btnClearRtbMessages_Click);
             // 
@@ -358,9 +376,10 @@
             // 
             this.btnTrade.BackColor = System.Drawing.Color.Gold;
             this.btnTrade.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTrade.Location = new System.Drawing.Point(493, 620);
+            this.btnTrade.Location = new System.Drawing.Point(656, 714);
+            this.btnTrade.Margin = new System.Windows.Forms.Padding(4);
             this.btnTrade.Name = "btnTrade";
-            this.btnTrade.Size = new System.Drawing.Size(75, 23);
+            this.btnTrade.Size = new System.Drawing.Size(100, 28);
             this.btnTrade.TabIndex = 21;
             this.btnTrade.Text = "Vendedor";
             this.btnTrade.UseVisualStyleBackColor = false;
@@ -370,20 +389,22 @@
             // 
             this.chkbxSndDisable.BackColor = System.Drawing.Color.Transparent;
             this.chkbxSndDisable.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkbxSndDisable.ForeColor = System.Drawing.Color.Gainsboro;
-            this.chkbxSndDisable.Location = new System.Drawing.Point(603, 422);
+            this.chkbxSndDisable.ForeColor = System.Drawing.Color.Black;
+            this.chkbxSndDisable.Location = new System.Drawing.Point(804, 519);
+            this.chkbxSndDisable.Margin = new System.Windows.Forms.Padding(4);
             this.chkbxSndDisable.Name = "chkbxSndDisable";
-            this.chkbxSndDisable.Size = new System.Drawing.Size(104, 24);
+            this.chkbxSndDisable.Size = new System.Drawing.Size(139, 49);
             this.chkbxSndDisable.TabIndex = 22;
-            this.chkbxSndDisable.Text = "Snd Disable";
+            this.chkbxSndDisable.Text = "Desativar Áudio";
             this.chkbxSndDisable.UseVisualStyleBackColor = false;
             this.chkbxSndDisable.CheckedChanged += new System.EventHandler(this.chkbxSndDisable_CheckedChanged);
             // 
             // btnMap
             // 
-            this.btnMap.Location = new System.Drawing.Point(493, 497);
+            this.btnMap.Location = new System.Drawing.Point(657, 612);
+            this.btnMap.Margin = new System.Windows.Forms.Padding(4);
             this.btnMap.Name = "btnMap";
-            this.btnMap.Size = new System.Drawing.Size(75, 23);
+            this.btnMap.Size = new System.Drawing.Size(100, 28);
             this.btnMap.TabIndex = 23;
             this.btnMap.Text = "Mapa";
             this.btnMap.UseVisualStyleBackColor = true;
@@ -391,11 +412,11 @@
             // 
             // SuperAdventure
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::SuperAdventure.Properties.Resources.UIbackGround;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(727, 663);
+            this.ClientSize = new System.Drawing.Size(969, 816);
             this.Controls.Add(this.btnMap);
             this.Controls.Add(this.chkbxSndDisable);
             this.Controls.Add(this.dgvQuests);
@@ -421,6 +442,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SuperAdventure";
             this.Text = "Meu Jogo";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SuperAdventure_FormClosing);

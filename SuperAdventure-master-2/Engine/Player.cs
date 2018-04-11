@@ -298,8 +298,8 @@ namespace Engine
         private void LootTheCurrentMonster()
         {
             RaiseMessage("");
-            RaiseMessage("Recebeste " + CurrentMonster.RewardExperiencePoints + " pontos de experiência");
-            RaiseMessage("Recebeste " + CurrentMonster.RewardGold + " ouro");
+            RaiseMessage("Recebeste " + CurrentMonster.RewardExperiencePoints + " pontos de experiência.");
+            RaiseMessage("Recebeste " + CurrentMonster.RewardGold + " moedas de ouro.");
 
             AddExperiencePoints(CurrentMonster.RewardExperiencePoints);
             Gold += CurrentMonster.RewardGold;
@@ -558,14 +558,21 @@ namespace Engine
                     {
                         returnval = "o";
                     }
-                    returnval = "a";
+                    else
+                    {
+                        returnval = "a";
+                    }
                     return returnval;
                 case 1:
                     if (name == "Rato")
                     {
                         returnval= "um";
                     }
-                    returnval = "uma";
+                    else
+                    {
+                        returnval = "uma";
+                    }
+
                     return returnval;
             }
             return returnval;
@@ -581,7 +588,7 @@ namespace Engine
 
             if (IsDead)
             {
-                RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0)+" " + CurrentMonster.Name + " killed you.");
+                RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0)+" " + CurrentMonster.Name + " matou-te. RIP");
 
                 // Place PlayerPain sound here
                 PlayAudio("PlayerPain", DisableAudio);

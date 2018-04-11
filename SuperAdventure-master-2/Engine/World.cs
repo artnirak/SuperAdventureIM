@@ -101,7 +101,7 @@ namespace Engine
                 new Quest(
                     QUEST_ID_CLEAR_ALCHEMIST_GARDEN,
                     "Inraticida",
-                    "Mata os ratos no jardim do alquimista. A recompensa é uma poção de vida e 10 moedas de ouro.", 20, 10);
+                    "Mata três ratos no jardim do alquimista. A recompensa é uma poção de vida e 10 moedas de ouro.", 20, 10);
 
             clearAlchemistGarden.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_RAT_TAIL), 3));
 
@@ -110,8 +110,8 @@ namespace Engine
             Quest clearFarmersField =
                 new Quest(
                     QUEST_ID_CLEAR_FARMERS_FIELD,
-                    "sssssssssssssssalva-me!",
-                    "Kill snakes in the farmer's field and bring back 3 snake fangs. You will receive an adventurer's pass and 20 gold pieces.", 20, 20);
+                    "Exterminação",
+                    "Mata três cobras no campo do agricultor. A recompensa é um passe de aventureiro e 20 moedas de ouro.", 20, 20);
 
             clearFarmersField.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_SNAKE_FANG), 3));
             clearFarmersField.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_SNAKE_VENOM_SAC), 1));
