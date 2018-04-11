@@ -52,7 +52,7 @@
             this.lvlMyInventory.Name = "lvlMyInventory";
             this.lvlMyInventory.Size = new System.Drawing.Size(89, 11);
             this.lvlMyInventory.TabIndex = 0;
-            this.lvlMyInventory.Text = "My Inventory";
+            this.lvlMyInventory.Text = "Meu inventário";
             // 
             // lblVendorInventory
             // 
@@ -63,7 +63,7 @@
             this.lblVendorInventory.Name = "lblVendorInventory";
             this.lblVendorInventory.Size = new System.Drawing.Size(131, 11);
             this.lblVendorInventory.TabIndex = 1;
-            this.lblVendorInventory.Text = "Vendor\'s Inventory";
+            this.lblVendorInventory.Text = "Inventário do vendedor";
             // 
             // dgvMyItems
             // 
@@ -131,7 +131,7 @@
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(56, 19);
             this.btnClose.TabIndex = 4;
-            this.btnClose.Text = "Close";
+            this.btnClose.Text = "Fechar";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
@@ -142,7 +142,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 5;
-            this.label1.Text = "Vendor Gold:";
+            this.label1.Text = "Ouro do vendedor:";
             // 
             // lblVendorGold
             // 
@@ -167,7 +167,7 @@
             this.Controls.Add(this.lvlMyInventory);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TradingScreen";
-            this.Text = "Trade";
+            this.Text = "Negócio";
             ((System.ComponentModel.ISupportInitialize)(this.dgvMyItems)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVendorItems)).EndInit();
             this.ResumeLayout(false);

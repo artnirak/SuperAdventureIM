@@ -3,20 +3,29 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-
+using mmisharp;
 using Engine;
+using System.Xml.Linq;
+using Newtonsoft.Json;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace SuperAdventure
 {
     public partial class SuperAdventure : Form
     {
         private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
+        private MmiCommunication mmiC;
+        Dispatcher dispUI = Dispatcher.CurrentDispatcher;
 
         private Player _player;
 
         public SuperAdventure()
         {
             InitializeComponent();
+            mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
+            mmiC.Message += MmiC_Message;
+            mmiC.Start();
 
             _player = PlayerDataMapper.CreateFromDatabase();
 
@@ -93,6 +102,40 @@ namespace SuperAdventure
 
             _player.MoveTo(_player.CurrentLocation);
         }
+        private void MmiC_Message(object sender, MmiEventArgs e)
+        {
+            
+            Console.WriteLine(e.Message);
+            var doc = XDocument.Parse(e.Message);
+            var com = doc.Descendants("command").FirstOrDefault().Value;
+            dynamic json = JsonConvert.DeserializeObject(com);
+
+            switch ((string)json.recognized[0].ToString())
+            {
+                case "MUTE":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        chkbxSndDisable.Checked = true;
+                        this._player.DisableAudio = true;
+                    });
+                    break;
+                case "UNMUTE":
+                    this.chkbxSndDisable.Checked = false;
+                    this._player.DisableAudio = false;
+                    break;
+            }
+           
+    /*
+            dispUI.Invoke(() =>
+            {
+                switch ((string)json.recognized[1].ToString())
+                {
+
+                }
+            });
+          */  
+        }
+
 
         private void DisplayMessage(object sender, MessageEventArgs messageEventArgs)
         {
