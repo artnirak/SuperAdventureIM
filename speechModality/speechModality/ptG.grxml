@@ -29,23 +29,34 @@
           <tag>out.casa=rules.latest()</tag>
         </item>
       </item>
-      
+
+  <!--ATACAR CRIATURAS-->
       <item>
-        <ruleref uri="#atacar" />
-        <tag>out.atacar=rules.atacar</tag>
+        <item>
+          <ruleref uri="#investida" />
+          <tag>out.investida=rules.latest()</tag>
+        </item>
+        <item>
+          <ruleref uri="#criatura" />
+          <tag>out.criatura=rules.latest()</tag>
+        </item>
       </item>
+
       <item>
         <ruleref uri="#abrirEntidades" />
         <tag>out.abrirEntidades=rules.abrirEntidades</tag>
       </item>
+
       <item>
         <ruleref uri="#fecharEntidades" />
         <tag>out.fecharEntidades=rules.fecharEntidades</tag>
       </item>
+
       <item>
         <ruleref uri="#comercio" />
         <tag>out.comercio=rules.comercio</tag>
       </item>
+
       <item>
         <ruleref uri="#som" />
         <tag>out.som=rules.latest()</tag>
@@ -60,16 +71,10 @@
         vai<tag>out="MOVER"</tag>
       </item>
       <item>
-        fugir<tag>out="MOVER"</tag>
-      </item>
-      <item>
         foge<tag>out="MOVER"</tag>
       </item>
-      <item>
-        ir<tag>out="MOVER"</tag>
-      </item>
     </one-of>
-    <item repeat="0-1">
+    <item>
       para<tag>out="MOVER"</tag>
     </item>
   </rule>
@@ -132,7 +137,7 @@
       <item>
         atinge<tag>out="ATACAR"</tag>
       </item>
-      <item>
+      <!--<item>
         <item>
           acerta<tag>out="ATACAR"</tag>
         </item>
@@ -140,7 +145,7 @@
           <item repeat="0-1">no</item>
           <item repeat="0-1">na</item>
         </one-of>
-      </item>
+      </item>-->
     </one-of>
   </rule>
 
