@@ -36,7 +36,7 @@
           <ruleref uri="#investida" />
           <tag>out.ataque=rules.latest()</tag>
         </item>
-        <item>
+        <item repeat="0-1">
           <ruleref uri="#criatura" />
           <tag>out.criatura=rules.latest()</tag>
         </item>
@@ -46,11 +46,11 @@
       <item>
         <one-of>
           <item>
-            <ruleref uri="#abrir" />
+            <ruleref uri="#abrirMapa" />
             <tag>out.interagir=rules.latest()</tag>
           </item>
           <item>
-            <ruleref uri="#fechar" />
+            <ruleref uri="#fecharMapa" />
             <tag>out.interagir=rules.latest()</tag>
           </item>
         </one-of>
@@ -58,6 +58,43 @@
           <ruleref uri="#mapa" />
           <tag>out.entidade=rules.latest()</tag>
         </item>
+      </item>
+
+      <!--ABRIR/FECHAR VENDEDOR-->
+      <item>
+        <one-of>
+          <item>
+            <item>
+              <ruleref uri="#abrirVendedor" />
+              <tag>out.interagir=rules.latest()</tag>
+            </item>
+            <item>
+              <ruleref uri="#o_vendedor" />
+              <tag>out.entidade=rules.latest()</tag>
+            </item>
+          </item>
+          
+          <item>
+            <item>
+              fecha<tag>out.interagir="FECHAR"</tag>
+            </item>
+            <item>
+              <ruleref uri="#o_vendedor" />
+              <tag>out.entidade=rules.latest()</tag>
+            </item>
+          </item>
+          
+          <item>
+            <item>
+              sai<tag>out.interagir="FECHAR"</tag>
+            </item>
+            <item>
+              <ruleref uri="#do_vendedor" />
+              <tag>out.entidade=rules.latest()</tag>
+            </item>
+          </item>
+        
+        </one-of>
       </item>
 
       <!--|-->
@@ -127,24 +164,13 @@
   <rule id="investida">
     <one-of>
       <item>
-        ataca<tag>out="ATACAR"</tag>
+        ataca
       </item>
       <item>
-        mata<tag>out="ATACAR"</tag>
+        mata
       </item>
-      <item>
-        atinge<tag>out="ATACAR"</tag>
-      </item>
-      <!--<item>
-        <item>
-          acerta<tag>out="ATACAR"</tag>
-        </item>
-        <one-of>
-          <item repeat="0-1">no</item>
-          <item repeat="0-1">na</item>
-        </one-of>
-      </item>-->
     </one-of>
+    <tag>out="ATACAR"</tag>
   </rule>
 
   <!--REFERENCIAR A CRIATURA-->
@@ -177,31 +203,20 @@
   <!--ABRIR VENDEDOR-->
   <rule id="abrirVendedor">
     <one-of>
-      <item>
-        <item repeat="0-1">
-          <ruleref uri="#abrir" />
-        </item>
-        <item>
-          <ruleref uri="#vendedor" />
-          <tag>out="ABRIR_VENDEDOR"</tag>
-        </item>
-      </item>
+      <item>abre</item>
       <item>
         <one-of>
-          <item>
-            troca<tag>out="ABRIR_VENDEDOR"</tag>
-          </item>
-          <item>
-            negocia<tag>out="ABRIR_VENDEDOR"</tag>
-          </item>
+          <item>troca</item>
+          <item>negocia</item>
         </one-of>
-        <item>com o</item>
+        <item>com</item>
       </item>
     </one-of>
+    <tag>out="ABRE"</tag>
   </rule>
 
-  <!--ABRIR...-->
-  <rule id="abrir">
+  <!--ABRIR MAPA-->
+  <rule id="abrirMapa">
     <item>
       <one-of>
         <item>mostra</item>
@@ -212,8 +227,8 @@
     </item>
   </rule>
 
-  <!--FECHAR...-->
-  <rule id="fechar">
+  <!--FECHAR MAPA-->
+  <rule id="fecharMapa">
     <one-of>
       <item>
         <item>fecha o</item>
@@ -431,7 +446,6 @@
         <one-of>
           <item>activa</item>
           <item>liga</item>
-
         </one-of>
         <tag>out="UNMUTE"</tag>
       </item>
@@ -472,13 +486,27 @@
     </item>
   </rule>
 
-  <!--NOMES PARA VENDEDOR-->
-  <rule id="vendedor">
+  <!--NOMES PARA VENDEDOR COM O/A-->
+  <rule id="o_vendedor">
     <item>
       <one-of>
-        <item>vendedor</item>
-        <item>negociante</item>
-        <item>comerciante</item>
+        <item>o vendedor</item>
+        <item>o negociante</item>
+        <item>o comerciante</item>
+        <item>a loja</item>
+      </one-of>
+      <tag>out="VENDEDOR"</tag>
+    </item>
+  </rule>
+
+  <!--NOMES PARA VENDEDOR COM DO/DA-->
+  <rule id="do_vendedor">
+    <item>
+      <one-of>
+        <item>do vendedor</item>
+        <item>do negociante</item>
+        <item>do comerciante</item>
+        <item>da loja</item>
       </one-of>
       <tag>out="VENDEDOR"</tag>
     </item>
