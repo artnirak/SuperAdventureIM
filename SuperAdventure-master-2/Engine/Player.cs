@@ -15,8 +15,10 @@ namespace Engine
         private Location _currentLocation;
         private bool _disableAudio;
 
-        public event EventHandler<MessageEventArgs> OnMessage;
+        
 
+        public event EventHandler<MessageEventArgs> OnMessage;
+        
         public int Gold
         {
             get { return _gold; }
@@ -78,6 +80,7 @@ namespace Engine
         public List<int> LocationsVisited { get; set; }
 
         private Monster CurrentMonster { get; set; }
+
 
         private Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, bool disableAudio) : base(currentHitPoints, maximumHitPoints)
         {
@@ -174,7 +177,7 @@ namespace Engine
         {
             if (PlayerDoesNotHaveTheRequiredItemToEnter(location))
             {
-                RaiseMessage("You must have a " + location.ItemRequiredToEnter.Name + " to enter this location.");
+                RaiseMessage("Tens de obter " + location.ItemRequiredToEnter.Name + " primeiro para entrar neste local.");
                 return;
             }
 
@@ -245,7 +248,7 @@ namespace Engine
 
             if (damage == 0)
             {
-                RaiseMessage("You missed the " + CurrentMonster.Name);
+                RaiseMessage("Falhaste o ataque.");
 
                 // Place AttackMiss sound
                 PlayAudio("AttackMiss", DisableAudio);
@@ -253,7 +256,7 @@ namespace Engine
             else
             {
                 CurrentMonster.CurrentHitPoints -= damage;
-                RaiseMessage("You hit the " + CurrentMonster.Name + " for " + damage + " points.");
+                RaiseMessage("Acertaste!, tiraste " + damage + " pontos de vida.");
 
                 // Place SwordHit or ClubHit sound
                 if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)
@@ -269,7 +272,7 @@ namespace Engine
             if (CurrentMonster.IsDead)
             {
                 RaiseMessage("");
-                RaiseMessage("You defeated the " + CurrentMonster.Name);
+                RaiseMessage("Mataste o monstro!");
 
                 // Place MonsterPain sound based on weapon used
                 if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)
@@ -295,8 +298,8 @@ namespace Engine
         private void LootTheCurrentMonster()
         {
             RaiseMessage("");
-            RaiseMessage("You receive " + CurrentMonster.RewardExperiencePoints + " experience points");
-            RaiseMessage("You receive " + CurrentMonster.RewardGold + " gold");
+            RaiseMessage("Recebeste " + CurrentMonster.RewardExperiencePoints + " pontos de experiência");
+            RaiseMessage("Recebeste " + CurrentMonster.RewardGold + " ouro");
 
             AddExperiencePoints(CurrentMonster.RewardExperiencePoints);
             Gold += CurrentMonster.RewardGold;
@@ -306,7 +309,7 @@ namespace Engine
             {
                 AddItemToInventory(inventoryItem.Details);
 
-                RaiseMessage(string.Format("You loot {0} {1}", inventoryItem.Quantity, inventoryItem.Description));
+                RaiseMessage(string.Format("Saqueaste: {0} {1}", inventoryItem.Quantity, inventoryItem.Description));
             }
 
             RaiseMessage("");
@@ -314,7 +317,7 @@ namespace Engine
 
         public void UsePotion(HealingPotion potion)
         {
-            RaiseMessage("You drink a " + potion.Name);
+            RaiseMessage("Tu bebes a " + potion.Name +".");
 
             HealPlayer(potion.AmountToHeal);
 
@@ -446,7 +449,7 @@ namespace Engine
 
             if (CurrentMonster != null)
             {
-                RaiseMessage("You see a " + CurrentMonster.Name);
+                RaiseMessage("Tu vês "+ CheckMonsterGender(CurrentMonster.Name,1) +" " + CurrentMonster.Name+".");
             }
         }
 
@@ -467,9 +470,9 @@ namespace Engine
 
         private void GiveQuestToPlayer(Quest quest)
         {
-            RaiseMessage("You receive the " + quest.Name + " quest.");
+            RaiseMessage("Tens uma missão nova: " + quest.Name + ".");
             RaiseMessage(quest.Description);
-            RaiseMessage("To complete it, return with:");
+            RaiseMessage("Para completá-la, volta com:");
 
             foreach (QuestCompletionItem qci in quest.QuestCompletionItems)
             {
@@ -520,10 +523,10 @@ namespace Engine
         private void GivePlayerQuestRewards(Quest quest)
         {
             RaiseMessage("");
-            RaiseMessage("You complete the '" + quest.Name + "' quest.");
-            RaiseMessage("You receive: ");
-            RaiseMessage(quest.RewardExperiencePoints + " experience points");
-            RaiseMessage(quest.RewardGold + " gold");
+            RaiseMessage("Completaste a missão '" + quest.Name + "'!");
+            RaiseMessage("Recompensa: ");
+            RaiseMessage(quest.RewardExperiencePoints + " pontos de experiência.");
+            RaiseMessage(quest.RewardGold + " ouro");
             RaiseMessage(quest.RewardItem.Name, true);
 
             AddExperiencePoints(quest.RewardExperiencePoints);
@@ -545,17 +548,40 @@ namespace Engine
             }
         }
 
+        private String CheckMonsterGender(String name, int op)
+        {
+            String returnval = "";
+            switch (op)
+            {
+                case 0:
+                    if (name == "Rato")
+                    {
+                        returnval = "o";
+                    }
+                    returnval = "a";
+                    return returnval;
+                case 1:
+                    if (name == "Rato")
+                    {
+                        returnval= "um";
+                    }
+                    returnval = "uma";
+                    return returnval;
+            }
+            return returnval;
+        }
+
         private void LetTheMonsterAttack()
         {
             int damageToPlayer = RandomNumberGenerator.NumberBetween(0, CurrentMonster.MaximumDamage);
 
-            RaiseMessage("The " + CurrentMonster.Name + " did " + damageToPlayer + " points of damage.");
+            RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0)+ " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida.");
 
             CurrentHitPoints -= damageToPlayer;
 
             if (IsDead)
             {
-                RaiseMessage("The " + CurrentMonster.Name + " killed you.");
+                RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0)+" " + CurrentMonster.Name + " killed you.");
 
                 // Place PlayerPain sound here
                 PlayAudio("PlayerPain", DisableAudio);
