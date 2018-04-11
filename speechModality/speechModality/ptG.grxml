@@ -6,11 +6,19 @@
     <one-of>
       <item>
         <ruleref uri="#deslocarMapa" />
-        <tag>out.deslocarMapa=rules.deslocarMapa</tag>        
+        <tag>out.deslocarMapa=rules.deslocarMapa</tag>
       </item>
       <item>
         <ruleref uri="#atacar" />
         <tag>out.atacar=rules.atacar</tag>
+      </item>
+      <item>
+        <ruleref uri="#abrirEntidades" />
+        <tag>out.abrirEntidades=rules.abrirEntidades</tag>
+      </item>
+      <item>
+        <ruleref uri="#fecharEntidades" />
+        <tag>out.fecharEntidades=rules.fecharEntidades</tag>
       </item>
     </one-of>
   </rule>
@@ -46,16 +54,11 @@
     <item>
       <ruleref uri="#move" />
     </item>
+    <!--"volta para (maybe?)"-->
     <one-of>
-      <item>
-        casa
-      </item>
-      <item>
-        esconderijo
-      </item>
-      <item>
-        início
-      </item>
+      <item>casa</item>
+      <item>esconderijo</item>
+      <item>início</item>
     </one-of>
   </rule>
 
@@ -102,7 +105,7 @@
   <rule id="atacar">
     <item>
       <ruleref uri="#investida" />
-      <tag>out.investida=rules.investida</tag>      
+      <tag>out.investida=rules.investida</tag>
     </item>
     <item>
       <ruleref uri="#criatura" />
@@ -127,12 +130,8 @@
           acerta<tag>out="ATACAR"</tag>
         </item>
         <one-of>
-          <item repeat="0-1">
-            no
-          </item>
-          <item repeat="0-1">
-            na
-          </item>          
+          <item repeat="0-1">no</item>
+          <item repeat="0-1">na</item>
         </one-of>
       </item>
     </one-of>
@@ -142,17 +141,13 @@
   <rule id="criatura">
     <one-of>
       <item>
-        <item repeat="0-1">
-          a
-        </item>
+        <item repeat="0-1">a</item>
         <one-of>
           <item>
             <item>
               aranha<tag>out="ARANHA"</tag>
             </item>
-            <item repeat="0-1">
-              gigante
-            </item>
+            <item repeat="0-1">gigante</item>
           </item>
           <item>
             cobra<tag>out="COBRA"</tag>
@@ -163,15 +158,157 @@
         </one-of>
       </item>
       <item>
-        <item repeat="0-1">
-          o
-        </item>
+        <item repeat="0-1">o</item>
         <item>
           rato<tag>out="RATO"</tag>
-        </item>        
+        </item>
       </item>
     </one-of>
   </rule>
+
+  <!--ABRIR (MAPA/VENDEDOR)-->
+  <rule id="abrirEntidades">
+    <one-of>
+      <item>
+        <ruleref uri="#abrirMapa" />
+        <tag>out.abrirMapa=rules.abrirMapa</tag>        
+      </item>
+      <item>
+        <ruleref uri="#abrirVendedor" />
+        <tag>out.abrirVendedor=rules.abrirVendedor</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--FECHAR (MAPA/VENDEDOR)-->
+  <rule id="fecharEntidades">
+    <one-of>
+      <item>
+        <ruleref uri="#fecharMapa" />
+        <tag>out.fecharMapa=rules.fecharMapa</tag>
+      </item>
+      <item>
+        <ruleref uri="#fecharVendedor" />
+        <tag>out.fecharVendedor=rules.fecharVendedor</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--ABRIR MAPA-->
+  <rule id="abrirMapa">
+    <item repeat="0-1">
+      <ruleref uri="#abrir" />
+    </item>
+    <item>
+      <one-of>
+        <item>
+          <ruleref uri="#mapa" />
+          <tag>out="ABRIR_MAPA"</tag>
+        </item>
+      </one-of>
+    </item>
+  </rule>
+
+  <!--FECHAR MAPA-->
+  <rule id="fecharMapa">
+    <item>
+      <ruleref uri="#fechar" />
+      <tag>out="FECHAR"</tag>
+    </item>
+    <item>
+      <ruleref uri="#mapa" />
+      <tag>out="MAPA"</tag>
+    </item>    
+  </rule>
+
+  <!--ABRIR VENDEDOR-->
+  <rule id="abrirVendedor">
+    <one-of>
+      <item>
+        <item repeat="0-1">
+          <ruleref uri="#abrir" />
+        </item>
+        <item>
+          <ruleref uri="#vendedor" />
+          <tag>out="ABRIR_VENDEDOR"</tag>
+        </item>
+      </item>
+      <item>
+        <one-of>
+          <item>
+            trocar<tag>out="ABRIR_VENDEDOR"</tag>
+          </item>
+          <item>
+            negociar<tag>out="ABRIR_VENDEDOR"</tag>
+          </item>
+        </one-of>
+        <item repeat="0-1">
+          <item>com o</item>
+          <item>
+            <ruleref uri="#vendedor" />
+          </item>
+        </item>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--FECHAR VENDEDOR-->
+  <rule id="fecharVendedor">
+    <item>
+      <ruleref uri="#fechar" />
+      <tag>out="FECHAR"</tag>
+    </item>
+    <item>
+      <ruleref uri="#vendedor" />
+      <tag>out="VENDEDOR"</tag>
+    </item>
+  </rule>
+
+  <!--NOMES PARA MAPA-->
+  <rule id="mapa">
+    <one-of>
+      <item>mapa</item>
+      <item>itinerário</item>
+    </one-of>
+  </rule>
+
+  <!--NOMES PARA VENDEDOR-->
+  <rule id="vendedor">
+    <one-of>
+      <item>vendedor</item>
+      <item>negociante</item>
+      <item>comerciante</item>
+    </one-of>
+  </rule>
+
+  <!--ABRIR...-->
+  <rule id="abrir">
+    <one-of>
+      <item>abrir</item>
+      <item>abre</item>
+    </one-of>
+    <item repeat="0-1">o</item>
+  </rule>
+  
+  <!--FECHAR...-->
+  <rule id="fechar">
+    <one-of>
+      <item>
+        <one-of>
+          <item>fechar</item>
+          <item>fecha</item>
+        </one-of>
+        <item repeat="0-1">o</item>
+      </item>
+      <item>
+        <one-of>
+          <item>sair</item>
+          <item>sai</item>
+        </one-of>
+        <item repeat="0-1">do</item>
+      </item>
+    </one-of>
+    </rule>
 
 
 </grammar>

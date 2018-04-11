@@ -1,4 +1,6 @@
 
-speechModality/speechModality/obj/Debug/*
+speechModality/speechModality/obj/*
+speechModality/speechModality/bin/*
 speechModality/.vs/*
 *.cache
+speechModality/speechModality/speechModality.csproj
