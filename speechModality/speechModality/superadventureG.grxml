@@ -143,6 +143,61 @@
         </one-of>
       </item>
 
+      <!--PEDIR INFORMAÇÃO-->
+      <item>
+        <one-of>
+          <item>
+            <item>
+              <ruleref uri="#infoMissao" />
+              <tag>out.Info=rules.latest()</tag>
+            </item>
+            <item>
+              <ruleref uri="#missao" />
+              <tag>out.Missao=rules.latest()</tag>
+            </item>
+          </item>
+          <item>
+            <item>
+              quanto tenho de<tag>out.Info="INFO"</tag>
+            </item>
+            <item>
+              <ruleref uri="#unidade" />
+              <tag>out.Unidade=rules.latest()</tag>
+            </item>
+          </item>
+          <item>
+            <item>
+              qual é o meu nível
+              <tag>out.Info="INFO"</tag>
+              <tag>out.Unidade="LVL"</tag>
+            </item>
+            <item repeat="0-1">actual</item>
+          </item>
+          <item>
+            <one-of>
+              <item>quantos pontos de experiência preciso para</item>
+              <item>quanto de experiência preciso para</item>
+            </one-of>
+            <one-of>
+              <item>o</item>
+              <item>chegar ao</item>
+            </one-of>
+            <item>próximo nível</item>
+            <tag>out.Info="INFO"</tag>
+            <tag>out.Unidade="NEXT_LVL"</tag>
+          </item>
+          <item>
+            <one-of>
+              <item>qual é o meu</item>
+              <item>como está o meu</item>
+            </one-of>
+            <item>estado</item>
+            <tag>out.Info="INFO"</tag>
+            <tag>out.Unidade="ESTADO"</tag>
+          </item>
+        </one-of>
+      </item>
+
       <!--ATIVAR/DESATIVAR SOM-->
       <item>
         <ruleref uri="#som" />
@@ -186,14 +241,14 @@
       <item>
         <one-of>
           <item>este</item>
-          <item>direita</item>
+          <item>a direita</item>
         </one-of>
         <tag>out="DIREITA"</tag>
       </item>
       <item>
         <one-of>
           <item>oeste</item>
-          <item>esquerda</item>
+          <item>a esquerda</item>
         </one-of>
         <tag>out="ESQUERDA"</tag>
       </item>
@@ -376,21 +431,13 @@
     <tag>out="EQUIPAR"</tag>
   </rule>
 
-  <!--ARMAS-->
-  <rule id="arma">
+  <!--PEDIR INFORMAÇÃO SOBRE MISSÃO-->
+  <rule id="infoMissao">
     <one-of>
-      <item>
-        o bastão<tag>out="BASTAO"</tag>
-      </item>
-      <item>
-        <item>
-          a espada<tag>out="ESPADA"</tag>
-        </item>
-        <item repeat="0-1">
-          enferrujada
-        </item>
-      </item>
+      <item>dá-me informação sobre</item>
+      <item>quero saber do que se trata</item>
     </one-of>
+    <tag>out="INFO"</tag>
   </rule>
 
   <!--DESATIVAR SOM-->
@@ -408,11 +455,66 @@
         <one-of>
           <item>activa</item>
           <item>liga</item>
+          <item>põe</item>
         </one-of>
         <tag>out="UNMUTE"</tag>
       </item>
     </one-of>
-    <item>o som</item>
+    <item>o</item>
+    <one-of>
+      <item>som</item>
+      <item>áudio</item>
+    </one-of>
+  </rule>
+
+  <!--ARMAS-->
+  <rule id="arma">
+    <one-of>
+      <item>
+        o bastão<tag>out="BASTAO"</tag>
+      </item>
+      <item>
+        <item>
+          a espada<tag>out="ESPADA"</tag>
+        </item>
+        <item repeat="0-1">
+          enferrujada
+        </item>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--UNIDADES DO JOGADOR-->
+  <rule id="unidade">
+    <one-of>
+      <item>
+        <item repeat="0-1">pontos de</item>
+        <one-of>
+          <item>
+            vida<tag>out="VIDA"</tag>
+          </item>
+          <item>
+            experiência<tag>out="EXP"</tag>
+          </item>
+        </one-of>
+      </item>
+      <item>
+        ouro<tag>out="OURO"</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--NOME DAS MISSÕES-->
+  <rule id="missao">
+    <item>a missão</item>
+    <one-of>
+      <item>
+        exterminação<tag>out="M_COBRAS"</tag>
+      </item>
+      <item>
+        inraticida<tag>out="M_RATOS"</tag>
+      </item>
+    </one-of>
   </rule>
 
   <!--NOME DE COBRA-->
