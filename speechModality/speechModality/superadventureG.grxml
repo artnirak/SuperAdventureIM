@@ -9,11 +9,11 @@
       <item>
         <item>
           <ruleref uri="#move" />
-          <tag>out.deslocar=rules.latest()</tag>
+          <tag>out.Deslocar=rules.latest()</tag>
         </item>
         <item>
           <ruleref uri="#directions" />
-          <tag>out.sentido=rules.latest()</tag>
+          <tag>out.Sentido=rules.latest()</tag>
         </item>
       </item>
 
@@ -21,12 +21,12 @@
       <item>
         <item>
           <ruleref uri="#move" />
-          <tag>out.deslocar=rules.latest()</tag>
+          <tag>out.Deslocar=rules.latest()</tag>
         </item>
         <!--"volta para (maybe?)"-->
         <item>
           <ruleref uri="#casa" />
-          <tag>out.casa=rules.latest()</tag>
+          <tag>out.Casa=rules.latest()</tag>
         </item>
       </item>
 
@@ -34,11 +34,11 @@
       <item>
         <item>
           <ruleref uri="#investida" />
-          <tag>out.ataque=rules.latest()</tag>
+          <tag>out.Ataque=rules.latest()</tag>
         </item>
         <item repeat="0-1">
           <ruleref uri="#criatura" />
-          <tag>out.criatura=rules.latest()</tag>
+          <tag>out.Criatura=rules.latest()</tag>
         </item>
       </item>
 
@@ -47,16 +47,17 @@
         <one-of>
           <item>
             <ruleref uri="#abrirMapa" />
-            <tag>out.interagir=rules.latest()</tag>
+            <tag>out.Interagir=rules.latest()</tag>
           </item>
+
           <item>
             <ruleref uri="#fecharMapa" />
-            <tag>out.interagir=rules.latest()</tag>
+            <tag>out.Interagir=rules.latest()</tag>
           </item>
         </one-of>
         <item>
           <ruleref uri="#mapa" />
-          <tag>out.entidade=rules.latest()</tag>
+          <tag>out.Entidade=rules.latest()</tag>
         </item>
       </item>
 
@@ -66,47 +67,66 @@
           <item>
             <item>
               <ruleref uri="#abrirVendedor" />
-              <tag>out.interagir=rules.latest()</tag>
+              <tag>out.Interagir=rules.latest()</tag>
             </item>
             <item>
               <ruleref uri="#o_vendedor" />
-              <tag>out.entidade=rules.latest()</tag>
+              <tag>out.Entidade=rules.latest()</tag>
             </item>
           </item>
-          
+
           <item>
             <item>
-              fecha<tag>out.interagir="FECHAR"</tag>
+              fecha<tag>out.Interagir="FECHAR"</tag>
             </item>
             <item>
               <ruleref uri="#o_vendedor" />
-              <tag>out.entidade=rules.latest()</tag>
+              <tag>out.Entidade=rules.latest()</tag>
             </item>
           </item>
-          
+
           <item>
             <item>
-              sai<tag>out.interagir="FECHAR"</tag>
+              sai<tag>out.Interagir="FECHAR"</tag>
             </item>
             <item>
               <ruleref uri="#do_vendedor" />
-              <tag>out.entidade=rules.latest()</tag>
+              <tag>out.Entidade=rules.latest()</tag>
             </item>
           </item>
-        
+
         </one-of>
       </item>
 
-      <!--|-->
+      <!--COMPRAR/VENDER ITENS-->
       <item>
-        <ruleref uri="#comercio" />
-        <tag>out.comercio=rules.comercio</tag>
+        <one-of>
+          <item>
+            <item>
+              vende<tag>out.Venda="VENDER"</tag>
+            </item>
+            <item>
+              <ruleref uri="#itensUtilizador" />
+              <tag>out.Itens=rules.latest()</tag>
+            </item>
+          </item>
+          
+          <item>
+            <item>
+              compra<tag>out.Compra="COMPRAR"</tag>
+            </item>
+            <item>
+              <ruleref uri="#itensVendedor" />
+              <tag>out.Itens=rules.latest()</tag>
+            </item>
+          </item>
+        </one-of>
       </item>
 
       <!--ATIVAR/DESATIVAR SOM-->
       <item>
         <ruleref uri="#som" />
-        <tag>out.som=rules.latest()</tag>
+        <tag>out.Som=rules.latest()</tag>
       </item>
     </one-of>
   </rule>
@@ -207,12 +227,12 @@
       <item>
         <one-of>
           <item>troca</item>
-          <item>negocia</item>
+          <item>negoceia</item>
         </one-of>
         <item>com</item>
       </item>
     </one-of>
-    <tag>out="ABRE"</tag>
+    <tag>out="ABRIR"</tag>
   </rule>
 
   <!--ABRIR MAPA-->
@@ -241,81 +261,18 @@
     </one-of>
   </rule>
 
-  <!--COMPRAR/VENDER ITENS-->
-  <rule id="comercio">
-    <one-of>
-      <item>
-        <ruleref uri="#vender" />
-        <tag>out.vender=rules.vender</tag>
-      </item>
-      <item>
-        <ruleref uri="#comprar" />
-        <tag>out.comprar=rules.comprar</tag>
-      </item>
-    </one-of>
-  </rule>
-
-  <!--COMPRAR ITENS-->
-  <rule id="comprar">
-    <one-of>
-      <item>
-        comprar<tag>out="COMPRAR"</tag>
-      </item>
-      <item>
-        compra<tag>out="COMPRAR"</tag>
-      </item>
-    </one-of>
-    <item repeat="0-1">
-      <one-of>
-        <item>o</item>
-        <item>a</item>
-        <item>as</item>
-      </one-of>
-    </item>
-    <ruleref uri="#itensVendedor" />
-    <tag>out.itensVendedor=rules.itensVendedor</tag>
-  </rule>
-
-  <!--VENDER ITENS-->
-  <rule id="vender">
-    <one-of>
-      <item>
-        vender<tag>out="VENDER"</tag>
-      </item>
-      <item>
-        vende<tag>out="VENDER"</tag>
-      </item>
-    </one-of>
-    <item repeat="0-1">
-      <one-of>
-        <item>o</item>
-        <item>a</item>
-        <item>as</item>
-      </one-of>
-    </item>
-    <ruleref uri="#itensUtilizador" />
-    <tag>out.itensUtilizador=rules.itensUtilizador</tag>
-  </rule>
-
   <!--ITENS DO UTILIZADOR-->
   <rule id="itensUtilizador">
     <one-of>
       <item>
-        bastão<tag>out="BASTAO"</tag>
+        <ruleref uri="#arma" />
+        <tag>out=rules.latest()</tag>
+      </item>      
+      <item>
+        a cauda de rato<tag>out="CAUDA_RATO"</tag>
       </item>
       <item>
-        <item>
-          espada<tag>out="ESPADA"</tag>
-        </item>
-        <item repeat="0-1">
-          enferrujada
-        </item>
-      </item>
-      <item>
-        cauda de rato<tag>out="CAUDA_RATO"</tag>
-      </item>
-      <item>
-        rabo de rato<tag>out="CAUDA_RATO"</tag>
+        o rabo de rato<tag>out="CAUDA_RATO"</tag>
       </item>
       <item>
         <item>
@@ -324,23 +281,23 @@
         <item repeat="0-1">de rato</item>
       </item>
       <item>
-        presas de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
+        as presas de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
       </item>
       <item>
-        dentes de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
+        os dentes de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
       </item>
       <item>
-        presas de aranha<tag>out="PRESAS_ARANHA"</tag>
+        as presas de aranha<tag>out="PRESAS_ARANHA"</tag>
       </item>
       <item>
-        seda de aranha<tag>out="SEDA_ARANHA"</tag>
+        a seda de aranha<tag>out="SEDA_ARANHA"</tag>
       </item>
       <item>
-        veneno de aranha<tag>out="VENENO_ARANHA"</tag>
+        o veneno de aranha<tag>out="VENENO_ARANHA"</tag>
       </item>
       <item>
         <item>
-          poção<tag>out="POCAO"</tag>
+          a poção<tag>out="POCAO"</tag>
         </item>
         <item repeat="0-1">
           de vida
@@ -354,17 +311,20 @@
     <one-of>
       <item>
         <ruleref uri="#arma" />
-        <tag>out.arma=rules.arma</tag>
+        <tag>out=rules.latest()</tag>
       </item>
       <item>
-        cauda de rato<tag>out="CAUDA_RATO"</tag>
-      </item>
-      <item>
-        pedaços de pêlo<tag>out="PEDACOS_PELO"</tag>
+        a cauda de rato<tag>out="CAUDA_RATO"</tag>
       </item>
       <item>
         <item>
-          poção<tag>out="POCAO"</tag>
+          pêlo<tag>out="PELO"</tag>
+        </item>
+        <item repeat="0-1">de rato</item>
+      </item>
+      <item>
+        <item>
+          a poção<tag>out="POCAO"</tag>
         </item>
         <item repeat="0-1">
           de vida
