@@ -110,7 +110,7 @@
               <tag>out.Itens=rules.latest()</tag>
             </item>
           </item>
-          
+
           <item>
             <item>
               compra<tag>out.Compra="COMPRAR"</tag>
@@ -118,6 +118,26 @@
             <item>
               <ruleref uri="#itensVendedor" />
               <tag>out.Itens=rules.latest()</tag>
+            </item>
+          </item>
+        </one-of>
+      </item>
+
+      <!--UTILIZAR ITENS-->
+      <item>
+        <one-of>
+          <item>
+            <ruleref uri="#beberPocao" />
+            <tag>out.BeberPocao=rules.latest()</tag>
+          </item>
+          <item>
+            <item>
+              <ruleref uri="#equipar" />
+              <tag>out.Equipar=rules.latest()</tag>
+            </item>
+            <item>
+              <ruleref uri="#arma" />
+              <tag>out.Arma=rules.latest()</tag>
             </item>
           </item>
         </one-of>
@@ -267,7 +287,7 @@
       <item>
         <ruleref uri="#arma" />
         <tag>out=rules.latest()</tag>
-      </item>      
+      </item>
       <item>
         a cauda de rato<tag>out="CAUDA_RATO"</tag>
       </item>
@@ -333,25 +353,11 @@
     </one-of>
   </rule>
 
-  <!--UTILIZAR ITENS-->
-  <rule id="utilizar">
-    <one-of>
-      <item>
-        <ruleref uri="#beberPocao" />
-        <tag>out.beberPocao=rules.beberPocao</tag>
-      </item>
-      <item>
-        <ruleref uri="#equipar" />
-        <tag>out.equipar=rules.equipar</tag>
-      </item>
-    </one-of>
-  </rule>
-
   <!--BEBER POÇÃO-->
   <rule id="beberPocao">
     <one-of>
       <item>bebe</item>
-      <item>beber</item>
+      <item>toma</item>
     </one-of>
     <item>
       a poção<tag>out="BEBER_POCAO"</tag>
@@ -364,14 +370,10 @@
   <!--EQUIPAR ARMA-->
   <rule id="equipar">
     <one-of>
-      <item>equipar</item>
       <item>equipa</item>
       <item>utiliza</item>
     </one-of>
-    <item>
-      <ruleref uri="#arma" />
-      <tag>out=rules.arma</tag>
-    </item>
+    <tag>out="EQUIPAR"</tag>
   </rule>
 
   <!--ARMAS-->
