@@ -18,6 +18,8 @@ namespace SuperAdventure
         private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
         private MmiCommunication mmiC;
         Dispatcher dispUI = Dispatcher.CurrentDispatcher;
+        WorldMap mapScreen;
+        TradingScreen tradingScreen;
 
         private Player _player;
 
@@ -228,6 +230,52 @@ namespace SuperAdventure
                         }
                     });
                     break;
+                case "FECHAR":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if (JsonArray_Length(json) == 2)
+                        {
+                            if ((string)json.recognized[1].ToString().ToLower() == "mapa")
+                            {
+                                FormCollection fc = Application.OpenForms;
+                                foreach (Form frm in fc)
+                                {
+                                    Console.WriteLine("nome form: " + frm.Name);
+                                    if(frm.Name == "WorldMap")
+                                    {
+                                        this.mapScreen.Close();
+                                        break;
+                                    }
+                                }
+                                ~~~~
+                                //O MAPA N ESTA ABERTO
+                            }
+                            else if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
+                            {
+                                FormCollection fc = Application.OpenForms;
+
+                                foreach (Form frm in fc)
+                                {
+                                    if (frm.Name == "TradingScreen")
+                                    {
+                                        Console.WriteLine("nome form: " + frm.Name);
+                                        this.mapScreen.Close();
+                                        break;
+                                    }
+                                }
+                                //O VENDEDOR N ESTA ABERTO
+                            }
+                            else
+                            {
+                                //
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("parou aqui 2 ???");
+                        }
+                    });
+                    break;
             }
            
     /*
@@ -375,9 +423,9 @@ namespace SuperAdventure
 
         private void btnTrade_Click(object sender, EventArgs e)
         {
-            TradingScreen tradingScreen = new TradingScreen(_player);
-            tradingScreen.StartPosition = FormStartPosition.CenterParent;
-            tradingScreen.ShowDialog(this);
+            this.tradingScreen = new TradingScreen(_player);
+            this.tradingScreen.StartPosition = FormStartPosition.CenterParent;
+            this.tradingScreen.ShowDialog(this);
         }
 
         private void btnClearRtbMessages_Click(object sender, EventArgs e)
@@ -399,9 +447,9 @@ namespace SuperAdventure
 
         private void btnMap_Click(object sender, EventArgs e)
         {
-            WorldMap mapScreen = new WorldMap(_player);
-            mapScreen.StartPosition = FormStartPosition.CenterParent;
-            mapScreen.ShowDialog(this);
+            this.mapScreen = new WorldMap(_player);
+            this.mapScreen.StartPosition = FormStartPosition.CenterParent;
+            this.mapScreen.ShowDialog(this);
         }
     }
 }
