@@ -79,7 +79,7 @@ namespace Engine
 
         public List<int> LocationsVisited { get; set; }
 
-        private Monster CurrentMonster { get; set; }
+        public Monster CurrentMonster { get; set; }
 
 
         private Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints, bool disableAudio) : base(currentHitPoints, maximumHitPoints)
@@ -178,6 +178,7 @@ namespace Engine
             if (PlayerDoesNotHaveTheRequiredItemToEnter(location))
             {
                 RaiseMessage("Tens de obter " + location.ItemRequiredToEnter.Name + " primeiro para entrar neste local.");
+                //TTS
                 return;
             }
 
@@ -216,6 +217,10 @@ namespace Engine
             {
                 MoveTo(CurrentLocation.LocationToNorth);
             }
+            else
+            {
+                //TTS
+            }
         }
 
         public void MoveEast()
@@ -223,6 +228,10 @@ namespace Engine
             if (CurrentLocation.LocationToEast != null)
             {
                 MoveTo(CurrentLocation.LocationToEast);
+            }
+            else
+            {
+                //TTS
             }
         }
 
@@ -232,6 +241,10 @@ namespace Engine
             {
                 MoveTo(CurrentLocation.LocationToSouth);
             }
+            else
+            {
+                //TTS
+            }
         }
 
         public void MoveWest()
@@ -239,6 +252,10 @@ namespace Engine
             if (CurrentLocation.LocationToWest != null)
             {
                 MoveTo(CurrentLocation.LocationToWest);
+            }
+            else
+            {
+                //TTS
             }
         }
 

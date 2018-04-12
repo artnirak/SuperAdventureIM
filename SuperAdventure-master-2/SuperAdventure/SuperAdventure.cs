@@ -9,6 +9,7 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using System.Windows;
 using System.Windows.Threading;
+using System.Collections.Generic;
 
 namespace SuperAdventure
 {
@@ -102,6 +103,15 @@ namespace SuperAdventure
 
             _player.MoveTo(_player.CurrentLocation);
         }
+
+        private int JsonArray_Length(dynamic json_array)
+        {
+            var array = json_array.recognized;
+            int x = ((IEnumerable<dynamic>)array).Cast<dynamic>().Count();
+            Console.WriteLine("tamanho: "+ x.ToString());
+            return x;
+
+        }
         private void MmiC_Message(object sender, MmiEventArgs e)
         {
             
@@ -115,13 +125,108 @@ namespace SuperAdventure
                 case "MUTE":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        chkbxSndDisable.Checked = true;
-                        this._player.DisableAudio = true;
+                        if(chkbxSndDisable.Checked == true)
+                        {
+                            //som está ativo burro TTS
+                        }
+                        else
+                        {
+                            chkbxSndDisable.Checked = true;
+                            this._player.DisableAudio = true;
+                        }
+
                     });
                     break;
                 case "UNMUTE":
-                    this.chkbxSndDisable.Checked = false;
-                    this._player.DisableAudio = false;
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if(chkbxSndDisable.Checked == false)
+                        {
+                            //som está desativo burro TTS
+                        }
+                        else
+                        {
+                            chkbxSndDisable.Checked = false;
+                            this._player.DisableAudio = false;
+                        }
+
+                    });
+                    break;
+                case "ATACAR":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if(_player.CurrentLocation.HasAMonster)
+                        {
+                            if (JsonArray_Length(json) == 1 || _player.CurrentMonster.Name.ToLower() == (string)json.recognized[1].ToString().ToLower())
+                            {
+                                btnUseWeapon_Click(null, null);
+                            }
+                            else
+                            {
+                                //MONSTRO ERRADO! TTS
+                            }
+                        }
+                        else
+                        {
+                            //NÃO HÁ MONSTRO AQUI! TTS
+                        }
+                    });
+                    break;
+                case "ABRIR":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if (JsonArray_Length(json) == 2)
+                        {
+                            if ((string)json.recognized[1].ToString().ToLower() == "mapa")
+                            {
+                                btnMap_Click(null, null);
+                            }
+                            else if ( _player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
+                            {
+                                btnTrade_Click(null, null);
+                            }
+                            else
+                            {
+                                //NÃO É POSSÍVEL FAZER ISSO AGORA
+                            }
+                        }
+                        else
+                        {
+                            //ABRIR O QUÊ ?? Não percebi.
+                        }
+                    });
+                    break;
+                case "MOVER":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if (JsonArray_Length(json) == 2)
+                        {
+                            if ((string)json.recognized[1].ToString().ToLower() == "cima")
+                            {
+                                btnNorth_Click(null, null);
+                            }
+                            else if ((string)json.recognized[1].ToString().ToLower() == "baixo")
+                            {
+                                btnSouth_Click(null, null);
+                            }
+                            else if ((string)json.recognized[1].ToString().ToLower() == "direita")
+                            {
+                                btnEast_Click(null, null);
+                            }
+                            else if ((string)json.recognized[1].ToString().ToLower() == "esquerda")
+                            {
+                                btnWest_Click(null, null);
+                            }
+                            else
+                            {
+                                //MOVER PARA ONDE NÃO PERCEBI
+                            }
+                        }
+                        else
+                        {
+                            //MOVER PARA ONDE? NÃO PERCEBI
+                        }
+                    });
                     break;
             }
            
