@@ -129,6 +129,46 @@ namespace SuperAdventure
             return x;
 
         }
+
+        private int getITEM_ID(String item_rule)
+        {
+            int id = 0;
+            switch(item_rule)
+            {
+                case "CAUDA_RATO":
+                    id = World.ITEM_ID_RAT_TAIL;
+                    break;
+                case "PELO_RATO":
+                    id = World.ITEM_ID_PIECE_OF_FUR;
+                    break;
+                case "PRESAS_COBRA":
+                    id = World.ITEM_ID_SNAKE_FANG;
+                    break;
+                case "PRESAS_ARANHA":
+                    id = World.ITEM_ID_SPIDER_FANG;
+                    break;
+                case "SEDA_ARANHA":
+                    id = World.ITEM_ID_SPIDER_SILK;
+                    break;
+                case "VENENO_ARANHA":
+                    id = World.ITEM_ID_SNAKE_VENOM_SAC;
+                    break;
+                case "POCAO_VIDA":
+                    id = World.ITEM_ID_HEALING_POTION;
+                    break;
+                case "BASTAO":
+                    id = World.ITEM_ID_CLUB;
+                    break;
+                case "ESPADA":
+                    id = World.ITEM_ID_RUSTY_SWORD;
+                    break;
+                case "PELE_COBRA":
+                    id = World.ITEM_ID_SNAKESKIN;
+                    break;
+
+            }
+            return id;
+        }
         public void MmiC_Message(object sender, MmiEventArgs e)
         {
             Console.WriteLine(e.Message);
@@ -170,13 +210,24 @@ namespace SuperAdventure
                     {
                         if (_player.CurrentLocation.HasAMonster)
                         {
-                            if (JsonArray_Length(json) == 1 || _player.CurrentMonster.Name.ToLower() == (string)json.recognized[1].ToString().ToLower())
+                            if (JsonArray_Length(json) == 1)
                             {
+
                                 btnUseWeapon_Click(null, null);
                             }
                             else
                             {
-                                //MONSTRO ERRADO! TTS
+                                Console.WriteLine(_player.CurrentMonster.Name.ToLower());
+                                if (_player.CurrentMonster.Name.ToLower() != (string)json.recognized[1].ToString().ToLower())
+                                {
+                                    //TTS é um _player.CurrentMonster.Name.ToLower() mas vou atacar a mesma!
+                                    btnUseWeapon_Click(null, null);
+                                }
+                                else
+                                {
+                                    btnUseWeapon_Click(null, null);
+                                }
+                                    
                             }
                         }
                         else
@@ -201,20 +252,20 @@ namespace SuperAdventure
                             }
                             else if (IsFormOpen("WorldMap"))
                             {
-                                //FECHA O MAPA
+                                //FECHA O MAPA TTS
                             }
                             else if (IsFormOpen("TradingScreen"))
                             {
-                                //FECHA O VENDEDOR
+                                //FECHA O VENDEDOR TTS
                             }
                             else
                             {
-                                //não podes fazer isso agora
+                                //não podes fazer isso agora TTS
                             }
                         }
                         else
                         {
-                            //ABRIR O QUÊ ?? Não percebi.
+                            //ABRIR O QUÊ ?? Não percebi. TTS
                         }
                     });
                     break;
@@ -223,34 +274,34 @@ namespace SuperAdventure
                     {
                         if (JsonArray_Length(json) == 2)
                         {
-                            if ((string)json.recognized[1].ToString().ToLower() == "cima" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
+                            if ((string)json.recognized[1].ToString().ToLower() == "cima")
                             {
                                 btnNorth_Click(null, null);
                             }
-                            else if ((string)json.recognized[1].ToString().ToLower() == "baixo" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
+                            else if ((string)json.recognized[1].ToString().ToLower() == "baixo")
                             {
                                 btnSouth_Click(null, null);
                             }
-                            else if ((string)json.recognized[1].ToString().ToLower() == "direita" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
+                            else if ((string)json.recognized[1].ToString().ToLower() == "direita")
                             {
                                 btnEast_Click(null, null);
                             }
-                            else if ((string)json.recognized[1].ToString().ToLower() == "esquerda" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
+                            else if ((string)json.recognized[1].ToString().ToLower() == "esquerda")
                             {
                                 btnWest_Click(null, null);
                             }
                             else if (IsFormOpen("WorldMap") || IsFormOpen("TradingScreen"))
                             {
-                                //FECHA PRIMEIRO O Q TENS ABERTO
+                                //FECHA PRIMEIRO O Q TENS ABERTO TTS
                             }
                             else
                             {
-                                //MOVER PARA ONDE N PERCEBI
+                                //MOVER PARA ONDE N PERCEBI TTS
                             }
                         }
                         else
                         {
-                            //MOVER PARA ONDE? NÃO PERCEBI
+                            //MOVER PARA ONDE? NÃO PERCEBI TTS
                         }
                     });
                     break;
@@ -279,6 +330,48 @@ namespace SuperAdventure
                     else
                     {
                         //TTS
+                    }
+                    break;
+                case "COMPRAR":
+                    if (JsonArray_Length(json) == 2)
+                    {
+                        if (IsFormOpen("TradingScreen"))
+                        {
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                int itemID = getITEM_ID((string)json.recognized[1].ToString());
+                                tradingScreen.VoiceBuy(itemID);
+                            });
+                        }
+                        else
+                        {
+                            //TTS
+                        }
+                    }
+                    else
+                    {
+                        //TTS COMPRAR OQ ?
+                    }
+                    break;
+                case "VENDER":
+                    if (JsonArray_Length(json) == 2)
+                    {
+                        if (IsFormOpen("TradingScreen"))
+                        {
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                int itemID = getITEM_ID((string)json.recognized[1].ToString());
+                                tradingScreen.VoiceSell(itemID);
+                            });
+                        }
+                        else
+                        {
+                            //TTS
+                        }
+                    }
+                    else
+                    {
+                        //TTS COMPRAR OQ ?
                     }
                     break;
             }
