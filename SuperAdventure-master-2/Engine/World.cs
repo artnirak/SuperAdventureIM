@@ -6,6 +6,7 @@ namespace Engine
     public static class World
     {
         public static readonly List<Item> _items = new List<Item>();
+        public static readonly List<Weapon> _weapons = new List<Weapon>();
         public static readonly List<Monster> _monsters = new List<Monster>();
         public static readonly List<Quest> _quests = new List<Quest>();
         public static readonly List<Location> _locations = new List<Location>();
@@ -57,6 +58,8 @@ namespace Engine
 
         private static void PopulateItems()
         {
+            _weapons.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Espada Enferrujada", "Espadas Enferrujadas", 0, 5, 5, true, false));
+            _weapons.Add(new Weapon(ITEM_ID_CLUB, "Bastão", "Bastões", 3, 10, 50, true, false));
             _items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Espada Enferrujada", "Espadas Enferrujadas", 0, 5, 5, true, false));
             _items.Add(new Item(ITEM_ID_RAT_TAIL, "Cauda de rato", "Caudas de ratos", 1, false, true));
             _items.Add(new Item(ITEM_ID_PIECE_OF_FUR, "Pêlo de rato", "Pêlos de ratos", 1, false, true));
@@ -197,6 +200,11 @@ namespace Engine
         public static Item ItemByID(int id)
         {
             return _items.SingleOrDefault(x => x.ID == id);
+        }
+
+        public static Weapon WeaponByID(int id)
+        {
+            return _weapons.SingleOrDefault(x => x.ID == id);
         }
 
         public static Monster MonsterByID(int id)

@@ -55,14 +55,14 @@ namespace SuperAdventure
 
             dgvInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Name",
+                HeaderText = "Item",
                 Width = 197,
                 DataPropertyName = "Description"
             });
 
             dgvInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Quantity",
+                HeaderText = "Quantidade",
                 DataPropertyName = "Quantity"
             });
 
@@ -73,14 +73,14 @@ namespace SuperAdventure
 
             dgvQuests.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Name",
+                HeaderText = "Nome",
                 Width = 197,
                 DataPropertyName = "Name"
             });
 
             dgvQuests.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Done?",
+                HeaderText = "Completada?",
                 DataPropertyName = "IsCompleted"
             });
 
@@ -133,7 +133,7 @@ namespace SuperAdventure
         private int getITEM_ID(String item_rule)
         {
             int id = 0;
-            switch(item_rule)
+            switch (item_rule)
             {
                 case "CAUDA_RATO":
                     id = World.ITEM_ID_RAT_TAIL;
@@ -153,7 +153,7 @@ namespace SuperAdventure
                 case "VENENO_ARANHA":
                     id = World.ITEM_ID_SNAKE_VENOM_SAC;
                     break;
-                case "POCAO_VIDA":
+                case "BEBER_POCAO":
                     id = World.ITEM_ID_HEALING_POTION;
                     break;
                 case "BASTAO":
@@ -227,7 +227,7 @@ namespace SuperAdventure
                                 {
                                     btnUseWeapon_Click(null, null);
                                 }
-                                    
+
                             }
                         }
                         else
@@ -374,15 +374,47 @@ namespace SuperAdventure
                         //TTS COMPRAR OQ ?
                     }
                     break;
+                case "EQUIPAR":
+                    if (JsonArray_Length(json) == 2)
+                    {
+
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            int itemID = getITEM_ID((string)json.recognized[1].ToString());
+                            Weapon weapon = World.WeaponByID(Convert.ToInt32(itemID));
+                            if(_player.Weapons.Contains(weapon))
+                            {
+                                cboWeapons.SelectedIndex = cboWeapons.FindStringExact(weapon.Name);
+                            }
+                            
+                        });
+                    }
+                    else
+                    {
+                        //TTS USAR O QUÊ ?
+                    }
+                    break;
+                case "BEBER_POCAO":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        int itemID = getITEM_ID((string)json.recognized[0].ToString());
+                        Item potion = World.ItemByID(Convert.ToInt32(itemID));
+                        cboPotions.SelectedIndex = cboPotions.FindStringExact(potion.Name);
+                        if(_player.Potions.Any())
+                        {
+                            btnUsePotion_Click(null, null);
+                        }
+                        
+                    });
+                    break;
             }
+
         }
 
 
         public void StartComms(MmiCommunication mmiC)
         {
-            Console.WriteLine("Estou aqui super adventure e está a correr ? ----> " + mmiC.IsRunning.ToString());
             mmiC.Start();
-            Console.WriteLine("Estou aqui superadventure e está a correr ? ----> " + mmiC.IsRunning.ToString());
         }
 
         private void DisplayMessage(object sender, MessageEventArgs messageEventArgs)
@@ -603,11 +635,11 @@ namespace SuperAdventure
         {
             //mmiC.Stop();
 
-            if(IsFormOpen("WorldMap"))
+            if (IsFormOpen("WorldMap"))
             {
                 //TTS MAPA JÁ ABERTO
             }
-            else if(IsFormOpen("TradingScreen"))
+            else if (IsFormOpen("TradingScreen"))
             {
                 tradingScreen.Close();
             }
@@ -617,7 +649,7 @@ namespace SuperAdventure
                 mapScreen.StartPosition = FormStartPosition.CenterParent;
                 mapScreen.Show();
             }
-                
+
 
         }
     }

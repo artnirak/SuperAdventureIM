@@ -273,7 +273,7 @@ namespace Engine
             else
             {
                 CurrentMonster.CurrentHitPoints -= damage;
-                RaiseMessage("Acertaste!, tiraste " + damage + " pontos de vida.");
+                RaiseMessage("Acertaste! tiraste " + damage + " pontos de vida.");
 
                 // Place SwordHit or ClubHit sound
                 if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)

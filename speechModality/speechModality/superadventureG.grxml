@@ -466,6 +466,7 @@
   <!--EQUIPAR ARMA-->
   <rule id="equipar">
     <one-of>
+      <item>usa</item>
       <item>equipa</item>
       <item>utiliza</item>
     </one-of>
