@@ -356,6 +356,9 @@
         <item repeat="0-1">de rato</item>
       </item>
       <item>
+        as peles de cobras<tag>out="PELE_COBRA"</tag>
+      </item>
+      <item>
         as presas de cobras<tag>out="PRESAS_COBRA"</tag>
       </item>
       <item>
