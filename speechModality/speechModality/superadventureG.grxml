@@ -351,7 +351,7 @@
       </item>
       <item>
         <item>
-          pêlo<tag>out="PELO"</tag>
+          pêlo<tag>out="PELO_RATO"</tag>
         </item>
         <item repeat="0-1">de rato</item>
       </item>
@@ -372,7 +372,7 @@
       </item>
       <item>
         <item>
-          a poção<tag>out="POCAO"</tag>
+          a poção<tag>out="POCAO_VIDA"</tag>
         </item>
         <item repeat="0-1">
           de vida
@@ -393,13 +393,13 @@
       </item>
       <item>
         <item>
-          pêlo<tag>out="PELO"</tag>
+          pêlo<tag>out="PELO_RATO"</tag>
         </item>
         <item repeat="0-1">de rato</item>
       </item>
       <item>
         <item>
-          a poção<tag>out="POCAO"</tag>
+          a poção<tag>out="POCAO_VIDA"</tag>
         </item>
         <item repeat="0-1">
           de vida
