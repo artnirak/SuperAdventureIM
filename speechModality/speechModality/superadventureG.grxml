@@ -5,29 +5,9 @@
   <rule id="rootRule" scope="public">
     <one-of>
 
-      <!--DESLOCAÇÃO NAS DIREÇÕES-->
+      <!--DESLOCAR NO MAPA-->
       <item>
-        <item>
-          <ruleref uri="#move" />
-          <tag>out.Deslocar=rules.latest()</tag>
-        </item>
-        <item>
-          <ruleref uri="#directions" />
-          <tag>out.Sentido=rules.latest()</tag>
-        </item>
-      </item>
-
-      <!--MOVER PARA CASA-->
-      <item>
-        <item>
-          <ruleref uri="#move" />
-          <tag>out.Deslocar=rules.latest()</tag>
-        </item>
-        <!--"volta para (maybe?)"-->
-        <item>
-          <ruleref uri="#casa" />
-          <tag>out.Casa=rules.latest()</tag>
-        </item>
+        <ruleref uri="#deslocar" />
       </item>
 
       <!--ATACAR CRIATURAS-->
@@ -72,6 +52,33 @@
             <item>
               <ruleref uri="#o_vendedor" />
               <tag>out.Entidade=rules.latest()</tag>
+            </item>
+            <!--CONCATENAR ABRIR VENDEDOR COM COMPRA/VENDA DE ITENS-->
+            <item repeat="0-1">
+              <item>e</item>
+              <item>
+                <one-of>
+                  <item>
+                    <item>
+                      vende<tag>out.Venda="VENDER"</tag>
+                    </item>
+                    <item>
+                      <ruleref uri="#itensUtilizador" />
+                      <tag>out.Itens=rules.latest()</tag>
+                    </item>
+                  </item>
+
+                  <item>
+                    <item>
+                      compra<tag>out.Compra="COMPRAR"</tag>
+                    </item>
+                    <item>
+                      <ruleref uri="#itensVendedor" />
+                      <tag>out.Itens=rules.latest()</tag>
+                    </item>
+                  </item>
+                </one-of>
+              </item>
             </item>
           </item>
 
@@ -205,6 +212,37 @@
       </item>
     </one-of>
   </rule>
+
+  <!--DESLOCAR NO MAPA-->
+  <rule id="deslocar">
+    <one-of>
+      <!--MOVER NAS DIREÇÕES-->
+      <item>
+        <item>
+          <ruleref uri="#move" />
+          <tag>out.Deslocar=rules.latest()</tag>
+        </item>
+        <item>
+          <ruleref uri="#directions" />
+          <tag>out.Sentido=rules.latest()</tag>
+        </item>
+      </item>
+
+      <!--MOVER PARA CASA-->
+      <item>
+        <item>
+          <ruleref uri="#move" />
+          <tag>out.Deslocar=rules.latest()</tag>
+        </item>
+        <!--"volta para (maybe?)"-->
+        <item>
+          <ruleref uri="#casa" />
+          <tag>out.Casa=rules.latest()</tag>
+        </item>
+      </item>
+    </one-of>
+  </rule>
+
 
   <!--ANUNCIAR MOVIMENTO-->
   <rule id="move">
