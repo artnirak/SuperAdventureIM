@@ -272,7 +272,7 @@
   <rule id="criatura">
     <one-of>
       <item>
-        <item repeat="0-1">a</item>
+        <item>a</item>
         <one-of>
           <item>
             <item>
@@ -282,12 +282,12 @@
           </item>
           <item>
             <ruleref uri="#cobra" />
-            <tag>out="COBRA"</tag>
+            <tag>out=rules.latest()</tag>
           </item>
         </one-of>
       </item>
       <item>
-        <item repeat="0-1">o</item>
+        <item>o</item>
         <item>
           rato<tag>out="RATO"</tag>
         </item>
@@ -356,10 +356,10 @@
         <item repeat="0-1">de rato</item>
       </item>
       <item>
-        as presas de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
+        as presas de cobras<tag>out="PRESAS_COBRA"</tag>
       </item>
       <item>
-        os dentes de <ruleref uri="#cobra" /><tag>out="PRESAS_COBRA"</tag>
+        os dentes de cobras<tag>out="PRESAS_COBRA"</tag>
       </item>
       <item>
         as presas de aranha<tag>out="PRESAS_ARANHA"</tag>
@@ -520,10 +520,18 @@
   <!--NOME DE COBRA-->
   <rule id="cobra">
     <one-of>
-      <item>cobra</item>
-      <item>serpente</item>
-      <item>víbora</item>
-      <item>cascavel</item>
+      <item>
+        cobra<tag>out="COBRA"</tag>
+      </item>
+      <item>
+        serpente<tag>out="SERPENTE"</tag>
+      </item>
+      <item>
+        víbora<tag>out="VÍBORA"</tag>
+      </item>
+      <item>
+        cascavel<tag>out="CASCAVEL"</tag>
+      </item>
     </one-of>
   </rule>
 
