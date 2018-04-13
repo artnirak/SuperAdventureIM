@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Windows;
 using System.Windows.Threading;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace SuperAdventure
 {
@@ -17,7 +18,6 @@ namespace SuperAdventure
     {
         private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
         private MmiCommunication mmiC;
-        Dispatcher dispUI = Dispatcher.CurrentDispatcher;
         WorldMap mapScreen;
         TradingScreen tradingScreen;
 
@@ -28,9 +28,8 @@ namespace SuperAdventure
             InitializeComponent();
             mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
             mmiC.Message += MmiC_Message;
-            mmiC.Start();
-
-            _player = PlayerDataMapper.CreateFromDatabase();
+            Console.WriteLine("faço isto quantas vezes? ????");
+            StartComms(mmiC);
 
             if (_player == null)
             {
@@ -104,30 +103,44 @@ namespace SuperAdventure
             _player.OnMessage += DisplayMessage;
 
             _player.MoveTo(_player.CurrentLocation);
+
+
         }
 
+        private bool IsFormOpen(String form_name)
+        {
+            FormCollection fc = Application.OpenForms;
+            foreach (Form frm in fc)
+            {
+                Console.WriteLine("nome form: " + frm.Name);
+                if (frm.Name == form_name)
+                {
+                    return true;
+                }
+
+            }
+            return false;
+        }
         private int JsonArray_Length(dynamic json_array)
         {
             var array = json_array.recognized;
             int x = ((IEnumerable<dynamic>)array).Cast<dynamic>().Count();
-            Console.WriteLine("tamanho: "+ x.ToString());
+            Console.WriteLine("tamanho: " + x.ToString());
             return x;
 
         }
-        private void MmiC_Message(object sender, MmiEventArgs e)
+        public void MmiC_Message(object sender, MmiEventArgs e)
         {
-            
             Console.WriteLine(e.Message);
             var doc = XDocument.Parse(e.Message);
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
-
             switch ((string)json.recognized[0].ToString())
             {
                 case "MUTE":
-                    this.Invoke((MethodInvoker)delegate
+                    Invoke((MethodInvoker)delegate
                     {
-                        if(chkbxSndDisable.Checked == true)
+                        if (chkbxSndDisable.Checked == true)
                         {
                             //som está ativo burro TTS
                         }
@@ -136,13 +149,12 @@ namespace SuperAdventure
                             chkbxSndDisable.Checked = true;
                             this._player.DisableAudio = true;
                         }
-
                     });
                     break;
                 case "UNMUTE":
-                    this.Invoke((MethodInvoker)delegate
+                    Invoke((MethodInvoker)delegate
                     {
-                        if(chkbxSndDisable.Checked == false)
+                        if (chkbxSndDisable.Checked == false)
                         {
                             //som está desativo burro TTS
                         }
@@ -151,13 +163,12 @@ namespace SuperAdventure
                             chkbxSndDisable.Checked = false;
                             this._player.DisableAudio = false;
                         }
-
                     });
                     break;
                 case "ATACAR":
-                    this.Invoke((MethodInvoker)delegate
+                    Invoke((MethodInvoker)delegate
                     {
-                        if(_player.CurrentLocation.HasAMonster)
+                        if (_player.CurrentLocation.HasAMonster)
                         {
                             if (JsonArray_Length(json) == 1 || _player.CurrentMonster.Name.ToLower() == (string)json.recognized[1].ToString().ToLower())
                             {
@@ -174,22 +185,31 @@ namespace SuperAdventure
                         }
                     });
                     break;
+
                 case "ABRIR":
-                    this.Invoke((MethodInvoker)delegate
+                    Invoke((MethodInvoker)delegate
                     {
                         if (JsonArray_Length(json) == 2)
                         {
-                            if ((string)json.recognized[1].ToString().ToLower() == "mapa")
+                            if ((string)json.recognized[1].ToString().ToLower() == "mapa" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
                             {
                                 btnMap_Click(null, null);
                             }
-                            else if ( _player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
+                            else if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor" && !IsFormOpen("TradingScreen") && !IsFormOpen("WorldMap"))
                             {
                                 btnTrade_Click(null, null);
                             }
+                            else if (IsFormOpen("WorldMap"))
+                            {
+                                //FECHA O MAPA
+                            }
+                            else if (IsFormOpen("TradingScreen"))
+                            {
+                                //FECHA O VENDEDOR
+                            }
                             else
                             {
-                                //NÃO É POSSÍVEL FAZER ISSO AGORA
+                                //não podes fazer isso agora
                             }
                         }
                         else
@@ -199,29 +219,33 @@ namespace SuperAdventure
                     });
                     break;
                 case "MOVER":
-                    this.Invoke((MethodInvoker)delegate
+                    Invoke((MethodInvoker)delegate
                     {
                         if (JsonArray_Length(json) == 2)
                         {
-                            if ((string)json.recognized[1].ToString().ToLower() == "cima")
+                            if ((string)json.recognized[1].ToString().ToLower() == "cima" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
                             {
                                 btnNorth_Click(null, null);
                             }
-                            else if ((string)json.recognized[1].ToString().ToLower() == "baixo")
+                            else if ((string)json.recognized[1].ToString().ToLower() == "baixo" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
                             {
                                 btnSouth_Click(null, null);
                             }
-                            else if ((string)json.recognized[1].ToString().ToLower() == "direita")
+                            else if ((string)json.recognized[1].ToString().ToLower() == "direita" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
                             {
                                 btnEast_Click(null, null);
                             }
-                            else if ((string)json.recognized[1].ToString().ToLower() == "esquerda")
+                            else if ((string)json.recognized[1].ToString().ToLower() == "esquerda" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
                             {
                                 btnWest_Click(null, null);
                             }
+                            else if (IsFormOpen("WorldMap") || IsFormOpen("TradingScreen"))
+                            {
+                                //FECHA PRIMEIRO O Q TENS ABERTO
+                            }
                             else
                             {
-                                //MOVER PARA ONDE NÃO PERCEBI
+                                //MOVER PARA ONDE N PERCEBI
                             }
                         }
                         else
@@ -231,64 +255,42 @@ namespace SuperAdventure
                     });
                     break;
                 case "FECHAR":
-                    this.Invoke((MethodInvoker)delegate
+                    if (JsonArray_Length(json) == 2)
                     {
-                        if (JsonArray_Length(json) == 2)
+                        if ((string)json.recognized[1].ToString().ToLower() == "mapa" && IsFormOpen("WorldMap"))
                         {
-                            if ((string)json.recognized[1].ToString().ToLower() == "mapa")
+                            this.Invoke((MethodInvoker)delegate
                             {
-                                FormCollection fc = Application.OpenForms;
-                                foreach (Form frm in fc)
-                                {
-                                    Console.WriteLine("nome form: " + frm.Name);
-                                    if(frm.Name == "WorldMap")
-                                    {
-                                        this.mapScreen.Close();
-                                        break;
-                                    }
-                                }
-                                ~~~~
-                                //O MAPA N ESTA ABERTO
-                            }
-                            else if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
+                                mapScreen.Close();
+                            });
+                        }
+                        else if (IsFormOpen("TradingScreen") && (string)json.recognized[1].ToString().ToLower() == "vendedor")
+                        {
+                            this.Invoke((MethodInvoker)delegate
                             {
-                                FormCollection fc = Application.OpenForms;
-
-                                foreach (Form frm in fc)
-                                {
-                                    if (frm.Name == "TradingScreen")
-                                    {
-                                        Console.WriteLine("nome form: " + frm.Name);
-                                        this.mapScreen.Close();
-                                        break;
-                                    }
-                                }
-                                //O VENDEDOR N ESTA ABERTO
-                            }
-                            else
-                            {
-                                //
-                            }
+                                tradingScreen.Close();
+                            });
                         }
                         else
                         {
-                            Console.WriteLine("parou aqui 2 ???");
+                            //TTS
                         }
-                    });
+                    }
+                    else
+                    {
+                        //TTS
+                    }
                     break;
             }
-           
-    /*
-            dispUI.Invoke(() =>
-            {
-                switch ((string)json.recognized[1].ToString())
-                {
-
-                }
-            });
-          */  
         }
 
+
+        public void StartComms(MmiCommunication mmiC)
+        {
+            Console.WriteLine("Estou aqui super adventure e está a correr ? ----> " + mmiC.IsRunning.ToString());
+            mmiC.Start();
+            Console.WriteLine("Estou aqui superadventure e está a correr ? ----> " + mmiC.IsRunning.ToString());
+        }
 
         private void DisplayMessage(object sender, MessageEventArgs messageEventArgs)
         {
@@ -368,26 +370,66 @@ namespace SuperAdventure
 
         private void btnNorth_Click(object sender, EventArgs e)
         {
+            if (IsFormOpen("WorldMap"))
+            {
+                mapScreen.Close();
+            }
+            else if (IsFormOpen("TradingScreen"))
+            {
+                tradingScreen.Close();
+            }
             _player.MoveNorth();
         }
 
         private void btnSouth_Click(object sender, EventArgs e)
         {
+            if (IsFormOpen("WorldMap"))
+            {
+                mapScreen.Close();
+            }
+            else if (IsFormOpen("TradingScreen"))
+            {
+                tradingScreen.Close();
+            }
             _player.MoveSouth();
         }
 
         private void btnEast_Click(object sender, EventArgs e)
         {
+            if (IsFormOpen("WorldMap"))
+            {
+                mapScreen.Close();
+            }
+            else if (IsFormOpen("TradingScreen"))
+            {
+                tradingScreen.Close();
+            }
             _player.MoveEast();
         }
 
         private void btnWest_Click(object sender, EventArgs e)
         {
+            if (IsFormOpen("WorldMap"))
+            {
+                mapScreen.Close();
+            }
+            else if (IsFormOpen("TradingScreen"))
+            {
+                tradingScreen.Close();
+            }
             _player.MoveWest();
         }
 
         private void btnUseWeapon_Click(object sender, EventArgs e)
         {
+            if (IsFormOpen("WorldMap"))
+            {
+                mapScreen.Close();
+            }
+            else if (IsFormOpen("TradingScreen"))
+            {
+                tradingScreen.Close();
+            }
             // Get the currently selected weapon from the cboWeapons ComboBox
             Weapon currentWeapon = (Weapon)cboWeapons.SelectedItem;
 
@@ -396,6 +438,14 @@ namespace SuperAdventure
 
         private void btnUsePotion_Click(object sender, EventArgs e)
         {
+            if (IsFormOpen("WorldMap"))
+            {
+                mapScreen.Close();
+            }
+            else if (IsFormOpen("TradingScreen"))
+            {
+                tradingScreen.Close();
+            }
             // Get the currently selected potion from the combobox
             HealingPotion potion = (HealingPotion)cboPotions.SelectedItem;
 
@@ -413,7 +463,6 @@ namespace SuperAdventure
         {
             File.WriteAllText(PLAYER_DATA_FILE_NAME, _player.ToXmlString());
 
-            PlayerDataMapper.SaveToDatabase(_player);
         }
 
         private void cboWeapons_SelectedIndexChanged(object sender, EventArgs e)
@@ -423,9 +472,21 @@ namespace SuperAdventure
 
         private void btnTrade_Click(object sender, EventArgs e)
         {
-            this.tradingScreen = new TradingScreen(_player);
-            this.tradingScreen.StartPosition = FormStartPosition.CenterParent;
-            this.tradingScreen.ShowDialog(this);
+            if (IsFormOpen("WorldMap"))
+            {
+                mapScreen.Close();
+            }
+            else if (IsFormOpen("TradingScreen"))
+            {
+                //TTS VENDEDOR JÁ ABERTO
+            }
+            else
+            {
+                tradingScreen = new TradingScreen(_player);
+                tradingScreen.StartPosition = FormStartPosition.CenterParent;
+                tradingScreen.Show();
+            }
+
         }
 
         private void btnClearRtbMessages_Click(object sender, EventArgs e)
@@ -447,9 +508,24 @@ namespace SuperAdventure
 
         private void btnMap_Click(object sender, EventArgs e)
         {
-            this.mapScreen = new WorldMap(_player);
-            this.mapScreen.StartPosition = FormStartPosition.CenterParent;
-            this.mapScreen.ShowDialog(this);
+            //mmiC.Stop();
+
+            if(IsFormOpen("WorldMap"))
+            {
+                //TTS MAPA JÁ ABERTO
+            }
+            else if(IsFormOpen("TradingScreen"))
+            {
+                tradingScreen.Close();
+            }
+            else
+            {
+                mapScreen = new WorldMap(_player);
+                mapScreen.StartPosition = FormStartPosition.CenterParent;
+                mapScreen.Show();
+            }
+                
+
         }
     }
 }
