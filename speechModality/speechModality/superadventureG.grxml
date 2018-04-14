@@ -12,197 +12,32 @@
 
       <!--ATACAR CRIATURAS-->
       <item>
-        <item>
-          <ruleref uri="#investida" />
-          <tag>out.Ataque=rules.latest()</tag>
-        </item>
-        <item repeat="0-1">
-          <ruleref uri="#criatura" />
-          <tag>out.Criatura=rules.latest()</tag>
-        </item>
+        <ruleref uri="#atacar" />
       </item>
 
       <!--ABRIR/FECHAR MAPA-->
       <item>
-        <one-of>
-          <item>
-            <ruleref uri="#abrirMapa" />
-            <tag>out.Interagir=rules.latest()</tag>
-          </item>
-
-          <item>
-            <ruleref uri="#fecharMapa" />
-            <tag>out.Interagir=rules.latest()</tag>
-          </item>
-        </one-of>
-        <item>
-          <ruleref uri="#mapa" />
-          <tag>out.Entidade=rules.latest()</tag>
-        </item>
+        <ruleref uri="#interagirMapa" />
       </item>
 
       <!--ABRIR/FECHAR VENDEDOR-->
       <item>
-        <one-of>
-          <item>
-            <item>
-              <ruleref uri="#abrirVendedor" />
-              <tag>out.Interagir=rules.latest()</tag>
-            </item>
-            <item>
-              <ruleref uri="#o_vendedor" />
-              <tag>out.Entidade=rules.latest()</tag>
-            </item>
-            <!--CONCATENAR ABRIR VENDEDOR COM COMPRA/VENDA DE ITENS-->
-            <item repeat="0-1">
-              <item>e</item>
-              <item>
-                <one-of>
-                  <item>
-                    <item>
-                      vende<tag>out.Venda="VENDER"</tag>
-                    </item>
-                    <item>
-                      <ruleref uri="#itensUtilizador" />
-                      <tag>out.Itens=rules.latest()</tag>
-                    </item>
-                  </item>
-
-                  <item>
-                    <item>
-                      compra<tag>out.Compra="COMPRAR"</tag>
-                    </item>
-                    <item>
-                      <ruleref uri="#itensVendedor" />
-                      <tag>out.Itens=rules.latest()</tag>
-                    </item>
-                  </item>
-                </one-of>
-              </item>
-            </item>
-          </item>
-
-          <item>
-            <item>
-              fecha<tag>out.Interagir="FECHAR"</tag>
-            </item>
-            <item>
-              <ruleref uri="#o_vendedor" />
-              <tag>out.Entidade=rules.latest()</tag>
-            </item>
-          </item>
-
-          <item>
-            <item>
-              sai<tag>out.Interagir="FECHAR"</tag>
-            </item>
-            <item>
-              <ruleref uri="#do_vendedor" />
-              <tag>out.Entidade=rules.latest()</tag>
-            </item>
-          </item>
-
-        </one-of>
+        <ruleref uri="#interagirVendedor" />
       </item>
 
       <!--COMPRAR/VENDER ITENS-->
       <item>
-        <one-of>
-          <item>
-            <item>
-              vende<tag>out.Venda="VENDER"</tag>
-            </item>
-            <item>
-              <ruleref uri="#itensUtilizador" />
-              <tag>out.Itens=rules.latest()</tag>
-            </item>
-          </item>
-
-          <item>
-            <item>
-              compra<tag>out.Compra="COMPRAR"</tag>
-            </item>
-            <item>
-              <ruleref uri="#itensVendedor" />
-              <tag>out.Itens=rules.latest()</tag>
-            </item>
-          </item>
-        </one-of>
+        <ruleref uri="#comercializar" />
       </item>
 
       <!--UTILIZAR ITENS-->
       <item>
-        <one-of>
-          <item>
-            <ruleref uri="#beberPocao" />
-            <tag>out.BeberPocao=rules.latest()</tag>
-          </item>
-          <item>
-            <item>
-              <ruleref uri="#equipar" />
-              <tag>out.Equipar=rules.latest()</tag>
-            </item>
-            <item>
-              <ruleref uri="#arma" />
-              <tag>out.Arma=rules.latest()</tag>
-            </item>
-          </item>
-        </one-of>
+        <ruleref uri="#utilizarItens" />
       </item>
 
       <!--PEDIR INFORMAÇÃO-->
       <item>
-        <one-of>
-          <item>
-            <item>
-              <ruleref uri="#infoMissao" />
-              <tag>out.Info=rules.latest()</tag>
-            </item>
-            <item>
-              <ruleref uri="#missao" />
-              <tag>out.Missao=rules.latest()</tag>
-            </item>
-          </item>
-          <item>
-            <item>
-              quanto tenho de<tag>out.Info="INFO"</tag>
-            </item>
-            <item>
-              <ruleref uri="#unidade" />
-              <tag>out.Unidade=rules.latest()</tag>
-            </item>
-          </item>
-          <item>
-            <item>
-              qual é o meu nível
-              <tag>out.Info="INFO"</tag>
-              <tag>out.Unidade="LVL"</tag>
-            </item>
-            <item repeat="0-1">actual</item>
-          </item>
-          <item>
-            <one-of>
-              <item>quantos pontos de experiência preciso para</item>
-              <item>quanto de experiência preciso para</item>
-            </one-of>
-            <one-of>
-              <item>o</item>
-              <item>chegar ao</item>
-            </one-of>
-            <item>próximo nível</item>
-            <tag>out.Info="INFO"</tag>
-            <tag>out.Unidade="NEXT_LVL"</tag>
-          </item>
-          <item>
-            <one-of>
-              <item>qual é o meu</item>
-              <item>como está o meu</item>
-            </one-of>
-            <item>estado</item>
-            <tag>out.Info="INFO"</tag>
-            <tag>out.Unidade="ESTADO"</tag>
-          </item>
-        </one-of>
+        <ruleref uri="#info" />
       </item>
 
       <!--ATIVAR/DESATIVAR SOM-->
@@ -210,6 +45,7 @@
         <ruleref uri="#som" />
         <tag>out.Som=rules.latest()</tag>
       </item>
+    
     </one-of>
   </rule>
 
@@ -242,7 +78,6 @@
       </item>
     </one-of>
   </rule>
-
 
   <!--ANUNCIAR MOVIMENTO-->
   <rule id="move">
@@ -306,6 +141,18 @@
     <tag>out="ATACAR"</tag>
   </rule>
 
+  <!--ATACAR CRIATURAS-->
+  <rule id="atacar">
+    <item>
+      <ruleref uri="#investida" />
+      <tag>out.Ataque=rules.latest()</tag>
+    </item>
+    <item repeat="0-1">
+      <ruleref uri="#criatura" />
+      <tag>out.Criatura=rules.latest()</tag>
+    </item>
+  </rule>
+
   <!--REFERENCIAR A CRIATURA-->
   <rule id="criatura">
     <one-of>
@@ -333,6 +180,69 @@
     </one-of>
   </rule>
 
+  <!--ABRIR/FECHAR VENDEDOR-->
+  <rule id="interagirVendedor">
+    <one-of>
+      <item>
+        <item>
+          <ruleref uri="#abrirVendedor" />
+          <tag>out.Interagir=rules.latest()</tag>
+        </item>
+        <item>
+          <ruleref uri="#o_vendedor" />
+          <tag>out.Entidade=rules.latest()</tag>
+        </item>
+
+        <!--CONCATENAR ABRIR VENDEDOR COM COMPRA/VENDA DE ITENS-->
+        <item repeat="0-1">
+          <item>e</item>
+          <!--<ruleref uri="#comercializar" /> NOT WORKING IDKW-->
+          <one-of>
+            <item>
+              <item>
+                vende<tag>out.Venda="VENDER"</tag>
+              </item>
+              <item>
+                <ruleref uri="#itensUtilizador" />
+                <tag>out.Itens=rules.latest()</tag>
+              </item>
+            </item>
+
+            <item>
+              <item>
+                compra<tag>out.Compra="COMPRAR"</tag>
+              </item>
+              <item>
+                <ruleref uri="#itensVendedor" />
+                <tag>out.Itens=rules.latest()</tag>
+              </item>
+            </item>
+          </one-of>
+        </item>
+      </item>
+
+      <item>
+        <item>
+          fecha<tag>out.Interagir="FECHAR"</tag>
+        </item>
+        <item>
+          <ruleref uri="#o_vendedor" />
+          <tag>out.Entidade=rules.latest()</tag>
+        </item>
+      </item>
+
+      <item>
+        <item>
+          sai<tag>out.Interagir="FECHAR"</tag>
+        </item>
+        <item>
+          <ruleref uri="#do_vendedor" />
+          <tag>out.Entidade=rules.latest()</tag>
+        </item>
+      </item>
+    </one-of>
+  </rule>
+
   <!--ABRIR VENDEDOR-->
   <rule id="abrirVendedor">
     <one-of>
@@ -346,6 +256,25 @@
       </item>
     </one-of>
     <tag>out="ABRIR"</tag>
+  </rule>
+
+  <!--ABRIR/FECHAR MAPA-->
+  <rule id="interagirMapa">
+    <one-of>
+      <item>
+        <ruleref uri="#abrirMapa" />
+        <tag>out.Interagir=rules.latest()</tag>
+      </item>
+
+      <item>
+        <ruleref uri="#fecharMapa" />
+        <tag>out.Interagir=rules.latest()</tag>
+      </item>
+    </one-of>
+    <item>
+      <ruleref uri="#mapa" />
+      <tag>out.Entidade=rules.latest()</tag>
+    </item>
   </rule>
 
   <!--ABRIR MAPA-->
@@ -370,6 +299,31 @@
       <item>
         <item>sai do</item>
         <tag>out="FECHAR"</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <!--COMPRAR/VENDER ITENS-->
+  <rule id="comercializar">
+    <one-of>
+      <item>
+        <item>
+          vende<tag>out.Venda="VENDER"</tag>
+        </item>
+        <item>
+          <ruleref uri="#itensUtilizador" />
+          <tag>out.Itens=rules.latest()</tag>
+        </item>
+      </item>
+
+      <item>
+        <item>
+          compra<tag>out.Compra="COMPRAR"</tag>
+        </item>
+        <item>
+          <ruleref uri="#itensVendedor" />
+          <tag>out.Itens=rules.latest()</tag>
+        </item>
       </item>
     </one-of>
   </rule>
@@ -449,6 +403,26 @@
     </one-of>
   </rule>
 
+  <!--UTILIZAR ITENS-->
+  <rule id="utilizarItens">
+    <one-of>
+      <item>
+        <ruleref uri="#beberPocao" />
+        <tag>out.BeberPocao=rules.latest()</tag>
+      </item>
+      <item>
+        <item>
+          <ruleref uri="#equipar" />
+          <tag>out.Equipar=rules.latest()</tag>
+        </item>
+        <item>
+          <ruleref uri="#arma" />
+          <tag>out.Arma=rules.latest()</tag>
+        </item>
+      </item>
+    </one-of>
+  </rule>
+
   <!--BEBER POÇÃO-->
   <rule id="beberPocao">
     <one-of>
@@ -471,6 +445,61 @@
       <item>utiliza</item>
     </one-of>
     <tag>out="EQUIPAR"</tag>
+  </rule>
+
+  <!--PEDIR INFORMAÇÃO-->
+  <rule id="info">
+    <one-of>
+      <item>
+        <item>
+          <ruleref uri="#infoMissao" />
+          <tag>out.Info=rules.latest()</tag>
+        </item>
+        <item>
+          <ruleref uri="#missao" />
+          <tag>out.Missao=rules.latest()</tag>
+        </item>
+      </item>
+      <item>
+        <item>
+          quanto tenho de<tag>out.Info="INFO"</tag>
+        </item>
+        <item>
+          <ruleref uri="#unidade" />
+          <tag>out.Unidade=rules.latest()</tag>
+        </item>
+      </item>
+      <item>
+        <item>
+          qual é o meu nível
+          <tag>out.Info="INFO"</tag>
+          <tag>out.Unidade="LVL"</tag>
+        </item>
+        <item repeat="0-1">actual</item>
+      </item>
+      <item>
+        <one-of>
+          <item>quantos pontos de experiência preciso para</item>
+          <item>quanto de experiência preciso para</item>
+        </one-of>
+        <one-of>
+          <item>o</item>
+          <item>chegar ao</item>
+        </one-of>
+        <item>próximo nível</item>
+        <tag>out.Info="INFO"</tag>
+        <tag>out.Unidade="NEXT_LVL"</tag>
+      </item>
+      <item>
+        <one-of>
+          <item>qual é o meu</item>
+          <item>como está o meu</item>
+        </one-of>
+        <item>estado</item>
+        <tag>out.Info="INFO"</tag>
+        <tag>out.Unidade="ESTADO"</tag>
+      </item>
+    </one-of>
   </rule>
 
   <!--PEDIR INFORMAÇÃO SOBRE MISSÃO-->
