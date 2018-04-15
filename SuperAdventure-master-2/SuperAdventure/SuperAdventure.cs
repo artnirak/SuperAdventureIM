@@ -130,7 +130,7 @@ namespace SuperAdventure
 
         }
 
-        private int getITEM_ID(String item_rule)
+        private int getObj_ID(String item_rule)
         {
             int id = 0;
             switch (item_rule)
@@ -164,6 +164,12 @@ namespace SuperAdventure
                     break;
                 case "PELE_COBRA":
                     id = World.ITEM_ID_SNAKESKIN;
+                    break;
+                case "M_RATOS":
+                    id = World.QUEST_ID_CLEAR_ALCHEMIST_GARDEN;
+                    break;
+                case "M_COBRAS":
+                    id = World.QUEST_ID_CLEAR_FARMERS_FIELD;
                     break;
 
             }
@@ -339,7 +345,7 @@ namespace SuperAdventure
                         {
                             this.Invoke((MethodInvoker)delegate
                             {
-                                int itemID = getITEM_ID((string)json.recognized[1].ToString());
+                                int itemID = getObj_ID((string)json.recognized[1].ToString());
                                 tradingScreen.VoiceBuy(itemID);
                             });
                         }
@@ -360,7 +366,7 @@ namespace SuperAdventure
                         {
                             this.Invoke((MethodInvoker)delegate
                             {
-                                int itemID = getITEM_ID((string)json.recognized[1].ToString());
+                                int itemID = getObj_ID((string)json.recognized[1].ToString());
                                 tradingScreen.VoiceSell(itemID);
                             });
                         }
@@ -380,11 +386,15 @@ namespace SuperAdventure
 
                         this.Invoke((MethodInvoker)delegate
                         {
-                            int itemID = getITEM_ID((string)json.recognized[1].ToString());
+                            int itemID = getObj_ID((string)json.recognized[1].ToString());
                             Weapon weapon = World.WeaponByID(Convert.ToInt32(itemID));
                             if(_player.Weapons.Contains(weapon))
                             {
                                 cboWeapons.SelectedIndex = cboWeapons.FindStringExact(weapon.Name);
+                            }
+                            else
+                            {
+                                //TTS não tens essa arma irmão
                             }
                             
                         });
@@ -397,14 +407,42 @@ namespace SuperAdventure
                 case "BEBER_POCAO":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        int itemID = getITEM_ID((string)json.recognized[0].ToString());
+                        int itemID = getObj_ID((string)json.recognized[0].ToString());
                         Item potion = World.ItemByID(Convert.ToInt32(itemID));
                         cboPotions.SelectedIndex = cboPotions.FindStringExact(potion.Name);
                         if(_player.Potions.Any())
                         {
                             btnUsePotion_Click(null, null);
                         }
+                        else
+                        {
+                            //TTS não tens poções irmão
+                        }
                         
+                    });
+                    break;
+                case "INFO":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if((string)json.recognized[1].ToString() == "M_RATOS" || (string)json.recognized[1].ToString() == "M_COBRAS")
+                        {
+                            String description = World.QuestByID(getObj_ID((string)json.recognized[1].ToString())).Description;
+                            //TTS QUEST DESCRIPT
+                        }
+                        else if((string)json.recognized[1].ToString() == "NEXT_LVL")
+                        {
+                            int exp_to_next_level = _player.Level * 100 - _player.ExperiencePoints;
+                            //TTS falta exp_to_next_level pontos experiencia para...
+                        }
+                        else if((string)json.recognized[1].ToString() == "LVL")
+                        {
+                            //TTS guerreiro está no nivel _player.Level
+                        }
+                        else if((string)json.recognized[1].ToString() == "ESTADO")
+                        {
+                            //ouro ? nivel ? pontos de vida? localização
+                        }
+
                     });
                     break;
             }
