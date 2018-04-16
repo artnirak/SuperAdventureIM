@@ -45,7 +45,12 @@
         <ruleref uri="#som" />
         <tag>out.Som=rules.latest()</tag>
       </item>
-    
+
+      <!--CONFIRMAÇÃO-->
+      <item>
+        <ruleref uri="#confirmar" />
+      </item>
+
     </one-of>
   </rule>
 
@@ -653,6 +658,17 @@
       </one-of>
       <tag>out="VENDEDOR"</tag>
     </item>
+  </rule>
+
+  <rule id="confirmar">
+    <one-of>
+      <item>
+        sim<tag>out.Sim="SIM"</tag>
+      </item>
+      <item>
+        não<tag>out.Nao="NAO"</tag>
+      </item>
+    </one-of>
   </rule>
 
 </grammar>
