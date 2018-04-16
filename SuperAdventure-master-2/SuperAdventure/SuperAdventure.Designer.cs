@@ -414,7 +414,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::SuperAdventure.Properties.Resources.UIbackGround1;
+            this.BackgroundImage = global::SuperAdventure.Properties.Resources.UIbackGround;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(974, 791);
             this.Controls.Add(this.btnMap);
