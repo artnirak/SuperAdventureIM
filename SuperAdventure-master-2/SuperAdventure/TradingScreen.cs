@@ -169,14 +169,12 @@ namespace SuperAdventure
             }
         }
 
-        public void VoiceBuy(int itemID)
+        public void VoiceBuy(int itemID,TTS tts)
         {
-            Console.WriteLine(itemID.ToString());
             Item itemBeingBought = World.ItemByID(Convert.ToInt32(itemID));
             if ((itemBeingBought.CanOnlyHaveOne) && (_currentPlayer.Inventory.SingleOrDefault(ii => ii.Details.ID == itemBeingBought.ID)) != null)
             {
-                //MessageBox.Show("You can only have one " + itemBeingBought.Name);
-                //TTS
+                tts.Speak("Só podes ter um único item: "+itemBeingBought.Name);
             }
             // Check if the player has enough gold to buy the item
             else if (_currentPlayer.Gold >= itemBeingBought.Price)
@@ -191,12 +189,11 @@ namespace SuperAdventure
             }
             else
             {
-                //MessageBox.Show("You do not have enough gold to buy the " + itemBeingBought.Name);
-                //TTS
+                tts.Speak("Não tens ouro suficiente para comprar isso. Haha pobre.");
             }
         }
 
-        public void VoiceSell(int itemID)
+        public void VoiceSell(int itemID,TTS tts)
         {
             // The first column of a datagridview has a ColumnIndex = 0
             // This is known as a "zero-based" array/collection/list.
@@ -213,15 +210,13 @@ namespace SuperAdventure
             // Check if the vendor wants an item in player's inventory
             if (!itemBeingSold.VendorWants)
             {
-                //MessageBox.Show("Vendor doesn't want " + itemBeingSold.Name);
-                //TTS
+                tts.Speak("O senhor vendedor não tem interesse nesse item.");
             }
             // May get rid of this since there is a VendorWants property
             // Check if item is unsellable
             else if (itemBeingSold.Price == World.UNSELLABLE_ITEM_PRICE)
             {
-                //MessageBox.Show("You cannot sell the " + itemBeingSold.Name);
-                //TTS
+                tts.Speak("Esse item não pode ser vendido.");
             }
             // Check if Vendor has enough gold when buying a player's item
             else if (_currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold >= itemBeingSold.Price)
@@ -237,8 +232,7 @@ namespace SuperAdventure
             }
             else
             {
-                //MessageBox.Show("Vendor does not have enough gold to buy " + itemBeingSold.Name);
-                //TTS
+                tts.Speak("O vendedor não tem ouro suficiente para te comprar esse item. Haha pobre.");
             }
         }
 

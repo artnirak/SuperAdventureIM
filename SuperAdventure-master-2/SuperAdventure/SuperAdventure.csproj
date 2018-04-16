@@ -106,7 +106,6 @@
     <Compile Include="TradingScreen.Designer.cs">
       <DependentUpon>TradingScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="TTS.cs" />
     <Compile Include="WorldMap.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Xml;
-
 namespace Engine
 {
     public class Player : LivingCreature
@@ -211,7 +210,7 @@ namespace Engine
             SetTheCurrentMonsterForTheCurrentLocation(location);
         }
 
-        public void MoveNorth()
+        public void MoveNorth(TTS tts)
         {
             if (CurrentLocation.LocationToNorth != null)
             {
@@ -219,11 +218,11 @@ namespace Engine
             }
             else
             {
-                //TTS
+                tts.Speak("Não podes ir mais para Norte.");
             }
         }
 
-        public void MoveEast()
+        public void MoveEast(TTS tts)
         {
             if (CurrentLocation.LocationToEast != null)
             {
@@ -231,11 +230,11 @@ namespace Engine
             }
             else
             {
-                //TTS
+                tts.Speak("Não podes ir mais para Este.");
             }
         }
 
-        public void MoveSouth()
+        public void MoveSouth(TTS tts)
         {
             if (CurrentLocation.LocationToSouth != null)
             {
@@ -243,11 +242,11 @@ namespace Engine
             }
             else
             {
-                //TTS
+                tts.Speak("Não podes ir mais para Sul.");
             }
         }
 
-        public void MoveWest()
+        public void MoveWest(TTS tts)
         {
             if (CurrentLocation.LocationToWest != null)
             {
@@ -255,7 +254,7 @@ namespace Engine
             }
             else
             {
-                //TTS
+                tts.Speak("Não podes ir mais para Oeste.");
             }
         }
 

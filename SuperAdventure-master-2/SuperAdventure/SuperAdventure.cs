@@ -22,7 +22,6 @@ namespace SuperAdventure
         private TradingScreen tradingScreen;
         private TTS tts;
         private bool ask_attack = false;
-
         private Player _player;
 
         public SuperAdventure()
@@ -255,7 +254,7 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            //NÃO HÁ MONSTRO AQUI! TTS
+                            tts.Speak("Atacar quem? Não há monstros aqui.");
                         }
                     });
                     break;
@@ -273,17 +272,9 @@ namespace SuperAdventure
                             {
                                 btnTrade_Click(null, null);
                             }
-                            else if (IsFormOpen("WorldMap"))
-                            {
-                                //FECHA O MAPA TTS
-                            }
-                            else if (IsFormOpen("TradingScreen"))
-                            {
-                                //FECHA O VENDEDOR TTS
-                            }
                             else
                             {
-                                //não podes fazer isso agora TTS
+                                tts.Speak("Não podes abrir isso agora.");
                             }
                         }
                         else
@@ -294,14 +285,14 @@ namespace SuperAdventure
                                 if ((string)json.recognized[2].ToString().ToLower() == "comprar")
                                 {
                                     int itemID = getObj_ID((string)json.recognized[3].ToString());
-                                    tradingScreen.VoiceBuy(itemID);
+                                    tradingScreen.VoiceBuy(itemID, tts);
                                 }
                                 else
                                 {
                                     if ((string)json.recognized[2].ToString().ToLower() == "vender")
                                     {
                                         int itemID = getObj_ID((string)json.recognized[3].ToString());
-                                        tradingScreen.VoiceSell(itemID);
+                                        tradingScreen.VoiceSell(itemID, tts);
                                     }
                                 }
                             }
@@ -329,18 +320,6 @@ namespace SuperAdventure
                             {
                                 btnWest_Click(null, null);
                             }
-                            else if (IsFormOpen("WorldMap") || IsFormOpen("TradingScreen"))
-                            {
-                                //FECHA PRIMEIRO O Q TENS ABERTO TTS
-                            }
-                            else
-                            {
-                                //MOVER PARA ONDE N PERCEBI TTS
-                            }
-                        }
-                        else
-                        {
-                            //MOVER PARA ONDE? NÃO PERCEBI TTS
                         }
                     });
                     break;
@@ -366,10 +345,6 @@ namespace SuperAdventure
                             //TTS
                         }
                     }
-                    else
-                    {
-                        //TTS
-                    }
                     break;
                 case "COMPRAR":
                     if (JsonArray_Length(json) == 2)
@@ -379,17 +354,20 @@ namespace SuperAdventure
                             this.Invoke((MethodInvoker)delegate
                             {
                                 int itemID = getObj_ID((string)json.recognized[1].ToString());
-                                tradingScreen.VoiceBuy(itemID);
+                                tradingScreen.VoiceBuy(itemID,tts);
                             });
                         }
                         else
                         {
-                            //TTS
+                            if (!_player.CurrentLocation.HasAVendor)
+                            {
+                                tts.Speak("Não tens um vendedor neste local.");
+                            }
+                            else
+                            {
+                                tts.Speak("Primeiro tens que abrir a interface do vendedor.");
+                            }
                         }
-                    }
-                    else
-                    {
-                        //TTS COMPRAR OQ ?
                     }
                     break;
                 case "VENDER":
@@ -400,17 +378,20 @@ namespace SuperAdventure
                             this.Invoke((MethodInvoker)delegate
                             {
                                 int itemID = getObj_ID((string)json.recognized[1].ToString());
-                                tradingScreen.VoiceSell(itemID);
+                                tradingScreen.VoiceSell(itemID, tts);
                             });
                         }
                         else
                         {
-                            //TTS
+                            if(!_player.CurrentLocation.HasAVendor)
+                            {
+                                tts.Speak("Não tens um vendedor neste local.");
+                            }
+                            else
+                            {
+                                tts.Speak("Primeiro tens que abrir a interface do vendedor.");
+                            }  
                         }
-                    }
-                    else
-                    {
-                        //TTS
                     }
                     break;
                 case "EQUIPAR":
@@ -427,14 +408,10 @@ namespace SuperAdventure
                             }
                             else
                             {
-                                //TTS não tens essa arma irmão
+                                tts.Speak("Não tens essa arma.");
                             }
                             
                         });
-                    }
-                    else
-                    {
-                        //TTS USAR O QUÊ ?
                     }
                     break;
                 case "BEBER_POCAO":
@@ -449,7 +426,7 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            //TTS não tens poções irmão
+                            tts.Speak("Não tens mais poções.");
                         }
                         
                     });
@@ -460,20 +437,21 @@ namespace SuperAdventure
                         if((string)json.recognized[1].ToString() == "M_RATOS" || (string)json.recognized[1].ToString() == "M_COBRAS")
                         {
                             String description = World.QuestByID(getObj_ID((string)json.recognized[1].ToString())).Description;
-                            //TTS QUEST DESCRIPT
+                            tts.Speak("A descrição da missão é a seguinte: "+description);
                         }
                         else if((string)json.recognized[1].ToString() == "NEXT_LVL")
                         {
                             int exp_to_next_level = _player.Level * 100 - _player.ExperiencePoints;
-                            //TTS falta exp_to_next_level pontos experiencia para...
+                            tts.Speak("Faltam-te " + exp_to_next_level + " pontos de experiência para o próximo nível.");
+                            
                         }
                         else if((string)json.recognized[1].ToString() == "LVL")
                         {
-                            //TTS guerreiro está no nivel _player.Level
+                            tts.Speak("Estás no nível " + _player.Level);
                         }
                         else if((string)json.recognized[1].ToString() == "ESTADO")
                         {
-                            //ouro ? nivel ? pontos de vida? localização
+                            tts.Speak("Estás com " + _player.CurrentHitPoints + " pontos de vida." + "Neste momento tens " + _player.Gold + "moedas de ouro."+"A tua localização é: "+_player.CurrentLocation.Name);
                         }
 
                     });
@@ -488,7 +466,7 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            tts.Speak("Afirmativo, ok, são todos sinónimos. correto");
+                            tts.Speak("Não.");
                         }
 
                     });
@@ -496,7 +474,7 @@ namespace SuperAdventure
                 case "NAO":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        tts.Speak("Ok, porreiro pá.");
+                        tts.Speak("Ok.");
                         ask_attack = false;
                     });
                     break;
@@ -596,7 +574,7 @@ namespace SuperAdventure
             {
                 tradingScreen.Close();
             }
-            _player.MoveNorth();
+            _player.MoveNorth(tts);
         }
 
         private void btnSouth_Click(object sender, EventArgs e)
@@ -609,7 +587,7 @@ namespace SuperAdventure
             {
                 tradingScreen.Close();
             }
-            _player.MoveSouth();
+            _player.MoveSouth(tts);
         }
 
         private void btnEast_Click(object sender, EventArgs e)
@@ -622,7 +600,7 @@ namespace SuperAdventure
             {
                 tradingScreen.Close();
             }
-            _player.MoveEast();
+            _player.MoveEast(tts);
         }
 
         private void btnWest_Click(object sender, EventArgs e)
@@ -635,7 +613,7 @@ namespace SuperAdventure
             {
                 tradingScreen.Close();
             }
-            _player.MoveWest();
+            _player.MoveWest(tts);
         }
 
         private void btnUseWeapon_Click(object sender, EventArgs e)

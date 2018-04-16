@@ -7,9 +7,9 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperAdventure
+namespace Engine
 {
-    class TTS
+    public class TTS
     {
         SpeechSynthesizer tts = null;
         static SoundPlayer player = new SoundPlayer();
