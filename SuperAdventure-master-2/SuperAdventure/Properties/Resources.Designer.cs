@@ -63,16 +63,6 @@ namespace SuperAdventure.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap runescape_wallpaper_by_valhelsing2_d9zp2zh {
-            get {
-                object obj = ResourceManager.GetObject("runescape_wallpaper_by_valhelsing2-d9zp2zh", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap UIbackGround {
             get {
                 object obj = ResourceManager.GetObject("UIbackGround", resourceCulture);
