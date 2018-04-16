@@ -66,6 +66,10 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Speech, Version=11.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll</HintPath>
+    </Reference>
     <Reference Include="mmisharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\mmisharp.dll</HintPath>
@@ -102,6 +106,7 @@
     <Compile Include="TradingScreen.Designer.cs">
       <DependentUpon>TradingScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="TTS.cs" />
     <Compile Include="WorldMap.cs">
       <SubType>Form</SubType>
     </Compile>

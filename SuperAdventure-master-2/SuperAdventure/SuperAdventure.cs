@@ -18,14 +18,17 @@ namespace SuperAdventure
     {
         private const string PLAYER_DATA_FILE_NAME = "PlayerData.xml";
         private MmiCommunication mmiC;
-        WorldMap mapScreen;
-        TradingScreen tradingScreen;
+        private WorldMap mapScreen;
+        private TradingScreen tradingScreen;
+        private TTS tts;
+        private bool ask_attack = false;
 
         private Player _player;
 
         public SuperAdventure()
         {
             InitializeComponent();
+            tts = new TTS();
             mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
             mmiC.Message += MmiC_Message;
             Console.WriteLine("faço isto quantas vezes? ????");
@@ -135,6 +138,15 @@ namespace SuperAdventure
             int id = 0;
             switch (item_rule)
             {
+                case "RATO":
+                    id = World.MONSTER_ID_RAT;
+                    break;
+                case "VÍBORA":
+                    id = World.MONSTER_ID_SNAKE_BLACK;
+                    break;
+                case "CASCAVEL":
+                    id = World.MONSTER_ID_SNAKE_COPPERHEAD;
+                    break;
                 case "CAUDA_RATO":
                     id = World.ITEM_ID_RAT_TAIL;
                     break;
@@ -181,6 +193,7 @@ namespace SuperAdventure
             var doc = XDocument.Parse(e.Message);
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
+
             switch ((string)json.recognized[0].ToString())
             {
                 case "MUTE":
@@ -188,12 +201,13 @@ namespace SuperAdventure
                     {
                         if (chkbxSndDisable.Checked == true)
                         {
-                            //som está ativo burro TTS
+                            tts.Speak("O som já está desactivado, não é preciso dizer mais que uma vez.");
                         }
                         else
                         {
                             chkbxSndDisable.Checked = true;
                             this._player.DisableAudio = true;
+                            tts.Speak("Som desactivado!");
                         }
                     });
                     break;
@@ -202,12 +216,13 @@ namespace SuperAdventure
                     {
                         if (chkbxSndDisable.Checked == false)
                         {
-                            //som está desativo burro TTS
+                            tts.Speak("O som já está activado. O som já está activado. É chato não é?");
                         }
                         else
                         {
                             chkbxSndDisable.Checked = false;
                             this._player.DisableAudio = false;
+                            tts.Speak("Som activado!");
                         }
                     });
                     break;
@@ -226,8 +241,10 @@ namespace SuperAdventure
                                 Console.WriteLine(_player.CurrentMonster.Name.ToLower());
                                 if (_player.CurrentMonster.Name.ToLower() != (string)json.recognized[1].ToString().ToLower())
                                 {
+                                    String monster = (string)json.recognized[1].ToString();
                                     //TTS é um _player.CurrentMonster.Name.ToLower() mas vou atacar a mesma!
-                                    btnUseWeapon_Click(null, null);
+                                    tts.Speak("O monstro não é"+ World.MonsterByID(getObj_ID(monster)).Name + ", é"+ _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
+                                    ask_attack = true;
                                 }
                                 else
                                 {
@@ -271,7 +288,23 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            //ABRIR O QUÊ ?? Não percebi. TTS
+                            if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor" && !IsFormOpen("TradingScreen") && !IsFormOpen("WorldMap"))
+                            {
+                                btnTrade_Click(null, null);
+                                if ((string)json.recognized[2].ToString().ToLower() == "comprar")
+                                {
+                                    int itemID = getObj_ID((string)json.recognized[3].ToString());
+                                    tradingScreen.VoiceBuy(itemID);
+                                }
+                                else
+                                {
+                                    if ((string)json.recognized[2].ToString().ToLower() == "vender")
+                                    {
+                                        int itemID = getObj_ID((string)json.recognized[3].ToString());
+                                        tradingScreen.VoiceSell(itemID);
+                                    }
+                                }
+                            }
                         }
                     });
                     break;
@@ -377,7 +410,7 @@ namespace SuperAdventure
                     }
                     else
                     {
-                        //TTS COMPRAR OQ ?
+                        //TTS
                     }
                     break;
                 case "EQUIPAR":
@@ -443,6 +476,28 @@ namespace SuperAdventure
                             //ouro ? nivel ? pontos de vida? localização
                         }
 
+                    });
+                    break;
+                case "SIM":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        if(ask_attack == true)
+                        {
+                            btnUseWeapon_Click(null, null);
+                            ask_attack = false;
+                        }
+                        else
+                        {
+                            tts.Speak("Afirmativo, ok, são todos sinónimos. correto");
+                        }
+
+                    });
+                    break;
+                case "NAO":
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        tts.Speak("Ok, porreiro pá.");
+                        ask_attack = false;
                     });
                     break;
             }
