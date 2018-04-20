@@ -455,6 +455,7 @@
   <!--PEDIR INFORMAÇÃO-->
   <rule id="info">
     <one-of>
+      <!--INFO MISSÃO-->
       <item>
         <item>
           <ruleref uri="#infoMissao" />
@@ -465,6 +466,8 @@
           <tag>out.Missao=rules.latest()</tag>
         </item>
       </item>
+
+      <!--INFO UNIDADES-->
       <item>
         <item>
           quanto tenho de<tag>out.Info="INFO"</tag>
@@ -474,6 +477,8 @@
           <tag>out.Unidade=rules.latest()</tag>
         </item>
       </item>
+
+      <!--INFO NÍVEL ATUAL-->
       <item>
         <item>
           qual é o meu nível
@@ -482,6 +487,8 @@
         </item>
         <item repeat="0-1">actual</item>
       </item>
+
+      <!--INFO PRÓXIMO NÍVEL-->
       <item>
         <one-of>
           <item>quantos pontos de experiência preciso para</item>
@@ -495,6 +502,8 @@
         <tag>out.Info="INFO"</tag>
         <tag>out.Unidade="NEXT_LVL"</tag>
       </item>
+      
+      <!--INFO ESTADO ATUAL-->
       <item>
         <one-of>
           <item>qual é o meu</item>
@@ -503,6 +512,17 @@
         <item>estado</item>
         <tag>out.Info="INFO"</tag>
         <tag>out.Unidade="ESTADO"</tag>
+      </item>
+
+      <!--INFO LOCALIZAÇÃO ATUAL-->
+      <item>
+        <one-of>
+          <item>Que lugar é este</item>
+          <item>Onde é que estou</item>
+          <item>Dá-me a minha localização</item>
+        </one-of>
+        <tag>out.Info="INFO"</tag>
+        <tag>out.Local="LOCAL"</tag>
       </item>
     </one-of>
   </rule>
@@ -660,6 +680,7 @@
     </item>
   </rule>
 
+  <!--CONFIRMAÇÃO-->
   <rule id="confirmar">
     <one-of>
       <item>
