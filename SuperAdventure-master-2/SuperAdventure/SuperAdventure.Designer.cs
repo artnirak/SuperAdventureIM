@@ -115,7 +115,7 @@
             this.lblHitPoints.BackColor = System.Drawing.Color.Transparent;
             this.lblHitPoints.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblHitPoints.ForeColor = System.Drawing.Color.Tomato;
-            this.lblHitPoints.Location = new System.Drawing.Point(147, 23);
+            this.lblHitPoints.Location = new System.Drawing.Point(170, 23);
             this.lblHitPoints.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblHitPoints.Name = "lblHitPoints";
             this.lblHitPoints.Size = new System.Drawing.Size(0, 14);
@@ -127,7 +127,7 @@
             this.lblGold.BackColor = System.Drawing.Color.Transparent;
             this.lblGold.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGold.ForeColor = System.Drawing.Color.Gold;
-            this.lblGold.Location = new System.Drawing.Point(147, 55);
+            this.lblGold.Location = new System.Drawing.Point(170, 55);
             this.lblGold.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGold.Name = "lblGold";
             this.lblGold.Size = new System.Drawing.Size(0, 14);
@@ -139,7 +139,7 @@
             this.lblExperience.BackColor = System.Drawing.Color.Transparent;
             this.lblExperience.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExperience.ForeColor = System.Drawing.Color.PowderBlue;
-            this.lblExperience.Location = new System.Drawing.Point(147, 90);
+            this.lblExperience.Location = new System.Drawing.Point(170, 90);
             this.lblExperience.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblExperience.Name = "lblExperience";
             this.lblExperience.Size = new System.Drawing.Size(0, 14);
@@ -151,7 +151,7 @@
             this.lblLevel.BackColor = System.Drawing.Color.Transparent;
             this.lblLevel.Font = new System.Drawing.Font("Lucida Console", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLevel.ForeColor = System.Drawing.Color.LavenderBlush;
-            this.lblLevel.Location = new System.Drawing.Point(147, 122);
+            this.lblLevel.Location = new System.Drawing.Point(170, 122);
             this.lblLevel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLevel.Name = "lblLevel";
             this.lblLevel.Size = new System.Drawing.Size(0, 14);
