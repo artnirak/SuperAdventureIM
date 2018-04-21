@@ -208,13 +208,19 @@ namespace Engine
                     }
                     else
                     {
-                        tts.Speak(text);
+                        if(text != "")
+                        {
+                            tts.Speak(text);
+                        }
                     }
                 }
             }
             else
             {
-                tts.Speak(text);
+                if (text != "")
+                {
+                    tts.Speak(text);
+                }
             }
 
             SetTheCurrentMonsterForTheCurrentLocation(location);
@@ -311,7 +317,6 @@ namespace Engine
 
             if (CurrentMonster.IsDead)
             {
-                text = "Mataste o monstro!";
                 RaiseMessage("");
                 RaiseMessage("Mataste o monstro!");
 

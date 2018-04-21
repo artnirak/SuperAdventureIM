@@ -135,6 +135,9 @@ namespace SuperAdventure
             int id = 0;
             switch (item_rule)
             {
+                case "ARANHA":
+                    id = World.MONSTER_ID_GIANT_SPIDER;
+                    break;
                 case "RATO":
                     id = World.MONSTER_ID_RAT;
                     break;
@@ -415,7 +418,7 @@ namespace SuperAdventure
                 case "BEBER_POCAO":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        int itemID = getObj_ID((string)json.recognized[0].ToString());
+                        int itemID = getObj_ID((string)json.recognized[0].ToString());  
                         Item potion = World.ItemByID(Convert.ToInt32(itemID));
                         cboPotions.SelectedIndex = cboPotions.FindStringExact(potion.Name);
                         if(_player.Potions.Any() && _player.CurrentLocation.HasAMonster)
