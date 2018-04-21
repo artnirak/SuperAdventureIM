@@ -252,7 +252,7 @@ namespace SuperAdventure
                                 if (_player.CurrentMonster.Name.ToLower() != (string)json.recognized[1].ToString().ToLower())
                                 {
                                     String monster = (string)json.recognized[1].ToString();
-                                    if(getObj_ID(monster) != _player.CurrentMonster.ID)
+                                    if (getObj_ID(monster) != _player.CurrentMonster.ID && getObj_ID(monster)!=0)
                                     {
                                         tts.Speak("O monstro não é" + World.MonsterByID(getObj_ID(monster)).Name + ", é" + _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
                                         ask_attack = true;
@@ -394,7 +394,19 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            tts.Speak("Não tens nada aberto para fechar.");
+                            if(IsFormOpen("WorldMap"))
+                            {
+                                tts.Speak("Não tens o vendedor aberto, mas sim o mapa.");
+                            }
+                            else if(IsFormOpen("TradingScreen"))
+                            {
+                                tts.Speak("Naão tens o mapa aberto, mas sim o vendedor.");
+                            }
+                            else
+                            {
+                                tts.Speak("Não tens nada aberto para fechar.");
+                            }
+                            
                         }
                         
                     }
@@ -543,7 +555,7 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            tts.Speak("Não.");
+                            tts.Speak("Desculpa mas não percebi.");
                         }
 
                     });
@@ -551,7 +563,7 @@ namespace SuperAdventure
                 case "NAO":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        tts.Speak("Ok.");
+                        tts.Speak("Desculpa mas não percebi.");
                         ask_attack = false;
                     });
                     break;

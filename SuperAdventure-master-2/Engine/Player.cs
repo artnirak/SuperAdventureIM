@@ -180,6 +180,7 @@ namespace Engine
                 RaiseMessage("Tens de obter " + location.ItemRequiredToEnter.Name + " primeiro para entrar neste local.");
                 text = "Tens de obter " + location.ItemRequiredToEnter.Name + " primeiro para entrar neste local.";
                 tts.Speak(text);
+                text = "";
                 return;
             }
 
@@ -211,6 +212,7 @@ namespace Engine
                         if(text != "")
                         {
                             tts.Speak(text);
+                            text = "";
                         }
                     }
                 }
@@ -220,6 +222,7 @@ namespace Engine
                 if (text != "")
                 {
                     tts.Speak(text);
+                    text = "";
                 }
             }
 
@@ -333,7 +336,8 @@ namespace Engine
                 LootTheCurrentMonster(tts);
 
                 // "Move" to the current location, to refresh the current monster
-                MoveTo(CurrentLocation, tts, "");
+                text = "";
+                MoveTo(CurrentLocation, tts, text);
             }
             else
             {
@@ -349,7 +353,7 @@ namespace Engine
             RaiseMessage("Recebeste " + CurrentMonster.RewardExperiencePoints + " pontos de experiência.");
             
             RaiseMessage("Recebeste " + CurrentMonster.RewardGold + " moedas de ouro.");
-            string reward = "Matáste um monstro! Recebeste " + CurrentMonster.RewardGold + " moedas de ouro " + "e " + CurrentMonster.RewardExperiencePoints + " pontos de experiência";
+            text = "Matáste um monstro! Recebeste " + CurrentMonster.RewardGold + " moedas de ouro " + "e " + CurrentMonster.RewardExperiencePoints + " pontos de experiência";
             AddExperiencePoints(CurrentMonster.RewardExperiencePoints);
             Gold += CurrentMonster.RewardGold;
 
@@ -362,7 +366,7 @@ namespace Engine
             }
 
             RaiseMessage("");
-            tts.Speak(reward);
+            tts.Speak(text);
 
         }
 
@@ -590,7 +594,15 @@ namespace Engine
             AddItemToInventory(quest.RewardItem);
 
             MarkPlayerQuestCompleted(quest);
-            tts.Speak("Completaste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência e " + quest.RewardGold + " moedas de ouro.");
+            if(quest.RewardItem == null)
+            {
+                tts.Speak("Completáste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência, " + quest.RewardGold + " moedas de ouro.");
+            }
+            else
+            {
+                tts.Speak("Completáste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência, " + quest.RewardGold + " moedas de ouro e o item: "+quest.RewardItem.Name+".");
+            }
+            text = "";
         }
 
         private void MarkPlayerQuestCompleted(Quest quest)
@@ -638,16 +650,17 @@ namespace Engine
             int damageToPlayer = RandomNumberGenerator.NumberBetween(0, CurrentMonster.MaximumDamage);
 
             RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0).ToUpper()+ " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida.");
-            string happens = CheckMonsterGender(CurrentMonster.Name, 0).ToUpper() + " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida.";
             CurrentHitPoints -= damageToPlayer;
 
             if (IsDead)
             {
+                text = CheckMonsterGender(CurrentMonster.Name, 0).ToUpper() + " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida." + "E por isso Morrêste!";
                 RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0).ToUpper()+" " + CurrentMonster.Name + " matou-te.");
 
                 // Place PlayerPain sound here
                 PlayAudio("PlayerPain", DisableAudio);
-                speak(tts, "Oh não! Morrêste!");
+                speak(tts, text);
+                text = "";
                 MoveHome(tts);
             }
             else
