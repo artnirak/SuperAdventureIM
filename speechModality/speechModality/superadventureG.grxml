@@ -491,12 +491,12 @@
       <!--INFO PRÓXIMO NÍVEL-->
       <item>
         <one-of>
-          <item>quantos pontos de experiência preciso para</item>
-          <item>quanto de experiência preciso para</item>
+          <item>quantos pontos de experiência preciso</item>
+          <item>quanto de experiência preciso</item>
         </one-of>
         <one-of>
-          <item>o</item>
-          <item>chegar ao</item>
+          <item>para o</item>
+          <item>para chegar ao</item>
           <item>até ao</item>
         </one-of>
         <item>próximo nível</item>
@@ -519,8 +519,7 @@
       <item>
         <one-of>
           <item>Que lugar é este</item>
-          <item>Onde é que estou</item>
-          <item>Onde é que eu estou</item>
+          <item>Onde é que <item repeat="0-1">eu</item> estou</item>
           <item>Dá-me a minha localização</item>
         </one-of>
         <tag>out.Info="INFO"</tag>
@@ -621,9 +620,6 @@
     <one-of>
       <item>
         cobra<tag>out="COBRA"</tag>
-      </item>
-      <item>
-        serpente<tag>out="SERPENTE"</tag>
       </item>
       <item>
         víbora<tag>out="VÍBORA"</tag>

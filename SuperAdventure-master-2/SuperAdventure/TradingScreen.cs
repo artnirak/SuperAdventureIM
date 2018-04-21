@@ -34,14 +34,14 @@ namespace SuperAdventure
 
             dgvMyItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Name",
-                Width = 100,
+                HeaderText = "Item",
+                Width = 160,
                 DataPropertyName = "Description"
             });
 
             dgvMyItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Qty",
+                HeaderText = "Qtd",
                 Width = 30,
                 DefaultCellStyle = rightAlignedCellStyle,
                 DataPropertyName = "Quantity"
@@ -49,17 +49,17 @@ namespace SuperAdventure
 
             dgvMyItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Price",
-                Width = 35,
+                HeaderText = "Preço",
+                Width = 45,
                 DefaultCellStyle = rightAlignedCellStyle,
                 DataPropertyName = "Price"
             });
 
             dgvMyItems.Columns.Add(new DataGridViewButtonColumn
             {
-                Text = "Sell 1",
+                Text = "Vender 1",
                 UseColumnTextForButtonValue = true,
-                Width = 50,
+                Width = 70,
                 DataPropertyName = "ItemID"
             });
 
@@ -83,14 +83,14 @@ namespace SuperAdventure
 
             dgvVendorItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Name",
-                Width = 100,
+                HeaderText = "Item",
+                Width = 160,
                 DataPropertyName = "Description"
             });
 
             dgvVendorItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Qty",
+                HeaderText = "Qtd",
                 Width = 30,
                 DefaultCellStyle = rightAlignedCellStyle,
                 DataPropertyName = "Quantity"
@@ -98,17 +98,17 @@ namespace SuperAdventure
 
             dgvVendorItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Price",
-                Width = 35,
+                HeaderText = "Preço",
+                Width = 45,
                 DefaultCellStyle = rightAlignedCellStyle,
                 DataPropertyName = "Price"
             });
 
             dgvVendorItems.Columns.Add(new DataGridViewButtonColumn
             {
-                Text = "Buy 1",
+                Text = "Comprar 1",
                 UseColumnTextForButtonValue = true,
-                Width = 50,
+                Width = 80,
                 DataPropertyName = "ItemID"
             });
 
