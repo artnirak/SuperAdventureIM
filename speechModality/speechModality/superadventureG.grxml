@@ -185,7 +185,6 @@
         <!--CONCATENAR ABRIR VENDEDOR COM COMPRA/VENDA DE ITENS-->
         <item repeat="0-1">
           <item>e</item>
-          <!--<ruleref uri="#comercializar" /> NOT WORKING IDKW-->
           <one-of>
             <item>
               vende<tag>out.Venda="VENDER"</tag>
@@ -252,6 +251,7 @@
         <tag>out.Interagir=rules.latest()</tag>
       </item>
     </one-of>
+    
     <item>
       <ruleref uri="#mapa" />
       <tag>out.Entidade=rules.latest()</tag>
@@ -321,13 +321,13 @@
         <item repeat="0-1">de rato</item>
       </item>
       <item>
-        as peles de cobras<tag>out="PELE_COBRA"</tag>
+        as peles de cobra<tag>out="PELE_COBRA"</tag>
       </item>
       <item>
-        as presas de cobras<tag>out="PRESAS_COBRA"</tag>
+        as presas de cobra<tag>out="PRESAS_COBRA"</tag>
       </item>
       <item>
-        os dentes de cobras<tag>out="PRESAS_COBRA"</tag>
+        os dentes de cobra<tag>out="PRESAS_COBRA"</tag>
       </item>
       <item>
         as presas de aranha<tag>out="PRESAS_ARANHA"</tag>
@@ -356,11 +356,13 @@
         <ruleref uri="#beberPocao" />
         <tag>out.BeberPocao=rules.latest()</tag>
       </item>
+      
       <item>
         <item>
           <ruleref uri="#equipar" />
           <tag>out.Equipar=rules.latest()</tag>
         </item>
+        
         <item>
           <ruleref uri="#arma" />
           <tag>out.Arma=rules.latest()</tag>
@@ -533,9 +535,6 @@
         <one-of>
           <item>
             vida<tag>out="VIDA"</tag>
-          </item>
-          <item>
-            experiência<tag>out="EXP"</tag>
           </item>
         </one-of>
       </item>

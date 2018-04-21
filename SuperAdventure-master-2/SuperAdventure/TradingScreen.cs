@@ -244,7 +244,7 @@ namespace SuperAdventure
                 }
                 else
                 {
-                    tts.Speak("O vendedor não tem ouro suficiente para te comprar esse item. Haha pobre.");
+                    tts.Speak("O vendedor não tem ouro suficiente para te comprar esse item.");
                 }
             }
             else
