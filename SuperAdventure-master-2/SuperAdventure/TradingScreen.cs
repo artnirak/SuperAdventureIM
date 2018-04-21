@@ -139,15 +139,15 @@ namespace SuperAdventure
                 // Check if the vendor wants an item in player's inventory
                 if (!itemBeingSold.VendorWants)
                 {
-                    //MessageBox.Show("Vendor doesn't want " + itemBeingSold.Name);
-                    //TTS
+                    MessageBox.Show("Vendor doesn't want " + itemBeingSold.Name);
+                    
                 }
                 // May get rid of this since there is a VendorWants property
                 // Check if item is unsellable
                 else if (itemBeingSold.Price == World.UNSELLABLE_ITEM_PRICE)
                 {
-                    //MessageBox.Show("You cannot sell the " + itemBeingSold.Name);
-                    //TTS
+                    MessageBox.Show("You cannot sell the " + itemBeingSold.Name);
+                   
                 }
                 // Check if Vendor has enough gold when buying a player's item
                 else if (_currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold >= itemBeingSold.Price)
@@ -163,8 +163,8 @@ namespace SuperAdventure
                 }
                 else
                 {
-                    //MessageBox.Show("Vendor does not have enough gold to buy " + itemBeingSold.Name);
-                    //TTS
+                    MessageBox.Show("Vendor does not have enough gold to buy " + itemBeingSold.Name);
+                    
                 }
             }
         }
@@ -172,25 +172,35 @@ namespace SuperAdventure
         public void VoiceBuy(int itemID,TTS tts)
         {
             Item itemBeingBought = World.ItemByID(Convert.ToInt32(itemID));
-            if ((itemBeingBought.CanOnlyHaveOne) && (_currentPlayer.Inventory.SingleOrDefault(ii => ii.Details.ID == itemBeingBought.ID)) != null)
+            
+            InventoryItem inv_item = _currentPlayer.CurrentLocation.VendorWorkingHere.Inventory.SingleOrDefault(ii => ii.Details.ID == itemBeingBought.ID);
+            if (inv_item != null)
             {
-                tts.Speak("Só podes ter um único item: "+itemBeingBought.Name);
-            }
-            // Check if the player has enough gold to buy the item
-            else if (_currentPlayer.Gold >= itemBeingBought.Price)
-            {
-                // Add one of the items to the player's inventory and remove from vendor's inventory
-                _currentPlayer.AddItemToInventory(itemBeingBought);
-                _currentPlayer.CurrentLocation.VendorWorkingHere.RemoveItemFromInventory(itemBeingBought);
+                if ((itemBeingBought.CanOnlyHaveOne) && (_currentPlayer.Inventory.SingleOrDefault(ii => ii.Details.ID == itemBeingBought.ID)) != null)
+                {
+                    tts.Speak("Só podes ter um único item: " + itemBeingBought.Name);
+                }
+                // Check if the player has enough gold to buy the item
+                else if (_currentPlayer.Gold >= itemBeingBought.Price)
+                {
+                    // Add one of the items to the player's inventory and remove from vendor's inventory
+                    _currentPlayer.AddItemToInventory(itemBeingBought);
+                    _currentPlayer.CurrentLocation.VendorWorkingHere.RemoveItemFromInventory(itemBeingBought);
 
-                // Remove the gold to pay for the item and add to vendor's gold
-                _currentPlayer.Gold -= itemBeingBought.Price;
-                _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold += itemBeingBought.Price;
+                    // Remove the gold to pay for the item and add to vendor's gold
+                    _currentPlayer.Gold -= itemBeingBought.Price;
+                    _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold += itemBeingBought.Price;
+                }
+                else
+                {
+                    tts.Speak("Não tens ouro suficiente para comprar isso.");
+                }
             }
             else
             {
-                tts.Speak("Não tens ouro suficiente para comprar isso. Haha pobre.");
+                tts.Speak("O vendedor não tem esse item!");
             }
+
         }
 
         public void VoiceSell(int itemID,TTS tts)
@@ -206,34 +216,42 @@ namespace SuperAdventure
 
             // Get the Item object for the selected item row
             Item itemBeingSold = World.ItemByID(Convert.ToInt32(itemID));
-
-            // Check if the vendor wants an item in player's inventory
-            if (!itemBeingSold.VendorWants)
+            InventoryItem inv_item = _currentPlayer.Inventory.SingleOrDefault(ii => ii.Details.ID == itemBeingSold.ID);
+            if(inv_item!=null)
             {
-                tts.Speak("O senhor vendedor não tem interesse nesse item.");
-            }
-            // May get rid of this since there is a VendorWants property
-            // Check if item is unsellable
-            else if (itemBeingSold.Price == World.UNSELLABLE_ITEM_PRICE)
-            {
-                tts.Speak("Esse item não pode ser vendido.");
-            }
-            // Check if Vendor has enough gold when buying a player's item
-            else if (_currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold >= itemBeingSold.Price)
-            {
-                // Remove one of these items from the player's inventory and add to Vendor's inventory
-                _currentPlayer.RemoveItemFromInventory(itemBeingSold);
-                _currentPlayer.CurrentLocation.VendorWorkingHere.AddItemToInventory(itemBeingSold);
+                // Check if the vendor wants an item in player's inventory
+                if (!itemBeingSold.VendorWants)
+                {
+                    tts.Speak("O senhor vendedor não tem interesse nesse item.");
+                }
+                // May get rid of this since there is a VendorWants property
+                // Check if item is unsellable
+                else if (itemBeingSold.Price == World.UNSELLABLE_ITEM_PRICE)
+                {
+                    tts.Speak("Esse item não pode ser vendido.");
+                }
+                // Check if Vendor has enough gold when buying a player's item
+                else if (_currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold >= itemBeingSold.Price)
+                {
+                    // Remove one of these items from the player's inventory and add to Vendor's inventory
+                    _currentPlayer.RemoveItemFromInventory(itemBeingSold);
+                    _currentPlayer.CurrentLocation.VendorWorkingHere.AddItemToInventory(itemBeingSold);
 
 
-                // Give the player the gold for the item being sold and remove gold from vendor
-                _currentPlayer.Gold += itemBeingSold.Price;
-                _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold -= itemBeingSold.Price;
+                    // Give the player the gold for the item being sold and remove gold from vendor
+                    _currentPlayer.Gold += itemBeingSold.Price;
+                    _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold -= itemBeingSold.Price;
+                }
+                else
+                {
+                    tts.Speak("O vendedor não tem ouro suficiente para te comprar esse item. Haha pobre.");
+                }
             }
             else
             {
-                tts.Speak("O vendedor não tem ouro suficiente para te comprar esse item. Haha pobre.");
+                tts.Speak("Não tens esse item.");
             }
+            
         }
 
         private void dgvVendorItems_CellClick(object sender, DataGridViewCellEventArgs e)
