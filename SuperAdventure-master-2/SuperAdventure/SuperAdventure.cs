@@ -563,8 +563,15 @@ namespace SuperAdventure
                 case "NAO":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        tts.Speak("Desculpa mas não percebi.");
-                        ask_attack = false;
+                        if (ask_attack == true)
+                        {
+                            tts.Speak("Certamente.");
+                            ask_attack = false;
+                        }
+                        else
+                        {
+                            tts.Speak("Desculpa mas não percebi.");
+                        }
                     });
                     break;
             }
