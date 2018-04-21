@@ -530,9 +530,11 @@ namespace Engine
             RaiseMessage("Tens uma missão nova: " + quest.Name + ".");
             RaiseMessage(quest.Description);
             RaiseMessage("Para completá-la, volta com:");
-
+            string items = "";
             foreach (QuestCompletionItem qci in quest.QuestCompletionItems)
             {
+                items += string.Format("{0} {1}", qci.Quantity,
+                    qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural);
                 RaiseMessage(string.Format("{0} {1}", qci.Quantity,
                     qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural));
             }
@@ -540,7 +542,8 @@ namespace Engine
             RaiseMessage("");
 
             Quests.Add(new PlayerQuest(quest));
-            tts.Speak("Tens uma missão nova: " + quest.Name + ".");
+            tts.Speak("Tens uma missão nova: " + quest.Name + "."+ " Para completá-la, volta com: "+items);
+            
         }
 
         private bool PlayerHasAllQuestCompletionItemsFor(Quest quest)
