@@ -56,16 +56,16 @@
 
   <!--DESLOCAR NO MAPA-->
   <rule id="deslocar">
+    <item>
       <item>
-        <item>
-          <ruleref uri="#move" />
-          <tag>out.Deslocar=rules.latest()</tag>
-        </item>
-        <item>
-          <ruleref uri="#directions" />
-          <tag>out.Sentido=rules.latest()</tag>
-        </item>
+        <ruleref uri="#move" />
+        <tag>out.Deslocar=rules.latest()</tag>
       </item>
+      <item>
+        <ruleref uri="#directions" />
+        <tag>out.Sentido=rules.latest()</tag>
+      </item>
+    </item>
   </rule>
 
   <!--ANUNCIAR MOVIMENTO-->
@@ -188,25 +188,17 @@
           <!--<ruleref uri="#comercializar" /> NOT WORKING IDKW-->
           <one-of>
             <item>
-              <item>
-                vende<tag>out.Venda="VENDER"</tag>
-              </item>
-              <item>
-                <ruleref uri="#itensUtilizador" />
-                <tag>out.Itens=rules.latest()</tag>
-              </item>
+              vende<tag>out.Venda="VENDER"</tag>
             </item>
-
             <item>
-              <item>
-                compra<tag>out.Compra="COMPRAR"</tag>
-              </item>
-              <item>
-                <ruleref uri="#itensVendedor" />
-                <tag>out.Itens=rules.latest()</tag>
-              </item>
+              compra<tag>out.Compra="COMPRAR"</tag>
             </item>
           </one-of>
+
+          <item>
+            <ruleref uri="#itens" />
+            <tag>out.Itens=rules.latest()</tag>
+          </item>
         </item>
       </item>
 
@@ -296,29 +288,21 @@
   <rule id="comercializar">
     <one-of>
       <item>
-        <item>
-          vende<tag>out.Venda="VENDER"</tag>
-        </item>
-        <item>
-          <ruleref uri="#itensUtilizador" />
-          <tag>out.Itens=rules.latest()</tag>
-        </item>
+        vende<tag>out.Venda="VENDER"</tag>
       </item>
-
       <item>
-        <item>
-          compra<tag>out.Compra="COMPRAR"</tag>
-        </item>
-        <item>
-          <ruleref uri="#itensVendedor" />
-          <tag>out.Itens=rules.latest()</tag>
-        </item>
+        compra<tag>out.Compra="COMPRAR"</tag>
       </item>
     </one-of>
+
+    <item>
+      <ruleref uri="#itens" />
+      <tag>out.Itens=rules.latest()</tag>
+    </item>
   </rule>
 
-  <!--ITENS DO UTILIZADOR-->
-  <rule id="itensUtilizador">
+  <!--ITENS-->
+  <rule id="itens">
     <one-of>
       <item>
         <ruleref uri="#arma" />
@@ -353,33 +337,6 @@
       </item>
       <item>
         o veneno de aranha<tag>out="VENENO_ARANHA"</tag>
-      </item>
-      <item>
-        <item>
-          a poção<tag>out="POCAO_VIDA"</tag>
-        </item>
-        <item repeat="0-1">
-          de vida
-        </item>
-      </item>
-    </one-of>
-  </rule>
-
-  <!--ITENS DO VENDEDOR-->
-  <rule id="itensVendedor">
-    <one-of>
-      <item>
-        <ruleref uri="#arma" />
-        <tag>out=rules.latest()</tag>
-      </item>
-      <item>
-        a cauda de rato<tag>out="CAUDA_RATO"</tag>
-      </item>
-      <item>
-        <item>
-          pêlo<tag>out="PELO_RATO"</tag>
-        </item>
-        <item repeat="0-1">de rato</item>
       </item>
       <item>
         <item>
@@ -487,7 +444,7 @@
         <tag>out.Info="INFO"</tag>
         <tag>out.Unidade="NEXT_LVL"</tag>
       </item>
-      
+
       <!--INFO ESTADO ATUAL-->
       <item>
         <one-of>
@@ -503,7 +460,9 @@
       <item>
         <one-of>
           <item>que lugar é este</item>
-          <item>onde é que <item repeat="0-1">eu</item> estou</item>
+          <item>
+            onde é que <item repeat="0-1">eu</item> estou
+          </item>
           <item>dá-me a minha localização</item>
         </one-of>
         <tag>out.Info="INFO"</tag>
