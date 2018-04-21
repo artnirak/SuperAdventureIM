@@ -30,7 +30,6 @@ namespace SuperAdventure
             tts = new TTS();
             mmiC = new MmiCommunication("localhost", 8000, "User1", "GUI");
             mmiC.Message += MmiC_Message;
-            Console.WriteLine("faço isto quantas vezes? ????");
             StartComms(mmiC);
 
             if (_player == null)
@@ -127,7 +126,6 @@ namespace SuperAdventure
         {
             var array = json_array.recognized;
             int x = ((IEnumerable<dynamic>)array).Cast<dynamic>().Count();
-            Console.WriteLine("tamanho: " + x.ToString());
             return x;
 
         }
@@ -188,7 +186,6 @@ namespace SuperAdventure
         }
         public void MmiC_Message(object sender, MmiEventArgs e)
         {
-            Console.WriteLine(e.Message);
             var doc = XDocument.Parse(e.Message);
             var com = doc.Descendants("command").FirstOrDefault().Value;
             dynamic json = JsonConvert.DeserializeObject(com);
@@ -200,7 +197,7 @@ namespace SuperAdventure
                     {
                         if (chkbxSndDisable.Checked == true)
                         {
-                            tts.Speak("O som já está desactivado, não é preciso dizer mais que uma vez.");
+                            tts.Speak("O som já está desactivado.");
                         }
                         else
                         {
@@ -215,7 +212,7 @@ namespace SuperAdventure
                     {
                         if (chkbxSndDisable.Checked == false)
                         {
-                            tts.Speak("O som já está activado. O som já está activado. É chato não é?");
+                            tts.Speak("O som já está activado.");
                         }
                         else
                         {
@@ -232,33 +229,29 @@ namespace SuperAdventure
                         {
                             if (JsonArray_Length(json) == 1)
                             {
-
-                                btnUseWeapon_Click(null, null);
+                                btnUseWeapon_Click(sender,e);
                             }
                             else
                             {
-                                Console.WriteLine(_player.CurrentMonster.Name.ToLower());
                                 if (_player.CurrentMonster.Name.ToLower() != (string)json.recognized[1].ToString().ToLower())
                                 {
                                     String monster = (string)json.recognized[1].ToString();
-                                    //TTS é um _player.CurrentMonster.Name.ToLower() mas vou atacar a mesma!
                                     tts.Speak("O monstro não é"+ World.MonsterByID(getObj_ID(monster)).Name + ", é"+ _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
                                     ask_attack = true;
                                 }
                                 else
                                 {
-                                    btnUseWeapon_Click(null, null);
+                                    btnUseWeapon_Click(sender, e);
                                 }
 
                             }
                         }
                         else
                         {
-                            tts.Speak("Atacar quem? Não há monstros aqui.");
+                            tts.Speak("Não existem monstros aqui.");
                         }
                     });
                     break;
-
                 case "ABRIR":
                     Invoke((MethodInvoker)delegate
                     {
@@ -342,7 +335,7 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            //TTS
+                            tts.Speak("Não tens nada aberto para fechar.");
                         }
                     }
                     break;
@@ -365,7 +358,7 @@ namespace SuperAdventure
                             }
                             else
                             {
-                                tts.Speak("Primeiro tens que abrir a interface do vendedor.");
+                                tts.Speak("Primeiro tens que abrir o vendedor.");
                             }
                         }
                     }
@@ -389,7 +382,7 @@ namespace SuperAdventure
                             }
                             else
                             {
-                                tts.Speak("Primeiro tens que abrir a interface do vendedor.");
+                                tts.Speak("Primeiro tens que abrir o vendedor.");
                             }  
                         }
                     }
@@ -401,10 +394,15 @@ namespace SuperAdventure
                         this.Invoke((MethodInvoker)delegate
                         {
                             int itemID = getObj_ID((string)json.recognized[1].ToString());
-                            Weapon weapon = World.WeaponByID(Convert.ToInt32(itemID));
-                            if(_player.Weapons.Contains(weapon))
+                            Item weapon = World.ItemByID(Convert.ToInt32(itemID));
+                            if(_player.Weapons.Contains(weapon) && _player.CurrentLocation.HasAMonster)
                             {
                                 cboWeapons.SelectedIndex = cboWeapons.FindStringExact(weapon.Name);
+                                tts.Speak("Equipaste a arma: " + weapon.Name);
+                            }
+                            else if(! _player.CurrentLocation.HasAMonster)
+                            {
+                                tts.Speak("Só podes fazer isso em combate!");
                             }
                             else
                             {
@@ -420,9 +418,14 @@ namespace SuperAdventure
                         int itemID = getObj_ID((string)json.recognized[0].ToString());
                         Item potion = World.ItemByID(Convert.ToInt32(itemID));
                         cboPotions.SelectedIndex = cboPotions.FindStringExact(potion.Name);
-                        if(_player.Potions.Any())
+                        if(_player.Potions.Any() && _player.CurrentLocation.HasAMonster)
                         {
                             btnUsePotion_Click(null, null);
+                            tts.Speak("Bebeste a poção glub glub.");
+                        }
+                        else if(!_player.CurrentLocation.HasAMonster)
+                        {
+                            tts.Speak("Só podes fazer isso em combate.");
                         }
                         else
                         {
@@ -443,7 +446,12 @@ namespace SuperAdventure
                         {
                             int exp_to_next_level = _player.Level * 100 - _player.ExperiencePoints;
                             tts.Speak("Faltam-te " + exp_to_next_level + " pontos de experiência para o próximo nível.");
-                            
+                        }
+                        else if((string)json.recognized[1].ToString() == "LOCAL")
+                        {
+                            string local_name = _player.CurrentLocation.Name;
+                            string local_description = _player.CurrentLocation.Description;
+                            tts.Speak("Estás em " + local_name + ". "+local_description);
                         }
                         else if((string)json.recognized[1].ToString() == "LVL")
                         {
@@ -451,7 +459,7 @@ namespace SuperAdventure
                         }
                         else if((string)json.recognized[1].ToString() == "ESTADO")
                         {
-                            tts.Speak("Estás com " + _player.CurrentHitPoints + " pontos de vida." + "Neste momento tens " + _player.Gold + "moedas de ouro."+"A tua localização é: "+_player.CurrentLocation.Name);
+                            tts.Speak("Estás com " + _player.CurrentHitPoints + " pontos de vida." + "Tens " + _player.Gold + "moedas de ouro."+"E a tua localização é: "+_player.CurrentLocation.Name);
                         }
 
                     });
@@ -629,7 +637,7 @@ namespace SuperAdventure
             // Get the currently selected weapon from the cboWeapons ComboBox
             Weapon currentWeapon = (Weapon)cboWeapons.SelectedItem;
 
-            _player.UseWeapon(currentWeapon);
+            _player.UseWeapon(currentWeapon,tts);
         }
 
         private void btnUsePotion_Click(object sender, EventArgs e)
@@ -645,7 +653,7 @@ namespace SuperAdventure
             // Get the currently selected potion from the combobox
             HealingPotion potion = (HealingPotion)cboPotions.SelectedItem;
 
-            _player.UsePotion(potion);
+            _player.UsePotion(potion, tts);
         }
 
         // On text change of Messages box, show new message and scroll to bottom.
@@ -674,7 +682,7 @@ namespace SuperAdventure
             }
             else if (IsFormOpen("TradingScreen"))
             {
-                //TTS VENDEDOR JÁ ABERTO
+                tts.Speak("O vendedor já está aberto.");
             }
             else
             {
@@ -708,7 +716,7 @@ namespace SuperAdventure
 
             if (IsFormOpen("WorldMap"))
             {
-                //TTS MAPA JÁ ABERTO
+                tts.Speak("O mapa já está aberto.");
             }
             else if (IsFormOpen("TradingScreen"))
             {

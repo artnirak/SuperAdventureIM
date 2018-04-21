@@ -128,7 +128,7 @@ namespace Engine
         private static void PopulateLocations()
         {
             // Create each location
-            Location home = new Location(LOCATION_ID_HOME, "Casa", "O teu quarto... que desarrumação.");
+            Location home = new Location(LOCATION_ID_HOME, "Casa", "O teu quarto está muito desarrumado...");
 
             Location townSquare = new Location(LOCATION_ID_TOWN_SQUARE, "Praça da cidade", "Vês uma fonte de água.");
             Vendor hobbitWares = new Engine.Vendor("Hobbit mercante", 50);

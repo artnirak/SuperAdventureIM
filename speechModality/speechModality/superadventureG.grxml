@@ -497,6 +497,7 @@
         <one-of>
           <item>o</item>
           <item>chegar ao</item>
+          <item>até ao</item>
         </one-of>
         <item>próximo nível</item>
         <tag>out.Info="INFO"</tag>
@@ -519,6 +520,7 @@
         <one-of>
           <item>Que lugar é este</item>
           <item>Onde é que estou</item>
+          <item>Onde é que eu estou</item>
           <item>Dá-me a minha localização</item>
         </one-of>
         <tag>out.Info="INFO"</tag>
@@ -532,6 +534,7 @@
     <one-of>
       <item>dá-me informação sobre</item>
       <item>quero saber do que se trata</item>
+      <item>descreve-me</item>
     </one-of>
     <tag>out="INFO"</tag>
   </rule>

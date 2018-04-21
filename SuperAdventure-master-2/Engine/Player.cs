@@ -13,6 +13,7 @@ namespace Engine
         private int _experiencePoints;
         private Location _currentLocation;
         private bool _disableAudio;
+        private string text;
 
         
 
@@ -177,7 +178,6 @@ namespace Engine
             if (PlayerDoesNotHaveTheRequiredItemToEnter(location))
             {
                 RaiseMessage("Tens de obter " + location.ItemRequiredToEnter.Name + " primeiro para entrar neste local.");
-                //TTS
                 return;
             }
 
@@ -215,6 +215,7 @@ namespace Engine
             if (CurrentLocation.LocationToNorth != null)
             {
                 MoveTo(CurrentLocation.LocationToNorth);
+                tts.Speak("Foste para Norte.");
             }
             else
             {
@@ -227,6 +228,7 @@ namespace Engine
             if (CurrentLocation.LocationToEast != null)
             {
                 MoveTo(CurrentLocation.LocationToEast);
+                tts.Speak("Foste para Este.");
             }
             else
             {
@@ -239,6 +241,7 @@ namespace Engine
             if (CurrentLocation.LocationToSouth != null)
             {
                 MoveTo(CurrentLocation.LocationToSouth);
+                tts.Speak("Foste para Sul.");
             }
             else
             {
@@ -251,42 +254,52 @@ namespace Engine
             if (CurrentLocation.LocationToWest != null)
             {
                 MoveTo(CurrentLocation.LocationToWest);
+                tts.Speak("Foste para Oeste.");
             }
             else
             {
                 tts.Speak("Não podes ir mais para Oeste.");
             }
         }
+        public void speak(TTS tts, string text)
+        {
+            tts.Speak(text);
+        }
 
-        public void UseWeapon(Weapon weapon)
+        public void UseWeapon(Weapon weapon,TTS tts)
         {
             int damage = RandomNumberGenerator.NumberBetween(weapon.MinimumDamage, weapon.MaximumDamage);
-
             if (damage == 0)
             {
+                Console.WriteLine("falhaste");
+                text="Falháste o ataque. ";
                 RaiseMessage("Falhaste o ataque.");
 
                 // Place AttackMiss sound
                 PlayAudio("AttackMiss", DisableAudio);
+                
             }
             else
             {
+                Console.WriteLine("Acertaste");
                 CurrentMonster.CurrentHitPoints -= damage;
-                RaiseMessage("Acertaste! tiraste " + damage + " pontos de vida.");
-
+                RaiseMessage("Acertaste! Tiraste " + damage + " pontos de vida. ");
+                text = "Acertáste! Tiráste " + damage + " pontos de vida. ";
                 // Place SwordHit or ClubHit sound
                 if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)
                 {
-                    PlayAudio("SwordHit", DisableAudio);
+                   PlayAudio("SwordHit", DisableAudio);
+
                 }
                 else if (CurrentWeapon.ID == World.ITEM_ID_CLUB)
-                {
+                { 
                     PlayAudio("ClubHit", DisableAudio);
                 }
             }
 
             if (CurrentMonster.IsDead)
             {
+                text = "Mataste o monstro!";
                 RaiseMessage("");
                 RaiseMessage("Mataste o monstro!");
 
@@ -299,24 +312,28 @@ namespace Engine
                 {
                     PlayAudio("MonsterPainClub", DisableAudio);
                 }
-
-                LootTheCurrentMonster();
+                
+                LootTheCurrentMonster(tts);
 
                 // "Move" to the current location, to refresh the current monster
                 MoveTo(CurrentLocation);
             }
             else
             {
-                LetTheMonsterAttack();
+
+                LetTheMonsterAttack(tts);
             }
+            
         }
 
-        private void LootTheCurrentMonster()
+        private void LootTheCurrentMonster(TTS tts)
         {
+            Console.WriteLine("LOOT");
             RaiseMessage("");
             RaiseMessage("Recebeste " + CurrentMonster.RewardExperiencePoints + " pontos de experiência.");
+            
             RaiseMessage("Recebeste " + CurrentMonster.RewardGold + " moedas de ouro.");
-
+            string reward = "Matáste o monstro! Recebeste " + CurrentMonster.RewardGold + " moedas de ouro " + "e " + CurrentMonster.RewardExperiencePoints + " pontos de experiência";
             AddExperiencePoints(CurrentMonster.RewardExperiencePoints);
             Gold += CurrentMonster.RewardGold;
 
@@ -329,18 +346,22 @@ namespace Engine
             }
 
             RaiseMessage("");
+            tts.Speak(reward);
+
         }
 
-        public void UsePotion(HealingPotion potion)
+        public void UsePotion(HealingPotion potion, TTS tts)
         {
             RaiseMessage("Tu bebes a " + potion.Name +".");
+            tts.Speak("Bebeste a" + potion.Name + ".");
+            
 
             HealPlayer(potion.AmountToHeal);
 
             RemoveItemFromInventory(potion);
 
             // The player used their turn to drink the potion, so let the monster attack now
-            LetTheMonsterAttack();
+            LetTheMonsterAttack(tts);
         }
 
         public void AddItemToInventory(Item itemToAdd, int quantity = 1)
@@ -594,23 +615,29 @@ namespace Engine
             return returnval;
         }
 
-        private void LetTheMonsterAttack()
+        private void LetTheMonsterAttack(TTS tts)
         {
             int damageToPlayer = RandomNumberGenerator.NumberBetween(0, CurrentMonster.MaximumDamage);
 
-            RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0)+ " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida.");
-
+            RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0).ToUpper()+ " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida.");
+            string happens = CheckMonsterGender(CurrentMonster.Name, 0).ToUpper() + " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida.";
             CurrentHitPoints -= damageToPlayer;
 
             if (IsDead)
             {
-                RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0)+" " + CurrentMonster.Name + " matou-te. RIP");
+                RaiseMessage(CheckMonsterGender(CurrentMonster.Name,0).ToUpper()+" " + CurrentMonster.Name + " matou-te.");
 
                 // Place PlayerPain sound here
                 PlayAudio("PlayerPain", DisableAudio);
-
+                speak(tts, "Oh não! Morrêste!");
                 MoveHome();
             }
+            else
+            {
+                speak(tts, text);
+                text = "";
+            }
+
         }
 
         private void HealPlayer(int hitPointsToHeal)
@@ -667,11 +694,26 @@ namespace Engine
         {
             if (!disabled)
             {
-                SoundPlayer audio;
-                Stream s = Engine.Properties.Media.ResourceManager.GetStream(soundToPlay);
-                audio = new SoundPlayer(s);
-                audio.PlaySync();
+                SoundPlayer audio = null;
+                Stream s = null;
+                try
+                {
+                    s = Engine.Properties.Media.ResourceManager.GetStream(soundToPlay);
+                    audio = new SoundPlayer(s);
+                    audio.Play();
+                } finally {
+                    if( s != null && audio != null)
+                    {
+                        s.Dispose();
+                        audio.Dispose();
+                    }
+
+                }
+
+
+
             }
         }
+       
     }
 }

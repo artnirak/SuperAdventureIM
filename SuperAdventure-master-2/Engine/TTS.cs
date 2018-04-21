@@ -110,31 +110,6 @@ namespace Engine
             tts.SpeakAsync(text);
         }
 
-        public void Speak(string text, int rate)
-        {
-
-            Console.WriteLine("Speak method called , version with samplerate parameter");
-
-            while (player.Stream != null)
-            {
-                Console.WriteLine("Waiting...");
-            }
-
-
-            //create audio stream with speech
-            player.Stream = new System.IO.MemoryStream();
-            tts.SetOutputToWaveStream(player.Stream);
-            tts.Rate = rate;
-            // tts.SpeakAsync(text);
-
-
-            Console.WriteLine("... calling  SpeakSsmlAsync()");
-
-            tts.SpeakSsmlAsync(text);
-
-            Console.WriteLine("done  SpeakSsmlAsync().\n");
-
-        }
 
         /*
          * tts_SpeakCompleted
@@ -145,8 +120,8 @@ namespace Engine
             {
                 //play stream
                 player.Stream.Position = 0;
-                player.Play();
-                player.Stream = null;  //  NEW 2015
+                player.PlaySync();
+                player.Stream = null;
             }
         }
     }
