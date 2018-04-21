@@ -20,14 +20,6 @@ namespace Engine
         public TTS()
         {
 
-
-            //Console.WriteLine("TTS constructor called");
-
-
-
-            //create sound player
-            //player = new SoundPlayer();
-
             //create speech synthesizer
             tts = new SpeechSynthesizer();
 
@@ -46,7 +38,6 @@ namespace Engine
                 //set function to play audio after synthesis is complete
                 tts.SpeakCompleted += new EventHandler<SpeakCompletedEventArgs>(tts_SpeakCompleted);
                 // Output information about all of the installed voices. 
-                //Console.WriteLine("Installed voices -");
                 /*
                 foreach (InstalledVoice voice in synth.GetInstalledVoices())
                 {

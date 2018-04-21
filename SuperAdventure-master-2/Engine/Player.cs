@@ -173,11 +173,13 @@ namespace Engine
             return player;
         }
 
-        public void MoveTo(Location location)
+        public void MoveTo(Location location, TTS tts, string text)
         {
             if (PlayerDoesNotHaveTheRequiredItemToEnter(location))
             {
                 RaiseMessage("Tens de obter " + location.ItemRequiredToEnter.Name + " primeiro para entrar neste local.");
+                text = "Tens de obter " + location.ItemRequiredToEnter.Name + " primeiro para entrar neste local.";
+                tts.Speak(text);
                 return;
             }
 
@@ -195,16 +197,24 @@ namespace Engine
             {
                 if (PlayerDoesNotHaveThisQuest(location.QuestAvailableHere))
                 {
-                    GiveQuestToPlayer(location.QuestAvailableHere);
+                    GiveQuestToPlayer(location.QuestAvailableHere, tts);
                 }
                 else
                 {
                     if (PlayerHasNotCompleted(location.QuestAvailableHere) &&
                        PlayerHasAllQuestCompletionItemsFor(location.QuestAvailableHere))
                     {
-                        GivePlayerQuestRewards(location.QuestAvailableHere);
+                        GivePlayerQuestRewards(location.QuestAvailableHere, tts);
+                    }
+                    else
+                    {
+                        tts.Speak(text);
                     }
                 }
+            }
+            else
+            {
+                tts.Speak(text);
             }
 
             SetTheCurrentMonsterForTheCurrentLocation(location);
@@ -214,8 +224,9 @@ namespace Engine
         {
             if (CurrentLocation.LocationToNorth != null)
             {
-                MoveTo(CurrentLocation.LocationToNorth);
-                tts.Speak("Foste para Norte.");
+                string text = "Foste para Norte.";
+                MoveTo(CurrentLocation.LocationToNorth, tts, text);
+                
             }
             else
             {
@@ -227,8 +238,9 @@ namespace Engine
         {
             if (CurrentLocation.LocationToEast != null)
             {
-                MoveTo(CurrentLocation.LocationToEast);
-                tts.Speak("Foste para Este.");
+                string text = "Foste para Este.";
+                MoveTo(CurrentLocation.LocationToEast, tts, text);
+                
             }
             else
             {
@@ -240,8 +252,9 @@ namespace Engine
         {
             if (CurrentLocation.LocationToSouth != null)
             {
-                MoveTo(CurrentLocation.LocationToSouth);
-                tts.Speak("Foste para Sul.");
+                string text = "Foste para Sul.";
+                MoveTo(CurrentLocation.LocationToSouth, tts, text);
+                
             }
             else
             {
@@ -253,8 +266,9 @@ namespace Engine
         {
             if (CurrentLocation.LocationToWest != null)
             {
-                MoveTo(CurrentLocation.LocationToWest);
-                tts.Speak("Foste para Oeste.");
+                string text = "Foste para Oeste.";
+                MoveTo(CurrentLocation.LocationToWest, tts, text);
+                
             }
             else
             {
@@ -271,7 +285,6 @@ namespace Engine
             int damage = RandomNumberGenerator.NumberBetween(weapon.MinimumDamage, weapon.MaximumDamage);
             if (damage == 0)
             {
-                Console.WriteLine("falhaste");
                 text="Falháste o ataque. ";
                 RaiseMessage("Falhaste o ataque.");
 
@@ -281,7 +294,6 @@ namespace Engine
             }
             else
             {
-                Console.WriteLine("Acertaste");
                 CurrentMonster.CurrentHitPoints -= damage;
                 RaiseMessage("Acertaste! Tiraste " + damage + " pontos de vida. ");
                 text = "Acertáste! Tiráste " + damage + " pontos de vida. ";
@@ -316,7 +328,7 @@ namespace Engine
                 LootTheCurrentMonster(tts);
 
                 // "Move" to the current location, to refresh the current monster
-                MoveTo(CurrentLocation);
+                MoveTo(CurrentLocation, tts, "");
             }
             else
             {
@@ -328,12 +340,11 @@ namespace Engine
 
         private void LootTheCurrentMonster(TTS tts)
         {
-            Console.WriteLine("LOOT");
             RaiseMessage("");
             RaiseMessage("Recebeste " + CurrentMonster.RewardExperiencePoints + " pontos de experiência.");
             
             RaiseMessage("Recebeste " + CurrentMonster.RewardGold + " moedas de ouro.");
-            string reward = "Matáste o monstro! Recebeste " + CurrentMonster.RewardGold + " moedas de ouro " + "e " + CurrentMonster.RewardExperiencePoints + " pontos de experiência";
+            string reward = "Matáste um monstro! Recebeste " + CurrentMonster.RewardGold + " moedas de ouro " + "e " + CurrentMonster.RewardExperiencePoints + " pontos de experiência";
             AddExperiencePoints(CurrentMonster.RewardExperiencePoints);
             Gold += CurrentMonster.RewardGold;
 
@@ -353,7 +364,7 @@ namespace Engine
         public void UsePotion(HealingPotion potion, TTS tts)
         {
             RaiseMessage("Tu bebes a " + potion.Name +".");
-            tts.Speak("Bebeste a" + potion.Name + ".");
+            text = "Bebeste a poção";
             
 
             HealPlayer(potion.AmountToHeal);
@@ -505,7 +516,7 @@ namespace Engine
             return Quests.Any(pq => pq.Details.ID == quest.ID && !pq.IsCompleted);
         }
 
-        private void GiveQuestToPlayer(Quest quest)
+        private void GiveQuestToPlayer(Quest quest, TTS tts)
         {
             RaiseMessage("Tens uma missão nova: " + quest.Name + ".");
             RaiseMessage(quest.Description);
@@ -520,6 +531,7 @@ namespace Engine
             RaiseMessage("");
 
             Quests.Add(new PlayerQuest(quest));
+            tts.Speak("Tens uma missão nova: " + quest.Name + ".");
         }
 
         private bool PlayerHasAllQuestCompletionItemsFor(Quest quest)
@@ -557,7 +569,7 @@ namespace Engine
             MaximumHitPoints = (Level * 10);
         }
 
-        private void GivePlayerQuestRewards(Quest quest)
+        private void GivePlayerQuestRewards(Quest quest, TTS tts)
         {
             RaiseMessage("");
             RaiseMessage("Completaste a missão '" + quest.Name + "'!");
@@ -573,6 +585,7 @@ namespace Engine
             AddItemToInventory(quest.RewardItem);
 
             MarkPlayerQuestCompleted(quest);
+            tts.Speak("Completaste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência e " + quest.RewardGold + " moedas de ouro.");
         }
 
         private void MarkPlayerQuestCompleted(Quest quest)
@@ -630,7 +643,7 @@ namespace Engine
                 // Place PlayerPain sound here
                 PlayAudio("PlayerPain", DisableAudio);
                 speak(tts, "Oh não! Morrêste!");
-                MoveHome();
+                MoveHome(tts);
             }
             else
             {
@@ -650,9 +663,9 @@ namespace Engine
             CurrentHitPoints = MaximumHitPoints;
         }
 
-        private void MoveHome()
+        private void MoveHome(TTS tts)
         {
-            MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
+            MoveTo(World.LocationByID(World.LOCATION_ID_HOME), tts, "");
         }
 
         private void CreateNewChildXmlNode(XmlDocument document, XmlNode parentNode, string elementName, object value)

@@ -103,7 +103,7 @@ namespace SuperAdventure
             _player.PropertyChanged += PlayerOnPropertyChanged;
             _player.OnMessage += DisplayMessage;
 
-            _player.MoveTo(_player.CurrentLocation);
+            _player.MoveTo(_player.CurrentLocation, tts,"");
 
 
         }
@@ -267,7 +267,7 @@ namespace SuperAdventure
                             }
                             else
                             {
-                                tts.Speak("Não podes abrir isso agora.");
+                                tts.Speak("Já está aberto.");
                             }
                         }
                         else
@@ -398,7 +398,7 @@ namespace SuperAdventure
                             if(_player.Weapons.Contains(weapon) && _player.CurrentLocation.HasAMonster)
                             {
                                 cboWeapons.SelectedIndex = cboWeapons.FindStringExact(weapon.Name);
-                                tts.Speak("Equipaste a arma: " + weapon.Name);
+                                tts.Speak("Equipáste a arma: " + weapon.Name);
                             }
                             else if(! _player.CurrentLocation.HasAMonster)
                             {
@@ -421,7 +421,6 @@ namespace SuperAdventure
                         if(_player.Potions.Any() && _player.CurrentLocation.HasAMonster)
                         {
                             btnUsePotion_Click(null, null);
-                            tts.Speak("Bebeste a poção glub glub.");
                         }
                         else if(!_player.CurrentLocation.HasAMonster)
                         {
@@ -680,10 +679,6 @@ namespace SuperAdventure
             {
                 mapScreen.Close();
             }
-            else if (IsFormOpen("TradingScreen"))
-            {
-                tts.Speak("O vendedor já está aberto.");
-            }
             else
             {
                 tradingScreen = new TradingScreen(_player);
@@ -712,13 +707,8 @@ namespace SuperAdventure
 
         private void btnMap_Click(object sender, EventArgs e)
         {
-            //mmiC.Stop();
 
-            if (IsFormOpen("WorldMap"))
-            {
-                tts.Speak("O mapa já está aberto.");
-            }
-            else if (IsFormOpen("TradingScreen"))
+            if (IsFormOpen("TradingScreen"))
             {
                 tradingScreen.Close();
             }
