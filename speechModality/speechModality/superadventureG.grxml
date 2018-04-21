@@ -56,8 +56,6 @@
 
   <!--DESLOCAR NO MAPA-->
   <rule id="deslocar">
-    <one-of>
-      <!--MOVER NAS DIREÇÕES-->
       <item>
         <item>
           <ruleref uri="#move" />
@@ -68,20 +66,6 @@
           <tag>out.Sentido=rules.latest()</tag>
         </item>
       </item>
-
-      <!--MOVER PARA CASA-->
-      <item>
-        <item>
-          <ruleref uri="#move" />
-          <tag>out.Deslocar=rules.latest()</tag>
-        </item>
-        <!--"volta para (maybe?)"-->
-        <item>
-          <ruleref uri="#casa" />
-          <tag>out.Casa=rules.latest()</tag>
-        </item>
-      </item>
-    </one-of>
   </rule>
 
   <!--ANUNCIAR MOVIMENTO-->
@@ -518,9 +502,9 @@
       <!--INFO LOCALIZAÇÃO ATUAL-->
       <item>
         <one-of>
-          <item>Que lugar é este</item>
-          <item>Onde é que <item repeat="0-1">eu</item> estou</item>
-          <item>Dá-me a minha localização</item>
+          <item>que lugar é este</item>
+          <item>onde é que <item repeat="0-1">eu</item> estou</item>
+          <item>dá-me a minha localização</item>
         </one-of>
         <tag>out.Info="INFO"</tag>
         <tag>out.Local="LOCAL"</tag>
@@ -628,18 +612,6 @@
         cascavel<tag>out="CASCAVEL"</tag>
       </item>
     </one-of>
-  </rule>
-
-  <!--NOME DE CASA-->
-  <rule id="casa">
-    <item>
-      <one-of>
-        <item>casa</item>
-        <item>esconderijo</item>
-        <item>início</item>
-      </one-of>
-      <tag>out="CASA"</tag>
-    </item>
   </rule>
 
   <!--NOMES PARA MAPA-->
