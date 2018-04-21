@@ -183,7 +183,6 @@ namespace Engine
                 text = "";
                 return;
             }
-            Console.WriteLine(text + "eheh");
             // The player can enter this location
             CurrentLocation = location;
 
@@ -209,7 +208,6 @@ namespace Engine
                     }
                 }
             }
-            Console.WriteLine(text + "iiihih");
             SetTheCurrentMonsterForTheCurrentLocation(location, tts);
         }
 
@@ -218,7 +216,6 @@ namespace Engine
             if (CurrentLocation.LocationToNorth != null)
             {
                 text = "Foste para Norte.";
-                Console.WriteLine(text);
                 MoveTo(CurrentLocation.LocationToNorth, tts);
                 
             }
@@ -275,17 +272,15 @@ namespace Engine
             int damage = RandomNumberGenerator.NumberBetween(weapon.MinimumDamage, weapon.MaximumDamage);
             if (damage == 0)
             {
-                Console.WriteLine("Falhaste");
                 text="Falháste o ataque. ";
                 RaiseMessage("Falhaste o ataque.");
 
                 // Place AttackMiss sound
-                //PlayAudio("AttackMiss", DisableAudio);
+                PlayAudio("AttackMiss", DisableAudio);
                 
             }
             else
             {
-                Console.WriteLine("Acertaste");
                 CurrentMonster.CurrentHitPoints -= damage;
                 RaiseMessage("Acertaste! Tiraste " + damage + " pontos de vida. ");
                 text = "Acertáste! Tiráste " + damage + " pontos de vida. ";
@@ -295,7 +290,7 @@ namespace Engine
                 }
                 
                 // Place SwordHit or ClubHit sound
-                /*
+                
                 if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)
                 {
                    PlayAudio("SwordHit", DisableAudio);
@@ -304,17 +299,25 @@ namespace Engine
                 else if (CurrentWeapon.ID == World.ITEM_ID_CLUB)
                 { 
                     PlayAudio("ClubHit", DisableAudio);
-                }*/
+                }
             }
 
             if (CurrentMonster.IsDead)
             {
-                Console.WriteLine("Morto");
                 RaiseMessage("");
                 RaiseMessage("Mataste o monstro!");
-                
+
                 // Place MonsterPain sound based on weapon used
-                
+                if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)
+                {
+                    PlayAudio("MonsterPainSword", DisableAudio);
+
+                }
+                else if (CurrentWeapon.ID == World.ITEM_ID_CLUB)
+                {
+                    PlayAudio("MonsterPainClub", DisableAudio);
+                }
+
                 LootTheCurrentMonster(tts);
 
                 // "Move" to the current location, to refresh the current monster
@@ -322,7 +325,6 @@ namespace Engine
             }
             else
             {
-                Console.WriteLine("não morto");
                 LetTheMonsterAttack(tts);
             }
             
@@ -489,7 +491,6 @@ namespace Engine
                 RaiseMessage("Tu vês "+ CheckMonsterGender(CurrentMonster.Name,1) +" " + CurrentMonster.Name+".");
                 if(text != "")
                 {
-                    Console.WriteLine("aqui1");
                     tts.Speak(text+" e vês " + CheckMonsterGender(CurrentMonster.Name, 1) + " " + CurrentMonster.Name + ".");
                     text = "";
                 }

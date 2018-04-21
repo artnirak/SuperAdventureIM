@@ -113,7 +113,6 @@ namespace SuperAdventure
             FormCollection fc = Application.OpenForms;
             foreach (Form frm in fc)
             {
-                Console.WriteLine("nome form: " + frm.Name);
                 if (frm.Name == form_name)
                 {
                     return true;
