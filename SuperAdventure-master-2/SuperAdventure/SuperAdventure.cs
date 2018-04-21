@@ -135,6 +135,16 @@ namespace SuperAdventure
             int id = 0;
             switch (item_rule)
             {
+                case "COBRA":
+                    if(_player.CurrentMonster.ID == 2 || _player.CurrentMonster.ID == 3)
+                    {
+                        id = _player.CurrentMonster.ID;
+                    }
+                    else
+                    {
+                        id = 0;
+                    }
+                    break;
                 case "ARANHA":
                     id = World.MONSTER_ID_GIANT_SPIDER;
                     break;
@@ -208,6 +218,7 @@ namespace SuperAdventure
                             this._player.DisableAudio = true;
                             tts.Speak("Som desactivado!");
                         }
+                        ask_attack = false;
                     });
                     break;
                 case "UNMUTE":
@@ -223,6 +234,7 @@ namespace SuperAdventure
                             this._player.DisableAudio = false;
                             tts.Speak("Som activado!");
                         }
+                        ask_attack = false;
                     });
                     break;
                 case "ATACAR":
@@ -232,19 +244,35 @@ namespace SuperAdventure
                         {
                             if (JsonArray_Length(json) == 1)
                             {
-                                btnUseWeapon_Click(sender,e);
+                                btnUseWeapon_Click(null,null);
+                                ask_attack = false;
                             }
                             else
                             {
                                 if (_player.CurrentMonster.Name.ToLower() != (string)json.recognized[1].ToString().ToLower())
                                 {
                                     String monster = (string)json.recognized[1].ToString();
-                                    tts.Speak("O monstro não é"+ World.MonsterByID(getObj_ID(monster)).Name + ", é"+ _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
-                                    ask_attack = true;
+                                    if(getObj_ID(monster) != _player.CurrentMonster.ID)
+                                    {
+                                        tts.Speak("O monstro não é" + World.MonsterByID(getObj_ID(monster)).Name + ", é" + _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
+                                        ask_attack = true;
+                                    }
+                                    else if(getObj_ID(monster) == 0)
+                                    {
+                                        tts.Speak("O monstro não é esse" + ", é" + _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
+                                        ask_attack = true;
+
+                                    }
+                                    else
+                                    {
+                                        btnUseWeapon_Click(null, null);
+                                        ask_attack = false;
+                                    }
                                 }
                                 else
                                 {
-                                    btnUseWeapon_Click(sender, e);
+                                    btnUseWeapon_Click(null,null);
+                                    ask_attack = false;
                                 }
 
                             }
@@ -260,17 +288,41 @@ namespace SuperAdventure
                     {
                         if (JsonArray_Length(json) == 2)
                         {
-                            if ((string)json.recognized[1].ToString().ToLower() == "mapa" && !IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
+                            if ((string)json.recognized[1].ToString().ToLower() == "mapa")
                             {
-                                btnMap_Click(null, null);
+                                if(!IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
+                                {
+                                    btnMap_Click(null, null);
+                                }
+                                else if(IsFormOpen("WorldMap"))
+                                {
+                                    tts.Speak("O mapa já está aberto.");
+                                }
+                                else if(IsFormOpen("TradingScreen"))
+                                {
+                                    tts.Speak("Não podes fazer isso. Neste momento tens o vendedor aberto.");
+                                }
+                                
                             }
-                            else if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor" && !IsFormOpen("TradingScreen") && !IsFormOpen("WorldMap"))
+                            else if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
                             {
-                                btnTrade_Click(null, null);
+                                if (!IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
+                                {
+                                    btnTrade_Click(null, null);
+                                }
+                                else if (IsFormOpen("TradingScreen"))
+                                {
+                                    tts.Speak("O vendedor já está aberto.");
+                                }
+                                else if (IsFormOpen("WorldMap"))
+                                {
+                                    tts.Speak("Não podes fazer isso. Neste momento tens o mapa aberto.");
+                                }
+
                             }
                             else
                             {
-                                tts.Speak("Já está aberto.");
+                                tts.Speak("Não podes fazer isso agora.");
                             }
                         }
                         else
@@ -293,7 +345,9 @@ namespace SuperAdventure
                                 }
                             }
                         }
+                        
                     });
+                    ask_attack = false;
                     break;
                 case "MOVER":
                     Invoke((MethodInvoker)delegate
@@ -317,7 +371,9 @@ namespace SuperAdventure
                                 btnWest_Click(null, null);
                             }
                         }
+                        
                     });
+                    ask_attack = false;
                     break;
                 case "FECHAR":
                     if (JsonArray_Length(json) == 2)
@@ -340,7 +396,9 @@ namespace SuperAdventure
                         {
                             tts.Speak("Não tens nada aberto para fechar.");
                         }
+                        
                     }
+                    ask_attack = false;
                     break;
                 case "COMPRAR":
                     if (JsonArray_Length(json) == 2)
@@ -365,6 +423,7 @@ namespace SuperAdventure
                             }
                         }
                     }
+                    ask_attack = false;
                     break;
                 case "VENDER":
                     if (JsonArray_Length(json) == 2)
@@ -389,6 +448,7 @@ namespace SuperAdventure
                             }  
                         }
                     }
+                    ask_attack = false;
                     break;
                 case "EQUIPAR":
                     if (JsonArray_Length(json) == 2)
@@ -414,6 +474,7 @@ namespace SuperAdventure
                             
                         });
                     }
+                    ask_attack = false;
                     break;
                 case "BEBER_POCAO":
                     this.Invoke((MethodInvoker)delegate
@@ -435,6 +496,7 @@ namespace SuperAdventure
                         }
                         
                     });
+                    ask_attack = false;
                     break;
                 case "INFO":
                     this.Invoke((MethodInvoker)delegate
@@ -463,8 +525,13 @@ namespace SuperAdventure
                         {
                             tts.Speak("Estás com " + _player.CurrentHitPoints + " pontos de vida." + "Tens " + _player.Gold + "moedas de ouro."+"E a tua localização é: "+_player.CurrentLocation.Name);
                         }
+                        else
+                        {
+                            tts.Speak("Tens " + _player.CurrentHitPoints + " pontos de vida.");
+                        }
 
                     });
+                    ask_attack = false;
                     break;
                 case "SIM":
                     this.Invoke((MethodInvoker)delegate
