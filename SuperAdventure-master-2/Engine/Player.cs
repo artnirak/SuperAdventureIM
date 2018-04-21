@@ -13,7 +13,7 @@ namespace Engine
         private int _experiencePoints;
         private Location _currentLocation;
         private bool _disableAudio;
-        private string text;
+        private string text = "";
 
         
 
@@ -173,7 +173,7 @@ namespace Engine
             return player;
         }
 
-        public void MoveTo(Location location, TTS tts, string text)
+        public void MoveTo(Location location, TTS tts)
         {
             if (PlayerDoesNotHaveTheRequiredItemToEnter(location))
             {
@@ -183,7 +183,7 @@ namespace Engine
                 text = "";
                 return;
             }
-
+            Console.WriteLine(text + "eheh");
             // The player can enter this location
             CurrentLocation = location;
 
@@ -207,34 +207,19 @@ namespace Engine
                     {
                         GivePlayerQuestRewards(location.QuestAvailableHere, tts);
                     }
-                    else
-                    {
-                        if(text != "")
-                        {
-                            tts.Speak(text);
-                            text = "";
-                        }
-                    }
                 }
             }
-            else
-            {
-                if (text != "")
-                {
-                    tts.Speak(text);
-                    text = "";
-                }
-            }
-
-            SetTheCurrentMonsterForTheCurrentLocation(location);
+            Console.WriteLine(text + "iiihih");
+            SetTheCurrentMonsterForTheCurrentLocation(location, tts);
         }
 
         public void MoveNorth(TTS tts)
         {
             if (CurrentLocation.LocationToNorth != null)
             {
-                string text = "Foste para Norte.";
-                MoveTo(CurrentLocation.LocationToNorth, tts, text);
+                text = "Foste para Norte.";
+                Console.WriteLine(text);
+                MoveTo(CurrentLocation.LocationToNorth, tts);
                 
             }
             else
@@ -247,8 +232,8 @@ namespace Engine
         {
             if (CurrentLocation.LocationToEast != null)
             {
-                string text = "Foste para Este.";
-                MoveTo(CurrentLocation.LocationToEast, tts, text);
+                text = "Foste para Este.";
+                MoveTo(CurrentLocation.LocationToEast, tts);
                 
             }
             else
@@ -261,8 +246,8 @@ namespace Engine
         {
             if (CurrentLocation.LocationToSouth != null)
             {
-                string text = "Foste para Sul.";
-                MoveTo(CurrentLocation.LocationToSouth, tts, text);
+                text = "Foste para Sul.";
+                MoveTo(CurrentLocation.LocationToSouth, tts);
                 
             }
             else
@@ -275,8 +260,8 @@ namespace Engine
         {
             if (CurrentLocation.LocationToWest != null)
             {
-                string text = "Foste para Oeste.";
-                MoveTo(CurrentLocation.LocationToWest, tts, text);
+                text = "Foste para Oeste.";
+                MoveTo(CurrentLocation.LocationToWest, tts);
                 
             }
             else
@@ -284,29 +269,33 @@ namespace Engine
                 tts.Speak("Não podes ir mais para Oeste.");
             }
         }
-        public void speak(TTS tts, string text)
-        {
-            tts.Speak(text);
-        }
 
         public void UseWeapon(Weapon weapon,TTS tts)
         {
             int damage = RandomNumberGenerator.NumberBetween(weapon.MinimumDamage, weapon.MaximumDamage);
             if (damage == 0)
             {
+                Console.WriteLine("Falhaste");
                 text="Falháste o ataque. ";
                 RaiseMessage("Falhaste o ataque.");
 
                 // Place AttackMiss sound
-                PlayAudio("AttackMiss", DisableAudio);
+                //PlayAudio("AttackMiss", DisableAudio);
                 
             }
             else
             {
+                Console.WriteLine("Acertaste");
                 CurrentMonster.CurrentHitPoints -= damage;
                 RaiseMessage("Acertaste! Tiraste " + damage + " pontos de vida. ");
                 text = "Acertáste! Tiráste " + damage + " pontos de vida. ";
+                if (damage==1)
+                {
+                    text = "Acertáste! Tiráste " + damage + " ponto de vida. ";
+                }
+                
                 // Place SwordHit or ClubHit sound
+                /*
                 if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)
                 {
                    PlayAudio("SwordHit", DisableAudio);
@@ -315,33 +304,25 @@ namespace Engine
                 else if (CurrentWeapon.ID == World.ITEM_ID_CLUB)
                 { 
                     PlayAudio("ClubHit", DisableAudio);
-                }
+                }*/
             }
 
             if (CurrentMonster.IsDead)
             {
+                Console.WriteLine("Morto");
                 RaiseMessage("");
                 RaiseMessage("Mataste o monstro!");
-
+                
                 // Place MonsterPain sound based on weapon used
-                if (CurrentWeapon.ID == World.ITEM_ID_RUSTY_SWORD)
-                {
-                    PlayAudio("MonsterPainSword", DisableAudio);
-                }
-                else if (CurrentWeapon.ID == World.ITEM_ID_CLUB)
-                {
-                    PlayAudio("MonsterPainClub", DisableAudio);
-                }
                 
                 LootTheCurrentMonster(tts);
 
                 // "Move" to the current location, to refresh the current monster
-                text = "";
-                MoveTo(CurrentLocation, tts, text);
+                MoveTo(CurrentLocation, tts);
             }
             else
             {
-
+                Console.WriteLine("não morto");
                 LetTheMonsterAttack(tts);
             }
             
@@ -353,7 +334,7 @@ namespace Engine
             RaiseMessage("Recebeste " + CurrentMonster.RewardExperiencePoints + " pontos de experiência.");
             
             RaiseMessage("Recebeste " + CurrentMonster.RewardGold + " moedas de ouro.");
-            text = "Matáste um monstro! Recebeste " + CurrentMonster.RewardGold + " moedas de ouro " + "e " + CurrentMonster.RewardExperiencePoints + " pontos de experiência";
+            text = "Matáste o monstro! Recebeste " + CurrentMonster.RewardGold + " moedas de ouro " + "e " + CurrentMonster.RewardExperiencePoints + " pontos de experiência";
             AddExperiencePoints(CurrentMonster.RewardExperiencePoints);
             Gold += CurrentMonster.RewardGold;
 
@@ -366,7 +347,6 @@ namespace Engine
             }
 
             RaiseMessage("");
-            tts.Speak(text);
 
         }
 
@@ -499,14 +479,33 @@ namespace Engine
             return Inventory.Any(ii => ii.Details.ID == location.ItemRequiredToEnter.ID);
         }
 
-        private void SetTheCurrentMonsterForTheCurrentLocation(Location location)
+        private void SetTheCurrentMonsterForTheCurrentLocation(Location location,TTS tts)
         {
             // Populate the current monster with this location's monster (or null, if there is no monster here)
             CurrentMonster = location.NewInstanceOfMonsterLivingHere();
-
+            
             if (CurrentMonster != null)
             {
                 RaiseMessage("Tu vês "+ CheckMonsterGender(CurrentMonster.Name,1) +" " + CurrentMonster.Name+".");
+                if(text != "")
+                {
+                    Console.WriteLine("aqui1");
+                    tts.Speak(text+" e vês " + CheckMonsterGender(CurrentMonster.Name, 1) + " " + CurrentMonster.Name + ".");
+                    text = "";
+                }
+                else
+                {
+                    tts.Speak("Tu vês " + CheckMonsterGender(CurrentMonster.Name, 1) + " " + CurrentMonster.Name + ".");
+                }
+                
+            }
+            else
+            {
+                if(text!="")
+                {
+                    tts.Speak(text);
+                    text = "";
+                }
             }
         }
 
@@ -542,7 +541,8 @@ namespace Engine
             RaiseMessage("");
 
             Quests.Add(new PlayerQuest(quest));
-            tts.Speak("Tens uma missão nova: " + quest.Name + "."+ " Para completá-la, volta com: "+items);
+            tts.Speak(text+" e tens uma missão nova: " + quest.Name + "."+ " Para completá-la, volta com: "+items);
+            text = "";
             
         }
 
@@ -599,11 +599,11 @@ namespace Engine
             MarkPlayerQuestCompleted(quest);
             if(quest.RewardItem == null)
             {
-                tts.Speak("Completáste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência, " + quest.RewardGold + " moedas de ouro.");
+                tts.Speak(text+" e completáste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência, " + quest.RewardGold + " moedas de ouro.");
             }
             else
             {
-                tts.Speak("Completáste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência, " + quest.RewardGold + " moedas de ouro e o item: "+quest.RewardItem.Name+".");
+                tts.Speak(text+" e completáste a missão '" + quest.Name + "'!" + "\n" + " Gánháste " + quest.RewardExperiencePoints + " pontos de experiência, " + quest.RewardGold + " moedas de ouro e o item: "+quest.RewardItem.Name+".");
             }
             text = "";
         }
@@ -662,13 +662,13 @@ namespace Engine
 
                 // Place PlayerPain sound here
                 PlayAudio("PlayerPain", DisableAudio);
-                speak(tts, text);
+                tts.Speak(text);
                 text = "";
                 MoveHome(tts);
             }
             else
             {
-                speak(tts, text);
+                tts.Speak(text);
                 text = "";
             }
 
@@ -686,7 +686,7 @@ namespace Engine
 
         private void MoveHome(TTS tts)
         {
-            MoveTo(World.LocationByID(World.LOCATION_ID_HOME), tts, "");
+            MoveTo(World.LocationByID(World.LOCATION_ID_HOME), tts);
         }
 
         private void CreateNewChildXmlNode(XmlDocument document, XmlNode parentNode, string elementName, object value)

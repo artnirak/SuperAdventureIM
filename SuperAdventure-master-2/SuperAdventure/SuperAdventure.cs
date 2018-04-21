@@ -21,7 +21,7 @@ namespace SuperAdventure
         private WorldMap mapScreen;
         private TradingScreen tradingScreen;
         private TTS tts;
-        private bool ask_attack = false;
+        public bool ask_attack = false;
         private Player _player;
 
         public SuperAdventure()
@@ -103,7 +103,7 @@ namespace SuperAdventure
             _player.PropertyChanged += PlayerOnPropertyChanged;
             _player.OnMessage += DisplayMessage;
 
-            _player.MoveTo(_player.CurrentLocation, tts,"");
+            _player.MoveTo(_player.CurrentLocation, tts);
 
 
         }

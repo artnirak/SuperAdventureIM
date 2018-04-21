@@ -94,11 +94,14 @@ namespace Engine
             {
                 Console.WriteLine("Waiting...");
             }
-
+            if(text!="")
+            {
+                player.Stream = new System.IO.MemoryStream();
+                tts.SetOutputToWaveStream(player.Stream);
+                tts.SpeakAsync(text);
+            }
             //create audio stream with speech
-            player.Stream = new System.IO.MemoryStream();
-            tts.SetOutputToWaveStream(player.Stream);
-            tts.SpeakAsync(text);
+
         }
 
 
