@@ -669,7 +669,7 @@ namespace Engine
             }
             else
             {
-                tts.Speak(text);
+                tts.Speak(text + CheckMonsterGender(CurrentMonster.Name, 0).ToUpper() + " " + CurrentMonster.Name + " tirou-te " + damageToPlayer + " pontos de vida.");
                 text = "";
             }
 
