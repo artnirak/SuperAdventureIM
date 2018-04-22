@@ -160,6 +160,7 @@ namespace SuperAdventure
                     // Give the player the gold for the item being sold and remove gold from vendor
                     _currentPlayer.Gold += itemBeingSold.Price;
                     _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold -= itemBeingSold.Price;
+
                 }
                 else
                 {
@@ -190,6 +191,7 @@ namespace SuperAdventure
                     // Remove the gold to pay for the item and add to vendor's gold
                     _currentPlayer.Gold -= itemBeingBought.Price;
                     _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold += itemBeingBought.Price;
+                    tts.Speak("Efetuáste a compra com sucesso.");
                 }
                 else
                 {
@@ -241,6 +243,7 @@ namespace SuperAdventure
                     // Give the player the gold for the item being sold and remove gold from vendor
                     _currentPlayer.Gold += itemBeingSold.Price;
                     _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold -= itemBeingSold.Price;
+                    tts.Speak("Efetuáste a compra com sucesso.");
                 }
                 else
                 {

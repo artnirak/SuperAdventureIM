@@ -588,7 +588,7 @@ namespace Engine
             RaiseMessage("Completaste a missão '" + quest.Name + "'!");
             RaiseMessage("Recompensa: ");
             RaiseMessage(quest.RewardExperiencePoints + " pontos de experiência.");
-            RaiseMessage(quest.RewardGold + " ouro");
+            RaiseMessage(quest.RewardGold + " moedas de ouro");
             RaiseMessage(quest.RewardItem.Name, true);
 
             AddExperiencePoints(quest.RewardExperiencePoints);
