@@ -192,6 +192,9 @@ namespace SuperAdventure
                 case "M_COBRAS":
                     id = World.QUEST_ID_CLEAR_FARMERS_FIELD;
                     break;
+                case "PASSE":
+                    id = World.ITEM_ID_ADVENTURER_PASS;
+                    break;
 
             }
             return id;

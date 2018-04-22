@@ -56,6 +56,10 @@
 
   <!--DESLOCAR NO MAPA-->
   <rule id="deslocar">
+    <example>Vai para norte</example>
+    <example>Foge para sul</example>
+    <example>Vai para a direita</example>
+
     <item>
       <item>
         <ruleref uri="#move" />
@@ -70,6 +74,9 @@
 
   <!--ANUNCIAR MOVIMENTO-->
   <rule id="move">
+    <example>Vai para</example>
+    <example>Foge para</example>
+
     <one-of>
       <item>
         vai<tag>out="MOVER"</tag>
@@ -85,6 +92,11 @@
 
   <!--DIREÇÕES-->
   <rule id="directions">
+    <example>norte/cima</example>
+    <example>sul/baixo</example>
+    <example>a esquerda/oeste</example>
+    <example>a direita/este</example>
+
     <one-of>
       <item>
         <one-of>
@@ -117,8 +129,35 @@
     </one-of>
   </rule>
 
+  <!--ATACAR CRIATURAS-->
+  <rule id="atacar">
+    <example>ataca o monstro</example>
+    <example>mata o rato</example>
+    <example>ataca a cobra</example>
+    <example>mata a víbora</example>
+
+    <item>
+      <ruleref uri="#investida" />
+      <tag>out.Ataque=rules.latest()</tag>
+    </item>
+    <item repeat="0-1">
+      <one-of>
+        <item>
+          o monstro
+        </item>
+        <item>
+          <ruleref uri="#criatura" />
+          <tag>out.Criatura=rules.latest()</tag>
+        </item>
+      </one-of>
+    </item>
+  </rule>
+
   <!--ANUNCIAR ATAQUE-->
   <rule id="investida">
+    <example>ataca</example>
+    <example>mata</example>
+
     <one-of>
       <item>
         ataca
@@ -130,20 +169,12 @@
     <tag>out="ATACAR"</tag>
   </rule>
 
-  <!--ATACAR CRIATURAS-->
-  <rule id="atacar">
-    <item>
-      <ruleref uri="#investida" />
-      <tag>out.Ataque=rules.latest()</tag>
-    </item>
-    <item repeat="0-1">
-      <ruleref uri="#criatura" />
-      <tag>out.Criatura=rules.latest()</tag>
-    </item>
-  </rule>
-
   <!--REFERENCIAR A CRIATURA-->
   <rule id="criatura">
+    <example>a cobra</example>
+    <example>a aranha gigante</example>
+    <example>o rato</example>
+
     <one-of>
       <item>
         <item>a</item>
@@ -171,6 +202,12 @@
 
   <!--ABRIR/FECHAR VENDEDOR-->
   <rule id="interagirVendedor">
+    <example>abre a loja</example>
+    <example>troca com o vendedor</example>
+    <example>abre a loja e compra o bastão</example>
+    <example>sai da loja</example>
+    <example>fecha o vendedor</example>
+
     <one-of>
       <item>
         <item>
@@ -225,6 +262,10 @@
 
   <!--ABRIR VENDEDOR-->
   <rule id="abrirVendedor">
+    <example>abre</example>
+    <example>troca com</example>
+    <example>negoceia com</example>
+
     <one-of>
       <item>abre</item>
       <item>
@@ -240,6 +281,10 @@
 
   <!--ABRIR/FECHAR MAPA-->
   <rule id="interagirMapa">
+    <example>abre o mapa</example>
+    <example>mostra o itinerário</example>
+    <example>sai do mapa</example>
+
     <one-of>
       <item>
         <ruleref uri="#abrirMapa" />
@@ -251,7 +296,7 @@
         <tag>out.Interagir=rules.latest()</tag>
       </item>
     </one-of>
-    
+
     <item>
       <ruleref uri="#mapa" />
       <tag>out.Entidade=rules.latest()</tag>
@@ -260,6 +305,9 @@
 
   <!--ABRIR MAPA-->
   <rule id="abrirMapa">
+    <example>mostra o</example>
+    <example>abre o</example>
+
     <item>
       <one-of>
         <item>mostra</item>
@@ -272,6 +320,9 @@
 
   <!--FECHAR MAPA-->
   <rule id="fecharMapa">
+    <example>fecha o</example>
+    <example>sai do</example>
+
     <one-of>
       <item>
         <item>fecha o</item>
@@ -286,6 +337,9 @@
 
   <!--COMPRAR/VENDER ITENS-->
   <rule id="comercializar">
+    <example>vende as peles de cobra</example>
+    <example>compra a poção de vida</example>
+
     <one-of>
       <item>
         vende<tag>out.Venda="VENDER"</tag>
@@ -339,6 +393,9 @@
         o veneno de aranha<tag>out="VENENO_ARANHA"</tag>
       </item>
       <item>
+        o passe de aventureiro<tag>out="PASSE"</tag>
+      </item>
+      <item>
         <item>
           a poção<tag>out="POCAO_VIDA"</tag>
         </item>
@@ -351,18 +408,22 @@
 
   <!--UTILIZAR ITENS-->
   <rule id="utilizarItens">
+    <example>bebe a poção</example>
+    <example>usa a espada</example>
+    <example>equipa o bastão</example>
+
     <one-of>
       <item>
         <ruleref uri="#beberPocao" />
         <tag>out.BeberPocao=rules.latest()</tag>
       </item>
-      
+
       <item>
         <item>
           <ruleref uri="#equipar" />
           <tag>out.Equipar=rules.latest()</tag>
         </item>
-        
+
         <item>
           <ruleref uri="#arma" />
           <tag>out.Arma=rules.latest()</tag>
@@ -373,6 +434,9 @@
 
   <!--BEBER POÇÃO-->
   <rule id="beberPocao">
+    <example>bebe a poção de vida</example>
+    <example>toma a poção</example>
+
     <one-of>
       <item>bebe</item>
       <item>toma</item>
@@ -397,6 +461,13 @@
 
   <!--PEDIR INFORMAÇÃO-->
   <rule id="info">
+    <example>dá-me informação sobre a missão exterminação</example>
+    <example>quanto tenho de vida</example>
+    <example>qual é o meu nível actual</example>
+    <example>quantos pontos de experiência preciso para chegar ao próximo nível</example>
+    <example>como está o meu estado</example>
+    <example>que lugar é este</example>
+
     <one-of>
       <!--INFO MISSÃO-->
       <item>
@@ -485,6 +556,10 @@
 
   <!--DESATIVAR SOM-->
   <rule id="som">
+    <example>tira o som</example>
+    <example>ativa o som</example>
+    <example>liga o áudio</example>
+
     <one-of>
       <item>
         <one-of>
