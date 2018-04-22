@@ -56,15 +56,15 @@ namespace SuperAdventure
 
             dgvInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Item",
-                Width = 197,
-                DataPropertyName = "Description"
+                HeaderText = "Quantidade",
+                DataPropertyName = "Quantity"
             });
 
             dgvInventory.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Quantidade",
-                DataPropertyName = "Quantity"
+                HeaderText = "Item",
+                Width = 197,
+                DataPropertyName = "Description"
             });
 
             dgvQuests.RowHeadersVisible = false;
@@ -135,7 +135,7 @@ namespace SuperAdventure
             switch (item_rule)
             {
                 case "COBRA":
-                    if(_player.CurrentMonster.ID == 2 || _player.CurrentMonster.ID == 3)
+                    if (_player.CurrentMonster.ID == 2 || _player.CurrentMonster.ID == 3)
                     {
                         id = _player.CurrentMonster.ID;
                     }
@@ -246,7 +246,7 @@ namespace SuperAdventure
                         {
                             if (JsonArray_Length(json) == 1)
                             {
-                                btnUseWeapon_Click(null,null);
+                                btnUseWeapon_Click(null, null);
                                 ask_attack = false;
                             }
                             else
@@ -254,12 +254,12 @@ namespace SuperAdventure
                                 if (_player.CurrentMonster.Name.ToLower() != (string)json.recognized[1].ToString().ToLower())
                                 {
                                     String monster = (string)json.recognized[1].ToString();
-                                    if (getObj_ID(monster) != _player.CurrentMonster.ID && getObj_ID(monster)!=0)
+                                    if (getObj_ID(monster) != _player.CurrentMonster.ID && getObj_ID(monster) != 0)
                                     {
                                         tts.Speak("O monstro não é" + World.MonsterByID(getObj_ID(monster)).Name + ", é" + _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
                                         ask_attack = true;
                                     }
-                                    else if(getObj_ID(monster) == 0)
+                                    else if (getObj_ID(monster) == 0)
                                     {
                                         tts.Speak("O monstro não é esse" + ", é" + _player.CurrentMonster.Name + ", tens a certeza que queres atacar?");
                                         ask_attack = true;
@@ -273,7 +273,7 @@ namespace SuperAdventure
                                 }
                                 else
                                 {
-                                    btnUseWeapon_Click(null,null);
+                                    btnUseWeapon_Click(null, null);
                                     ask_attack = false;
                                 }
 
@@ -288,67 +288,70 @@ namespace SuperAdventure
                 case "ABRIR":
                     Invoke((MethodInvoker)delegate
                     {
-                        if (JsonArray_Length(json) == 2)
+                        if ((string)json.recognized[1].ToString().ToLower() == "mapa")
                         {
-                            if ((string)json.recognized[1].ToString().ToLower() == "mapa")
+                            if (!IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
                             {
-                                if(!IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
-                                {
-                                    btnMap_Click(null, null);
-                                }
-                                else if(IsFormOpen("WorldMap"))
-                                {
-                                    tts.Speak("O mapa já está aberto.");
-                                }
-                                else if(IsFormOpen("TradingScreen"))
-                                {
-                                    tts.Speak("Não podes fazer isso. Neste momento tens o vendedor aberto.");
-                                }
-                                
+                                btnMap_Click(null, null);
                             }
-                            else if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
+                            else if (IsFormOpen("WorldMap"))
                             {
-                                if (!IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
-                                {
-                                    btnTrade_Click(null, null);
-                                }
-                                else if (IsFormOpen("TradingScreen"))
-                                {
-                                    tts.Speak("O vendedor já está aberto.");
-                                }
-                                else if (IsFormOpen("WorldMap"))
-                                {
-                                    tts.Speak("Não podes fazer isso. Neste momento tens o mapa aberto.");
-                                }
+                                tts.Speak("O mapa já está aberto.");
+                            }
+                            else if (IsFormOpen("TradingScreen"))
+                            {
+                                tts.Speak("Não podes fazer isso. Neste momento tens o vendedor aberto.");
+                            }
 
-                            }
-                            else
-                            {
-                                tts.Speak("Não podes fazer isso agora.");
-                            }
                         }
-                        else
+                        else if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
                         {
-                            if (_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor" && !IsFormOpen("TradingScreen") && !IsFormOpen("WorldMap"))
+                            if (!IsFormOpen("WorldMap") && !IsFormOpen("TradingScreen"))
                             {
                                 btnTrade_Click(null, null);
-                                if ((string)json.recognized[2].ToString().ToLower() == "comprar")
+                                if (JsonArray_Length(json) > 2 && (string)json.recognized[2].ToString().ToLower() == "comprar")
                                 {
                                     int itemID = getObj_ID((string)json.recognized[3].ToString());
                                     tradingScreen.VoiceBuy(itemID, tts);
                                 }
-                                else
+                                else if (JsonArray_Length(json) > 2 && (string)json.recognized[2].ToString().ToLower() == "vender")
                                 {
-                                    if ((string)json.recognized[2].ToString().ToLower() == "vender")
-                                    {
-                                        int itemID = getObj_ID((string)json.recognized[3].ToString());
-                                        tradingScreen.VoiceSell(itemID, tts);
-                                    }
+                                    int itemID = getObj_ID((string)json.recognized[3].ToString());
+                                    tradingScreen.VoiceSell(itemID, tts);
                                 }
                             }
+                            else if (IsFormOpen("TradingScreen"))
+                            {
+                                if (JsonArray_Length(json) == 2)
+                                {
+                                    tts.Speak("O vendedor já está aberto.");
+                                }
+                                else if (JsonArray_Length(json) > 2 && (string)json.recognized[2].ToString().ToLower() == "comprar")
+                                {
+                                    int itemID = getObj_ID((string)json.recognized[3].ToString());
+                                    tradingScreen.VoiceBuy(itemID, tts, "O vendedor já está aberto, mas vou comprar na mesma.");
+                                }
+                                else
+                                {
+                                    int itemID = getObj_ID((string)json.recognized[3].ToString());
+                                    tradingScreen.VoiceSell(itemID, tts, "O vendedor já está aberto, mas vou vender na mesma.");
+                                }
+                            }
+                            else if (IsFormOpen("WorldMap"))
+                            {
+                                tts.Speak("Não podes fazer isso. Neste momento tens o mapa aberto.");
+                            }
                         }
-                        
+                        else if (!_player.CurrentLocation.HasAVendor && (string)json.recognized[1].ToString().ToLower() == "vendedor")
+                        {
+                            tts.Speak("Não podes fazer isso agora. Não há vendedores neste local.");
+                        }
+                        else
+                        {
+                            tts.Speak("Não podes fazer isso agora.");
+                        }
                     });
+
                     ask_attack = false;
                     break;
                 case "MOVER":
@@ -373,7 +376,7 @@ namespace SuperAdventure
                                 btnWest_Click(null, null);
                             }
                         }
-                        
+
                     });
                     ask_attack = false;
                     break;
@@ -396,11 +399,11 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            if(IsFormOpen("WorldMap"))
+                            if (IsFormOpen("WorldMap"))
                             {
                                 tts.Speak("Não tens o vendedor aberto, mas sim o mapa.");
                             }
-                            else if(IsFormOpen("TradingScreen"))
+                            else if (IsFormOpen("TradingScreen"))
                             {
                                 tts.Speak("Naão tens o mapa aberto, mas sim o vendedor.");
                             }
@@ -408,9 +411,9 @@ namespace SuperAdventure
                             {
                                 tts.Speak("Não tens nada aberto para fechar.");
                             }
-                            
+
                         }
-                        
+
                     }
                     ask_attack = false;
                     break;
@@ -422,7 +425,7 @@ namespace SuperAdventure
                             this.Invoke((MethodInvoker)delegate
                             {
                                 int itemID = getObj_ID((string)json.recognized[1].ToString());
-                                tradingScreen.VoiceBuy(itemID,tts);
+                                tradingScreen.VoiceBuy(itemID, tts);
                             });
                         }
                         else
@@ -452,14 +455,14 @@ namespace SuperAdventure
                         }
                         else
                         {
-                            if(!_player.CurrentLocation.HasAVendor)
+                            if (!_player.CurrentLocation.HasAVendor)
                             {
                                 tts.Speak("Não tens um vendedor neste local.");
                             }
                             else
                             {
                                 tts.Speak("Primeiro tens que abrir o vendedor.");
-                            }  
+                            }
                         }
                     }
                     ask_attack = false;
@@ -472,12 +475,12 @@ namespace SuperAdventure
                         {
                             int itemID = getObj_ID((string)json.recognized[1].ToString());
                             Item weapon = World.ItemByID(Convert.ToInt32(itemID));
-                            if(_player.Weapons.Contains(weapon) && _player.CurrentLocation.HasAMonster)
+                            if (_player.Weapons.Contains(weapon) && _player.CurrentLocation.HasAMonster)
                             {
                                 cboWeapons.SelectedIndex = cboWeapons.FindStringExact(weapon.Name);
                                 tts.Speak("Equipáste a arma: " + weapon.Name);
                             }
-                            else if(! _player.CurrentLocation.HasAMonster)
+                            else if (!_player.CurrentLocation.HasAMonster)
                             {
                                 tts.Speak("Só podes fazer isso em combate!");
                             }
@@ -485,7 +488,7 @@ namespace SuperAdventure
                             {
                                 tts.Speak("Não tens essa arma.");
                             }
-                            
+
                         });
                     }
                     ask_attack = false;
@@ -493,14 +496,14 @@ namespace SuperAdventure
                 case "BEBER_POCAO":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        int itemID = getObj_ID((string)json.recognized[0].ToString());  
+                        int itemID = getObj_ID((string)json.recognized[0].ToString());
                         Item potion = World.ItemByID(Convert.ToInt32(itemID));
                         cboPotions.SelectedIndex = cboPotions.FindStringExact(potion.Name);
-                        if(_player.Potions.Any() && _player.CurrentLocation.HasAMonster)
+                        if (_player.Potions.Any() && _player.CurrentLocation.HasAMonster)
                         {
                             btnUsePotion_Click(null, null);
                         }
-                        else if(!_player.CurrentLocation.HasAMonster)
+                        else if (!_player.CurrentLocation.HasAMonster)
                         {
                             tts.Speak("Só podes fazer isso em combate.");
                         }
@@ -508,36 +511,36 @@ namespace SuperAdventure
                         {
                             tts.Speak("Não tens mais poções.");
                         }
-                        
+
                     });
                     ask_attack = false;
                     break;
                 case "INFO":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        if((string)json.recognized[1].ToString() == "M_RATOS" || (string)json.recognized[1].ToString() == "M_COBRAS")
+                        if ((string)json.recognized[1].ToString() == "M_RATOS" || (string)json.recognized[1].ToString() == "M_COBRAS")
                         {
                             String description = World.QuestByID(getObj_ID((string)json.recognized[1].ToString())).Description;
-                            tts.Speak("A descrição da missão é a seguinte: "+description);
+                            tts.Speak("A descrição da missão é a seguinte: " + description);
                         }
-                        else if((string)json.recognized[1].ToString() == "NEXT_LVL")
+                        else if ((string)json.recognized[1].ToString() == "NEXT_LVL")
                         {
                             int exp_to_next_level = _player.Level * 100 - _player.ExperiencePoints;
                             tts.Speak("Faltam-te " + exp_to_next_level + " pontos de experiência para o próximo nível.");
                         }
-                        else if((string)json.recognized[1].ToString() == "LOCAL")
+                        else if ((string)json.recognized[1].ToString() == "LOCAL")
                         {
                             string local_name = _player.CurrentLocation.Name;
                             string local_description = _player.CurrentLocation.Description;
-                            tts.Speak("Estás em " + local_name + ". "+local_description);
+                            tts.Speak("Estás em " + local_name + ". " + local_description);
                         }
-                        else if((string)json.recognized[1].ToString() == "LVL")
+                        else if ((string)json.recognized[1].ToString() == "LVL")
                         {
                             tts.Speak("Estás no nível " + _player.Level);
                         }
-                        else if((string)json.recognized[1].ToString() == "ESTADO")
+                        else if ((string)json.recognized[1].ToString() == "ESTADO")
                         {
-                            tts.Speak("Estás com " + _player.CurrentHitPoints + " pontos de vida." + "Tens " + _player.Gold + "moedas de ouro."+"E a tua localização é: "+_player.CurrentLocation.Name);
+                            tts.Speak("Estás com " + _player.CurrentHitPoints + " pontos de vida." + "Tens " + _player.Gold + "moedas de ouro." + "E a tua localização é: " + _player.CurrentLocation.Name);
                         }
                         else
                         {
@@ -550,7 +553,7 @@ namespace SuperAdventure
                 case "SIM":
                     this.Invoke((MethodInvoker)delegate
                     {
-                        if(ask_attack == true)
+                        if (ask_attack == true)
                         {
                             btnUseWeapon_Click(null, null);
                             ask_attack = false;
@@ -727,7 +730,7 @@ namespace SuperAdventure
             // Get the currently selected weapon from the cboWeapons ComboBox
             Weapon currentWeapon = (Weapon)cboWeapons.SelectedItem;
 
-            _player.UseWeapon(currentWeapon,tts);
+            _player.UseWeapon(currentWeapon, tts);
         }
 
         private void btnUsePotion_Click(object sender, EventArgs e)

@@ -535,6 +535,7 @@ namespace Engine
             {
                 items += string.Format("{0} {1}", qci.Quantity,
                     qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural);
+                items += ",";
                 RaiseMessage(string.Format("{0} {1}", qci.Quantity,
                     qci.Quantity == 1 ? qci.Details.Name : qci.Details.NamePlural));
             }

@@ -34,17 +34,17 @@ namespace SuperAdventure
 
             dgvMyItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Item",
-                Width = 160,
-                DataPropertyName = "Description"
-            });
-
-            dgvMyItems.Columns.Add(new DataGridViewTextBoxColumn
-            {
                 HeaderText = "Qtd",
                 Width = 30,
                 DefaultCellStyle = rightAlignedCellStyle,
                 DataPropertyName = "Quantity"
+            });
+
+            dgvMyItems.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Item",
+                Width = 160,
+                DataPropertyName = "Description"
             });
 
             dgvMyItems.Columns.Add(new DataGridViewTextBoxColumn
@@ -83,17 +83,17 @@ namespace SuperAdventure
 
             dgvVendorItems.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Item",
-                Width = 160,
-                DataPropertyName = "Description"
-            });
-
-            dgvVendorItems.Columns.Add(new DataGridViewTextBoxColumn
-            {
                 HeaderText = "Qtd",
                 Width = 30,
                 DefaultCellStyle = rightAlignedCellStyle,
                 DataPropertyName = "Quantity"
+            });
+
+            dgvVendorItems.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Item",
+                Width = 160,
+                DataPropertyName = "Description"
             });
 
             dgvVendorItems.Columns.Add(new DataGridViewTextBoxColumn
@@ -140,14 +140,14 @@ namespace SuperAdventure
                 if (!itemBeingSold.VendorWants)
                 {
                     MessageBox.Show("Vendor doesn't want " + itemBeingSold.Name);
-                    
+
                 }
                 // May get rid of this since there is a VendorWants property
                 // Check if item is unsellable
                 else if (itemBeingSold.Price == World.UNSELLABLE_ITEM_PRICE)
                 {
                     MessageBox.Show("You cannot sell the " + itemBeingSold.Name);
-                   
+
                 }
                 // Check if Vendor has enough gold when buying a player's item
                 else if (_currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold >= itemBeingSold.Price)
@@ -165,15 +165,15 @@ namespace SuperAdventure
                 else
                 {
                     MessageBox.Show("Vendor does not have enough gold to buy " + itemBeingSold.Name);
-                    
+
                 }
             }
         }
 
-        public void VoiceBuy(int itemID,TTS tts)
+        public void VoiceBuy(int itemID, TTS tts, string text = "")
         {
             Item itemBeingBought = World.ItemByID(Convert.ToInt32(itemID));
-            
+
             InventoryItem inv_item = _currentPlayer.CurrentLocation.VendorWorkingHere.Inventory.SingleOrDefault(ii => ii.Details.ID == itemBeingBought.ID);
             if (inv_item != null)
             {
@@ -191,7 +191,7 @@ namespace SuperAdventure
                     // Remove the gold to pay for the item and add to vendor's gold
                     _currentPlayer.Gold -= itemBeingBought.Price;
                     _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold += itemBeingBought.Price;
-                    tts.Speak("Efetuáste a compra com sucesso.");
+                    tts.Speak(text + " Efectuáste a compra com sucesso.");
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace SuperAdventure
 
         }
 
-        public void VoiceSell(int itemID,TTS tts)
+        public void VoiceSell(int itemID, TTS tts, string text = "")
         {
             // The first column of a datagridview has a ColumnIndex = 0
             // This is known as a "zero-based" array/collection/list.
@@ -219,7 +219,7 @@ namespace SuperAdventure
             // Get the Item object for the selected item row
             Item itemBeingSold = World.ItemByID(Convert.ToInt32(itemID));
             InventoryItem inv_item = _currentPlayer.Inventory.SingleOrDefault(ii => ii.Details.ID == itemBeingSold.ID);
-            if(inv_item!=null)
+            if (inv_item != null)
             {
                 // Check if the vendor wants an item in player's inventory
                 if (!itemBeingSold.VendorWants)
@@ -243,7 +243,7 @@ namespace SuperAdventure
                     // Give the player the gold for the item being sold and remove gold from vendor
                     _currentPlayer.Gold += itemBeingSold.Price;
                     _currentPlayer.CurrentLocation.VendorWorkingHere.VendorGold -= itemBeingSold.Price;
-                    tts.Speak("Efetuáste a compra com sucesso.");
+                    tts.Speak(text + " Efectuáste a venda com sucesso.");
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace SuperAdventure
             {
                 tts.Speak("Não tens esse item.");
             }
-            
+
         }
 
         private void dgvVendorItems_CellClick(object sender, DataGridViewCellEventArgs e)

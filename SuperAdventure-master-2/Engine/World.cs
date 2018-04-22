@@ -61,15 +61,15 @@ namespace Engine
             _weapons.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Espada Enferrujada", "Espadas Enferrujadas", 0, 5, 5, true, false));
             _weapons.Add(new Weapon(ITEM_ID_CLUB, "Bastão", "Bastões", 3, 10, 50, true, false));
             _items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Espada Enferrujada", "Espadas Enferrujadas", 0, 5, 5, true, false));
-            _items.Add(new Item(ITEM_ID_RAT_TAIL, "Cauda de rato", "Caudas de ratos", 1, false, true));
-            _items.Add(new Item(ITEM_ID_PIECE_OF_FUR, "Pêlo de rato", "Pêlos de ratos", 1, false, true));
-            _items.Add(new Item(ITEM_ID_SNAKE_FANG, "Presa de cobra", "Presas de cobras", 1, false, true));
-            _items.Add(new Item(ITEM_ID_SNAKESKIN, "Pele de cobra", "Peles de cobras", 2, false, true));
-            _items.Add(new Item(ITEM_ID_SNAKE_VENOM_SAC, "Veneno de aranha", "Venenos de aranhas", 4, false, true));
+            _items.Add(new Item(ITEM_ID_RAT_TAIL, "Cauda de rato", "Caudas de rato", 1, false, true));
+            _items.Add(new Item(ITEM_ID_PIECE_OF_FUR, "Pêlo de rato", "Pêlos de rato", 1, false, true));
+            _items.Add(new Item(ITEM_ID_SNAKE_FANG, "Presa de cobra", "Presas de cobra", 1, false, true));
+            _items.Add(new Item(ITEM_ID_SNAKESKIN, "Pele de cobra", "Peles de cobra", 2, false, true));
+            _items.Add(new Item(ITEM_ID_SNAKE_VENOM_SAC, "Veneno de aranha", "Venenos de aranha", 4, false, true));
             _items.Add(new Weapon(ITEM_ID_CLUB, "Bastão", "Bastões", 3, 10, 50, true, false));
             _items.Add(new HealingPotion(ITEM_ID_HEALING_POTION, "Poção de vida", "Poções de vida", 5, 3, false, false));
-            _items.Add(new Item(ITEM_ID_SPIDER_FANG, "Presa de aranha", "Presas de aranhas", 1, false, true));
-            _items.Add(new Item(ITEM_ID_SPIDER_SILK, "Seda de aranha", "Sedas de aranhas", 1, false, true));
+            _items.Add(new Item(ITEM_ID_SPIDER_FANG, "Presa de aranha", "Presas de aranha", 1, false, true));
+            _items.Add(new Item(ITEM_ID_SPIDER_SILK, "Seda de aranha", "Sedas de aranha", 1, false, true));
             _items.Add(new Item(ITEM_ID_ADVENTURER_PASS, "Passe de aventureiro", "Passes de aventureiro", UNSELLABLE_ITEM_PRICE, true, false));
         }
 
